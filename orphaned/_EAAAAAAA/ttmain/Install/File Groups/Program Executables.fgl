@@ -1,0 +1,8 @@
+[TopDir]
+file0=D:\User\Hmo\Projekte\wimmer\mfc\zuschnitt15\Release\zuschnitt.exe
+file1=D:\User\Hmo\Projekte\wimmer\mfc\zuschnitt15\Release\RegMan.dll
+
+[General]
+Type=FILELIST
+Version=1.00.000
+

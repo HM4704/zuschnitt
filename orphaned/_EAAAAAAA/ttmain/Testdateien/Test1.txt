@@ -1,0 +1,1202 @@
+#
+#
+#
+# Format:
+# A: Tor-Typ Füllung Anzahl OkF B H ObtH Bogen SehnenH ProfilD
+# F: geteilt Oberteil Fenster Glasart Breite
+# F: geteilt Oberteil Fenster Glasart Breite
+
+########################################## Typ 400
+############################ Tueren
+[Referenz\t4ZNNN.rtt]
+A: 4101 4501 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t4ZONN.rtt]
+A: 4101 4501 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t4WNNN.rtt]
+A: 4102 4501 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t4WONN.rtt]
+A: 4102 4501 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\t4ZNOZN.rtt]
+A: 4101 4501 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t4ZOOZN.rtt]
+A: 4101 4501 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t4WNOZN.rtt]
+A: 4102 4501 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t4WOOZN.rtt]
+A: 4102 4501 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\t4ZNFN.rtt]
+A: 4101 4501 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t4ZOFN.rtt]
+A: 4101 4501 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t4WNFN.rtt]
+A: 4102 4501 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t4WOFN.rtt]
+A: 4102 4501 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+# mit Fenster schiebe
+[Referenz\t4ZNFSN.rtt]
+A: 4101 4501 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t4ZOFSN.rtt]
+A: 4101 4501 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t4WNFSN.rtt]
+A: 4102 4501 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t4WOFSN.rtt]
+A: 4102 4501 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+############################ Tore
+[Referenz\tt4ZNNN.rtt]
+A: 4301 4501 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4ZONN.rtt]
+A: 4301 4501 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4WNNN.rtt]
+A: 4302 4501 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4WONN.rtt]
+A: 4302 4501 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\tt4ZNOZN.rtt]
+A: 4301 4501 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4ZOOZN.rtt]
+A: 4301 4501 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4WNOZN.rtt]
+A: 4302 4501 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt4WOOZN.rtt]
+A: 4302 4501 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Fenster starr
+[Referenz\tt4ZNFN.rtt]
+A: 4301 4501 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt4ZOFN.rtt]
+A: 4301 4501 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt4WNFN.rtt]
+A: 4302 4501 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt4WOFN.rtt]
+A: 4302 4501 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+### mit Fenster schiebe
+[Referenz\tt4ZNFSN.rtt]
+A: 4301 4501 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt4ZOFSN.rtt]
+A: 4301 4501 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt4WNFSN.rtt]
+A: 4302 4501 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt4WOFSN.rtt]
+A: 4302 4501 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+############################ F3-Tore
+[Referenz\f3t4WNNN.rtt]
+A: 4701 4501 2 0 400 400 0 0 0 0
+F: 0 0 0 0 1333
+F: 0 0 0 0 1333
+F: 0 0 0 0 1333
+
+[Referenz\f3t4WONN.rtt]
+A: 4701 4501 2 1 400 400 0 0 0 0
+F: 0 0 0 0 1333
+F: 0 0 0 0 1333
+F: 0 0 0 0 1333
+
+### mit Oberteil zum Öffnen
+#[Referenz\tt4ZNOZN.rtt]
+#A: 4301 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4ZOOZN.rtt]
+#A: 4301 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WNOZN.rtt]
+#A: 4302 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WOOZN.rtt]
+#A: 4302 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+### mit Fenster starr
+[Referenz\f3t4WNFN.rtt]
+A: 4701 4501 2 0 400 400 170 0 0 0
+F: 0 0 1 1 1333
+F: 0 0 1 1 1333
+F: 0 0 0 0 1333
+
+[Referenz\f3t4WOFN.rtt]
+A: 4701 4501 2 1 400 400 170 0 0 0
+F: 0 0 1 1 1333
+F: 0 0 1 1 1333
+F: 0 0 0 0 1333
+
+### mit Fenster schiebe
+[Referenz\f3t4WNFSN.rtt]
+A: 4701 4501 2 0 400 400 170 0 0 0
+F: 0 0 2 1 1333
+F: 0 0 2 1 1333
+F: 0 0 0 0 1333
+
+[Referenz\f3t4WOFSN.rtt]
+A: 4701 4501 2 1 400 400 170 0 0 0
+F: 0 0 2 1 1333
+F: 0 0 2 1 1333
+F: 0 0 0 0 1333
+
+############################ F4-Tore
+[Referenz\f4t4WNNN.rtt]
+A: 4703 4501 2 0 500 400 0 0 0 0
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+
+[Referenz\f4t4WONN.rtt]
+A: 4703 4501 2 1 500 400 0 0 0 0
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+
+### mit Oberteil zum Öffnen
+#[Referenz\tt4ZNOZN.rtt]
+#A: 4301 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4ZOOZN.rtt]
+#A: 4301 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WNOZN.rtt]
+#A: 4302 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WOOZN.rtt]
+#A: 4302 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+### mit Fenster starr
+[Referenz\f4t4WNFN.rtt]
+A: 4703 4501 2 0 500 400 170 0 0 0
+F: 0 0 1 1 1250
+F: 0 0 1 1 1250
+F: 0 0 0 0 1250
+F: 0 0 1 1 1250
+
+[Referenz\f4t4WOFN.rtt]
+A: 4703 4501 2 1 500 400 170 0 0 0
+F: 0 0 1 1 1250
+F: 0 0 1 1 1250
+F: 0 0 0 0 1250
+F: 0 0 1 1 1250
+
+### mit Fenster schiebe
+[Referenz\f4t4WNFSN.rtt]
+A: 4703 4501 2 0 500 400 170 0 0 0
+F: 0 0 2 1 1250
+F: 0 0 2 1 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+
+[Referenz\f4t4WOFSN.rtt]
+A: 4703 4501 2 1 500 400 170 0 0 0
+F: 0 0 2 1 1250
+F: 0 0 2 1 1250
+F: 0 0 0 0 1250
+F: 0 0 0 0 1250
+
+############################ F5-Tore
+[Referenz\f5t4WNNN.rtt]
+A: 4705 4501 2 0 600 500 0 0 0 0
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+
+[Referenz\f5t4WONN.rtt]
+A: 4705 4501 2 1 600 500 0 0 0 0
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+
+### mit Oberteil zum Öffnen
+#[Referenz\tt4ZNOZN.rtt]
+#A: 4301 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4ZOOZN.rtt]
+#A: 4301 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WNOZN.rtt]
+#A: 4302 4501 2 0 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+#[Referenz\tt4WOOZN.rtt]
+#A: 4302 4501 2 1 200 200 70 0 0 0
+#F: 0 1 0 0 0
+#F: 0 0 0 0 0
+
+### mit Fenster starr
+[Referenz\f5t4WNFN.rtt]
+A: 4705 4501 2 0 600 500 240 0 0 0
+F: 0 0 1 1 1200
+F: 0 0 1 1 1200
+F: 0 0 0 0 1200
+F: 0 0 1 1 1200
+F: 0 0 0 0 1200
+
+[Referenz\f5t4WOFN.rtt]
+A: 4705 4501 2 1 600 500 240 0 0 0
+F: 0 0 1 1 1200
+F: 0 0 1 1 1200
+F: 0 0 0 0 1200
+F: 0 0 1 1 1200
+F: 0 0 0 0 1200
+
+### mit Fenster schiebe
+[Referenz\f5t4WNFSN.rtt]
+A: 4705 4501 2 0 600 500 240 0 0 0
+F: 0 0 2 1 1200
+F: 0 0 2 1 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+
+[Referenz\f5t4WOFSN.rtt]
+A: 4705 4501 2 1 600 500 240 0 0 0
+F: 0 0 2 1 1200
+F: 0 0 2 1 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+F: 0 0 0 0 1200
+
+
+########################################## Typ 600
+############################ Tueren
+[Referenz\t6ZNNN_HH.rtt]
+A: 6101 6501 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6ZNNN_HB.rtt]
+A: 6101 6504 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6ZONN_HH.rtt]
+A: 6101 6501 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6ZONN_HB.rtt]
+A: 6101 6504 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6WNNN_HH.rtt]
+A: 6102 6501 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6WNNN_HB.rtt]
+A: 6102 6504 2 0 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6WONN_HH.rtt]
+A: 6102 6501 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+[Referenz\t6WONN_HB.rtt]
+A: 6102 6504 2 1 100 200 0 0 0 0
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\t6ZNOZN_HH.rtt]
+A: 6101 6501 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6ZNOZN_HB.rtt]
+A: 6101 6504 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6ZOOZN_HH.rtt]
+A: 6101 6501 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6ZOOZN_HB.rtt]
+A: 6101 6504 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6WNOZN_HH.rtt]
+A: 6102 6501 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6WNOZN_HB.rtt]
+A: 6102 6504 2 0 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6WOOZN_HH.rtt]
+A: 6102 6501 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+[Referenz\t6WOOZN_HB.rtt]
+A: 6102 6504 2 1 100 200 70 0 0 0
+F: 0 1 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\t6ZNFN_HH.rtt]
+A: 6101 6501 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6ZNFN_HB.rtt]
+A: 6101 6504 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6ZOFN_HH.rtt]
+A: 6101 6501 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6ZOFN_HB.rtt]
+A: 6101 6504 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6WNFN_HH.rtt]
+A: 6102 6501 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6WNFN_HB.rtt]
+A: 6102 6504 2 0 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6WOFN_HH.rtt]
+A: 6102 6501 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+[Referenz\t6WOFN_HB.rtt]
+A: 6102 6504 2 1 100 200 70 0 0 0
+F: 0 0 1 1 1000
+
+# mit Fenster schiebe
+[Referenz\t6ZNFSN_HH.rtt]
+A: 6101 6501 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6ZNFSN_HB.rtt]
+A: 6101 6504 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6ZOFSN_HH.rtt]
+A: 6101 6501 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6ZOFSN_HB.rtt]
+A: 6101 6504 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6WNFSN_HH.rtt]
+A: 6102 6501 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6WNFSN_HB.rtt]
+A: 6102 6504 2 0 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6WOFSN_HH.rtt]
+A: 6102 6501 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+[Referenz\t6WOFSN_HB.rtt]
+A: 6102 6504 2 1 100 200 70 0 0 0
+F: 0 0 2 1 1000
+
+### mit Fenster starr + OzO
+[Referenz\t6ZNOFN_HH.rtt]
+A: 6101 6501 2 0 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6ZNOFN_HB.rtt]
+A: 6101 6504 2 0 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6ZOOFN_HH.rtt]
+A: 6101 6501 2 1 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6ZOOFN_HB.rtt]
+A: 6101 6504 2 1 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+
+[Referenz\t6WNOFN_HH.rtt]
+A: 6102 6501 2 0 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6WNOFN_HB.rtt]
+A: 6102 6504 2 0 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6WOOFN_HH.rtt]
+A: 6102 6501 2 1 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+[Referenz\t6WOOFN_HB.rtt]
+A: 6102 6504 2 1 100 200 70 0 0 0
+F: 0 1 1 1 1000
+
+##### mit Bogen
+[Referenz\t6ZNNB.rtt]
+A: 6101 6501 2 0 100 200 0 1 40 10
+F: 0 0 0 0 1000
+
+############################ Tore
+[Referenz\tt6ZNNN_HH.rtt]
+A: 6301 6501 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZNNN_HB.rtt]
+A: 6301 6504 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZONN_HH.rtt]
+A: 6301 6501 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZONN_HB.rtt]
+A: 6301 6504 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNNN_HH.rtt]
+A: 6302 6501 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNNN_HB.rtt]
+A: 6302 6504 2 0 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WONN_HH.rtt]
+A: 6302 6501 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WONN_HB.rtt]
+A: 6302 6504 2 1 200 200 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\tt6ZNOZN_HH.rtt]
+A: 6301 6501 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZNOZN_HB.rtt]
+A: 6301 6504 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZOOZN_HH.rtt]
+A: 6301 6501 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZOOZN_HB.rtt]
+A: 6301 6504 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+
+[Referenz\tt6WNOZN_HH.rtt]
+A: 6302 6501 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNOZN_HB.rtt]
+A: 6302 6504 2 0 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WOOZN_HH.rtt]
+A: 6302 6501 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+
+[Referenz\tt6WOOZN_HB.rtt]
+A: 6302 6504 2 1 200 200 70 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\tt6ZNFN_HH.rtt]
+A: 6301 6501 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt6ZNFN_HB.rtt]
+A: 6301 6504 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZOFN_HH.rtt]
+A: 6301 6501 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt6ZOFN_HB.rtt]
+A: 6301 6504 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+
+[Referenz\tt6WNFN_HH.rtt]
+A: 6302 6501 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt6WNFN_HB.rtt]
+A: 6302 6504 2 0 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WOFN_HH.rtt]
+A: 6302 6501 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\tt6WOFN_HB.rtt]
+A: 6302 6504 2 1 200 200 70 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+# mit Fenster schiebe
+[Referenz\tt6ZNFSN_HH.rtt]
+A: 6301 6501 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt6ZNFSN_HB.rtt]
+A: 6301 6504 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZOFSN_HH.rtt]
+A: 6301 6501 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt6ZOFSN_HB.rtt]
+A: 6301 6504 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNFSN_HH.rtt]
+A: 6302 6501 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt6WNFSN_HB.rtt]
+A: 6302 6504 2 0 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WOFSN_HH.rtt]
+A: 6302 6501 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\tt6WOFSN_HB.rtt]
+A: 6302 6504 2 1 200 200 70 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+### mit Fenster starr + OzO
+[Referenz\tt6ZNOFN_HH.rtt]
+A: 6301 6501 2 0 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZNOFN_HB.rtt]
+A: 6301 6504 2 0 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\tt6ZOOFN_HH.rtt]
+A: 6301 6501 2 1 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6ZOOFN_HB.rtt]
+A: 6301 6504 2 1 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\tt6WNOFN_HH.rtt]
+A: 6302 6501 2 0 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNOFN_HB.rtt]
+A: 6302 6504 2 0 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\tt6WOOFN_HH.rtt]
+A: 6302 6501 2 1 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WOOFN_HB.rtt]
+A: 6302 6504 2 1 200 200 70 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+##### mit Bogen
+[Referenz\tt6ZNNB.rtt]
+A: 6301 6501 2 0 200 200 0 1 40 10
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\tt6WNNB.rtt]
+A: 6302 6501 2 0 200 200 0 1 40 10
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+############################ F3-Tore
+[Referenz\f3t6WNNN_HH.rtt]
+A: 6701 6501 2 0 300 300 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WNNN_HB.rtt]
+A: 6701 6504 2 0 300 300 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WONN_HH.rtt]
+A: 6701 6501 2 1 300 300 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WONN_HB.rtt]
+A: 6701 6504 2 1 300 300 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\f3t6WNOZN_HH.rtt]
+A: 6701 6501 2 0 300 300 140 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+
+[Referenz\f3t6WNOZN_HB.rtt]
+A: 6701 6504 2 0 300 300 140 0 0 0
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WOOZN_HH.rtt]
+A: 6701 6501 2 1 300 300 140 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WOOZN_HB.rtt]
+A: 6701 6504 2 1 300 300 140 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\f3t6WNFN_HH.rtt]
+A: 6701 6501 2 0 300 300 140 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WNFN_HB.rtt]
+A: 6701 6504 2 0 300 300 140 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WOFN_HH.rtt]
+A: 6701 6501 2 1 300 300 140 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\f3t6WOFN_HB.rtt]
+A: 6701 6504 2 1 300 300 140 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+
+# mit Fenster schiebe
+[Referenz\f3t6WNFSN_HH.rtt]
+A: 6701 6501 2 0 300 300 140 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WNFSN_HB.rtt]
+A: 6701 6504 2 0 300 300 140 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WOFSN_HH.rtt]
+A: 6701 6501 2 1 300 300 140 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\f3t6WOFSN_HB.rtt]
+A: 6701 6504 2 1 300 300 140 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+
+### mit Fenster starr + OzO
+[Referenz\f3t6WNOFN_HH.rtt]
+A: 6701 6501 2 0 300 300 140 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 1 1 1000
+
+[Referenz\f3t6WNOFN_HB.rtt]
+A: 6701 6504 2 0 300 300 140 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\f3t6WOOFN_HH.rtt]
+A: 6701 6501 2 1 300 300 140 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f3t6WOOFN_HB.rtt]
+A: 6701 6504 2 1 300 300 140 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 1 1 1000
+
+############################ F4-Tore
+[Referenz\f4t6WNNN_HH.rtt]
+A: 6703 6501 2 0 400 400 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WNNN_HB.rtt]
+A: 6703 6504 2 0 400 400 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WONN_HH.rtt]
+A: 6703 6501 2 1 400 400 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WONN_HB.rtt]
+A: 6703 6504 2 1 400 400 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\f4t6WNOZN_HH.rtt]
+A: 6703 6501 2 0 400 400 180 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WNOZN_HB.rtt]
+A: 6703 6504 2 0 400 400 180 0 0 0
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WOOZN_HH.rtt]
+A: 6703 6501 2 1 400 400 180 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WOOZN_HB.rtt]
+A: 6703 6504 2 1 400 400 180 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\f4t6WNFN_HH.rtt]
+A: 6703 6501 2 0 400 400 180 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+
+[Referenz\f4t6WNFN_HB.rtt]
+A: 6703 6504 2 0 400 400 180 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WOFN_HH.rtt]
+A: 6703 6501 2 1 400 400 180 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\f4t6WOFN_HB.rtt]
+A: 6703 6504 2 1 400 400 180 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+# mit Fenster schiebe
+[Referenz\f4t6WNFSN_HH.rtt]
+A: 6703 6501 2 0 400 400 180 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WNFSN_HB.rtt]
+A: 6703 6504 2 0 400 400 180 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+
+[Referenz\f4t6WOFSN_HH.rtt]
+A: 6703 6501 2 1 400 400 180 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\f4t6WOFSN_HB.rtt]
+A: 6703 6504 2 1 400 400 180 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+### mit Fenster starr + OzO
+[Referenz\f4t6WNOFN_HH.rtt]
+A: 6703 6501 2 0 400 400 180 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\f4t6WNOFN_HB.rtt]
+A: 6703 6504 2 0 400 400 180 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\f4t6WOOFN_HH.rtt]
+A: 6703 6501 2 1 400 400 180 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f4t6WOOFN_HB.rtt]
+A: 6703 6504 2 1 400 400 180 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+
+############################ F5-Tore
+[Referenz\f5t6WNNN_HH.rtt]
+A: 6705 6501 2 0 500 500 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WNNN_HB.rtt]
+A: 6705 6504 2 0 500 500 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WONN_HH.rtt]
+A: 6705 6501 2 1 500 500 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WONN_HB.rtt]
+A: 6705 6504 2 1 500 500 0 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+### mit Oberteil zum Öffnen
+[Referenz\f5t6WNOZN_HH.rtt]
+A: 6705 6501 2 0 500 500 220 0 0 0
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WNOZN_HB.rtt]
+A: 6705 6504 2 0 500 500 220 0 0 0
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WOOZN_HH.rtt]
+A: 6705 6501 2 1 500 500 220 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+
+[Referenz\f5t6WOOZN_HB.rtt]
+A: 6705 6504 2 1 500 500 220 0 0 0
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+
+
+### mit Fenster starr
+[Referenz\f5t6WNFN_HH.rtt]
+A: 6705 6501 2 0 500 500 220 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\f5t6WNFN_HB.rtt]
+A: 6705 6504 2 0 500 500 220 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+
+[Referenz\f5t6WOFN_HH.rtt]
+A: 6705 6501 2 1 500 500 220 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+
+[Referenz\f5t6WOFN_HB.rtt]
+A: 6705 6504 2 1 500 500 220 0 0 0
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+F: 0 0 1 1 1000
+F: 0 0 0 0 1000
+
+# mit Fenster schiebe
+[Referenz\f5t6WNFSN_HH.rtt]
+A: 6705 6501 2 0 500 500 220 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WNFSN_HB.rtt]
+A: 6705 6504 2 0 500 500 220 0 0 0
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+
+[Referenz\f5t6WOFSN_HH.rtt]
+A: 6705 6501 2 1 500 500 220 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+[Referenz\f5t6WOFSN_HB.rtt]
+A: 6705 6504 2 1 500 500 220 0 0 0
+F: 0 0 2 1 1000
+F: 0 0 0 0 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+F: 0 0 2 1 1000
+
+### mit Fenster starr + OzO
+[Referenz\f5t6WNOFN_HH.rtt]
+A: 6705 6501 2 0 500 500 220 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 0 0 1000
+
+[Referenz\f5t6WNOFN_HB.rtt]
+A: 6705 6504 2 0 500 500 220 0 0 0
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+F: 0 1 1 1 1000
+
+[Referenz\f5t6WOOFN_HH.rtt]
+A: 6705 6501 2 1 500 500 220 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 0 0 1000
+F: 0 0 0 0 1000
+F: 0 1 1 1 1000
+
+[Referenz\f5t6WOOFN_HB.rtt]
+A: 6705 6504 2 1 500 500 220 0 0 0
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 1 1 1 1000
+F: 0 0 0 0 1000
+F: 0 0 0 0 1000
+
+##### zusätzliche tests
+#### O.i.F Typ 600
+[Referenz\tt6ZNOIFN_HH.rtt]
+A: 6301 6501 2 0 300 300 130 0 0 0
+F: 0 2 0 0 1500
+F: 0 2 0 0 1500
+
+#### Bogen und geteilt Typ 600
+[Referenz\tt6ZNNBG_HH.rtt]
+A: 6301 6501 2 0 200 200 70 1 20 20
+F: 1 0 0 0 1000
+F: 0 0 0 0 1000

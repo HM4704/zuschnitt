@@ -1,0 +1,24 @@
+[Data]
+TITLE_MAIN=Zuschnitt
+ERROR_COMPONENT=Component:
+COMPANY_NAME=Zuschnitt
+COMPANY_NAME16=Company
+ERROR_FILEGROUP=File Group:
+ERROR_MOVEDATA=An error occurred during the move data process: %d
+PRODUCT_VERSION=1.05.00.0
+UNINST_KEY=Zuschnitt
+TITLE_CAPTIONBAR=Zuschnitt
+PRODUCT_NAME16=Product
+FOLDER_NAME=Zuschnitt15
+ERROR_FILE=File:
+ERROR_VGARESOLUTION=This program requires VGA or better resolution.
+PRODUCT_KEY=zuschnitt.exe
+UNINST_DISPLAY_NAME=Zuschnitt
+ERROR_UNINSTSETUP=unInstaller setup failed to initialize.  You may not be able to uninstall this product.
+PRODUCT_NAME=Zuschnitt15
+
+[General]
+Language=0009
+Type=STRINGTABLESPECIFIC
+Version=1.00.000
+
