@@ -1,0 +1,52 @@
+[Language]
+LanguageSupport0=0009
+
+[OperatingSystem]
+OSSupport=0000000000011010
+
+[Data]
+CurrentMedia=New Media
+set_mifserial=
+ProductName=ttmain
+CurrentComponentDef=Default.cdf
+set_dlldebug=No
+AppExe=D:\User\Hmo\Projekte\wimmer\mfc\zuschnitt16\Release\zuschnitt.exe
+DevEnvironment=Microsoft Visual C++ 6
+set_mif=No
+set_testmode=No
+Instructions=Instructions.txt
+EmailAddresss=
+SummaryText=
+Department=
+Type=Win32 (x86) Application
+Author=
+HomeURL=
+InstallRoot=D:\User\Hmo\Projekte\wimmer\mfc\zuschnitt16\Install
+set_level=Level 3
+InstallationGUID={7B7F8A59-D25D-474E-9C28-29936C4A32FD}
+Version=1.05.00.0
+set_miffile=Status.mif
+set_args=
+set_maxerr=50
+Notes=Notes.txt
+CurrentFileGroupDef=Default.fdf
+set_dllcmdline=
+set_warnaserr=No
+Copyright=
+set_preproc=
+Category=
+CurrentPlatform=
+set_crc=Yes
+set_maxwarn=50
+Description=Description.txt
+CompanyName=hermann moosburger
+CurrentLanguage=English
+set_compileb4build=No
+
+[MediaInfo]
+mediadata0=New Media/Media\New Media
+
+[General]
+Type=INSTALLMAIN
+Version=1.10.000
+
