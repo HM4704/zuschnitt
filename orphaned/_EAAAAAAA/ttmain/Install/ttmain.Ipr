@@ -1,0 +1,53 @@
+[Language]
+LanguageSupport0=0009
+
+[OperatingSystem]
+OSSupport=0000000000011010
+
+[Data]
+CurrentMedia=Floppy
+CurrentComponentDef=Default.cdf
+ProductName=ttmain
+set_mifserial=
+DevEnvironment=Microsoft Visual C++ 6
+AppExe=D:\User\Hmo\Projekte\wimmer\mfc\zuschnitt16\Release\zuschnitt.exe
+set_dlldebug=No
+EmailAddresss=
+Instructions=Instructions.txt
+set_testmode=No
+set_mif=No
+SummaryText=
+Department=
+HomeURL=
+Author=
+Type=Win32 (x86) Application
+InstallRoot=D:\User\Hmo\Projekte\wimmer\mfc\aktuell\Install
+Version=1.05.00.0
+InstallationGUID={7B7F8A59-D25D-474E-9C28-29936C4A32FD}
+set_level=Level 3
+CurrentFileGroupDef=Default.fdf
+Notes=Notes.txt
+set_maxerr=50
+set_args=
+set_miffile=Status.mif
+set_dllcmdline=
+Copyright=
+set_warnaserr=No
+CurrentPlatform=
+Category=
+set_preproc=
+set_compileb4build=No
+CurrentLanguage=English
+CompanyName=hermann moosburger
+Description=Description.txt
+set_maxwarn=50
+set_crc=Yes
+
+[MediaInfo]
+mediadata0=New Media/Media\New Media
+mediadata1=Floppy/Media\Floppy
+
+[General]
+Type=INSTALLMAIN
+Version=1.10.000
+
