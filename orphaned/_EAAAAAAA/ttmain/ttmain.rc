@@ -1,0 +1,605 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 7, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\ttmain.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.deu\\afxres.rc""          // Standard components\r\n"
+    "#include ""l.deu\\afxprint.rc""        // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ttmain.ico"
+IDR_TTMAINTYPE          ICON    DISCARDABLE     "res\\ttmainDoc.ico"
+AFX_IDI_STD_MDIFRAME    ICON    DISCARDABLE     "res\\Ttprog.ico"
+AFX_IDI_STD_FRAME       ICON    DISCARDABLE     "res\\ttprog1.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_TOR_HINZU
+    SEPARATOR
+    BUTTON      ID_TOR_AENDERN
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      ID_KREISBERECHNUNG
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Datei"
+    BEGIN
+        MENUITEM "&Neu\tStrg+N",                ID_FILE_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "Drucker&einrichtung...",      ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "&Beenden",                    ID_APP_EXIT
+    END
+    POPUP "&Ansicht"
+    BEGIN
+        MENUITEM "&Symbolleiste",               ID_VIEW_TOOLBAR
+        MENUITEM "S&tatusleiste",               ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Extras"
+    BEGIN
+        MENUITEM "&Kreisberechnungen",          ID_KREISBERECHNUNG
+    END
+    POPUP "&Hilfe"
+    BEGIN
+        MENUITEM "&Inhalt",                     ID_INHALT
+        MENUITEM SEPARATOR
+        MENUITEM "Inf&o",                       ID_APP_ABOUT
+    END
+END
+
+IDR_TTMAINTYPE MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Datei"
+    BEGIN
+        MENUITEM "&Neu\tStrg+N",                ID_FILE_NEW
+        MENUITEM "&Schließen",                  ID_FILE_CLOSE, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Drucken\tStrg+P",            ID_FILE_PRINT
+        MENUITEM "Drucker&einrichtung...",      ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "&Beenden",                    ID_APP_EXIT
+    END
+    POPUP "&Bearbeiten"
+    BEGIN
+        MENUITEM "&Hinzufügen",                 ID_TOR_HINZU
+        MENUITEM SEPARATOR
+        MENUITEM "&Tor ändern...",              ID_TOR_AENDERN
+    END
+    POPUP "&Extras"
+    BEGIN
+        MENUITEM "&Kreisberechnungen",          ID_KREISBERECHNUNG
+    END
+    POPUP "&Ansicht"
+    BEGIN
+        MENUITEM "&Symbolleiste",               ID_VIEW_TOOLBAR
+        MENUITEM "S&tatusleiste",               ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Fenster"
+    BEGIN
+        MENUITEM "Über&lappend",                ID_WINDOW_CASCADE
+        MENUITEM "&Nebeneinander",              ID_WINDOW_TILE_HORZ
+        MENUITEM "&Symbole anordnen",           ID_WINDOW_ARRANGE
+    END
+    POPUP "&Hilfe"
+    BEGIN
+        MENUITEM "&Inhalt",                     ID_INHALT
+        MENUITEM SEPARATOR
+        MENUITEM "Inf&o",                       ID_APP_ABOUT
+    END
+END
+
+IDR_TORVIEWMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "dummy"
+    BEGIN
+        MENUITEM "&Tor ändern...",              ID_PU_TOR_AENDERN
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 206, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Info"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Torzuschnitt\n Version 1.1",IDC_STATIC,42,17,63,21,
+                    SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,136,18,50,14,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,13,16,20,20
+END
+
+IDD_TTAUSWDLG DIALOG DISCARDABLE  11, 65535, 247, 261
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "TOR/TÜR Auswahl"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_KUNDE,60,3,151,12
+    EDITTEXT        IDC_KOMMISSION,60,19,151,12
+    COMBOBOX        IDC_TTORTYP,60,37,43,73,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FUELLUNG,60,58,43,73,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_ANZAHL,60,79,40,12
+    CONTROL         "OKF",IDC_OKF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,
+                    81,28,12
+    EDITTEXT        IDC_BREITE,60,98,22,12
+    EDITTEXT        IDC_HOEHE,85,98,22,12
+    EDITTEXT        IDC_OBERHOEHE,200,99,22,12
+    CONTROL         "Bogen:",IDC_BOGEN,"Button",BS_AUTOCHECKBOX | 
+                    BS_LEFTTEXT | WS_TABSTOP,27,122,38,10
+    EDITTEXT        IDC_SEHNENHOEHE,120,121,31,12,WS_DISABLED
+    EDITTEXT        IDC_PROFILDICKE,196,121,31,12,WS_DISABLED
+    CONTROL         "geteilt",IDC_GETEILT1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,156,31,12
+    COMBOBOX        IDC_OBERT1,69,155,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FENSTER1,137,155,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_GLASART1,193,155,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "geteilt",IDC_GETEILT2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,172,31,12
+    COMBOBOX        IDC_OBERT2,69,171,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FENSTER2,137,171,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_GLASART2,193,171,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "geteilt",IDC_GETEILT3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,189,31,12
+    COMBOBOX        IDC_OBERT3,69,188,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FENSTER3,137,188,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_GLASART3,193,188,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "geteilt",IDC_GETEILT4,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,205,31,12
+    COMBOBOX        IDC_OBERT4,69,204,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FENSTER4,137,204,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_GLASART4,193,204,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "geteilt",IDC_GETEILT5,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,35,221,31,12
+    COMBOBOX        IDC_OBERT5,69,220,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FENSTER5,137,220,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_GLASART5,193,220,50,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "OK",IDOK,12,242,35,14
+    PUSHBUTTON      "Abbruch",IDCANCEL,58,242,35,14
+    EDITTEXT        IDS_FUELLUNG,111,58,110,20,ES_MULTILINE
+    LTEXT           "1",-1,17,158,8,8
+    LTEXT           "2",-1,17,174,8,8
+    LTEXT           "3",-1,17,191,8,8
+    LTEXT           "4",-1,17,207,8,8
+    LTEXT           "5",-1,17,223,8,8
+    LTEXT           "Fenster/Obt.-Höhe:",-1,136,101,60,8
+    LTEXT           "[cm]",-1,111,100,16,8
+    LTEXT           "[cm]",-1,225,101,16,8
+    LTEXT           "Anzahl:",-1,26,81,24,8
+    LTEXT           "Tor-Typ:",-1,22,39,27,8,NOT WS_GROUP
+    LTEXT           "Füllung:",-1,24,59,26,8
+    LTEXT           "Maße (B, H):",-1,10,101,40,8
+    LTEXT           "",IDS_TTORTYP,111,37,110,18,WS_BORDER
+    LTEXT           "Kunde:",-1,27,5,23,8,NOT WS_GROUP
+    LTEXT           "Fluegel-Nr.:",-1,9,145,38,8
+    LTEXT           "Oberteil:",-1,69,145,38,8
+    LTEXT           "Glasart:",-1,192,145,38,8
+    RTEXT           "Kommission:",-1,3,21,45,8,NOT WS_GROUP
+    LTEXT           "Fenster:",-1,137,145,38,8
+    LTEXT           "Sehnenhöhe:",-1,74,123,46,8
+    LTEXT           "Profil-\ndicke:",-1,174,119,22,18
+    LTEXT           "[cm]",-1,153,123,15,8
+    LTEXT           "[mm]",-1,228,123,16,8
+END
+
+IDD_KREISBERECHNUNG DIALOGEX 0, 0, 208, 213
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Kreisberechnungen"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Radius",IDC_RADIORADIUS,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,137,34,48,10
+    CONTROL         "Sehne",IDC_RADIOSEHNE,"Button",BS_AUTORADIOBUTTON,137,
+                    49,50,10
+    CONTROL         "Sehnenhöhe",IDC_RADIOSEHNENHOEHE,"Button",
+                    BS_AUTORADIOBUTTON,137,64,59,10
+    EDITTEXT        IDC_RADIUS,63,22,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_NUMBER
+    EDITTEXT        IDC_SEHNE,63,45,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_NUMBER
+    EDITTEXT        IDC_SEHNENHOEHE,63,68,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_NUMBER
+    EDITTEXT        IDC_PROFILDICKE,63,91,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_NUMBER
+    EDITTEXT        IDC_BOGENLAENGE,63,121,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_READONLY | ES_NUMBER | NOT WS_TABSTOP
+    EDITTEXT        IDC_BWINKEL_MITTE,63,144,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_READONLY | ES_NUMBER | NOT WS_TABSTOP,WS_EX_RIGHT
+    PUSHBUTTON      "Berechnen",IDOK,128,91,73,23
+    PUSHBUTTON      "Ende",IDCANCEL,126,191,35,14
+    PUSHBUTTON      "Hilfe",IDC_CIRCLE_HELP,166,191,35,14
+    LTEXT           "Radius:",IDC_STATIC,33,25,23,8,WS_TABSTOP
+    LTEXT           "Sehne:",IDC_STATIC,33,48,24,8
+    LTEXT           "Sehnenhöhe:",IDC_STATIC,14,71,45,8
+    LTEXT           "Bogenlänge:",IDC_STATIC,16,123,43,8
+    LTEXT           "Schnittwinkel:\n(Bogenmitte)",IDC_STATIC,12,142,50,18
+    GROUPBOX        "Berechnen von",IDC_STATIC,129,17,72,65
+    LTEXT           "Profildicke:",IDC_STATIC,22,94,35,9
+    PUSHBUTTON      "Berechne Winkel",IDC_BERECHNEWINKEL,128,120,73,19,NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_BWINKEL_AUSSEN,63,167,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_READONLY | ES_NUMBER | NOT WS_TABSTOP
+    EDITTEXT        IDC_SWINKEL_AUSSEN,63,190,45,14,ES_RIGHT | ES_MULTILINE | 
+                    ES_READONLY | ES_NUMBER | NOT WS_TABSTOP
+    LTEXT           "   Schnittwinkel:\n(Bogen außen)",IDC_STATIC,7,164,53,
+                    20
+    LTEXT           "Schnittwinkel:\n(senkrecht)",IDC_STATIC,13,188,47,17
+END
+
+IDD_TORWAHL_DLG DIALOG DISCARDABLE  0, 0, 146, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Tor auswählen"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,14,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,77,49,50,14
+    LISTBOX         IDC_TORLIST,14,7,74,32,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040704b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Torzuschnitt\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Zuschnitt\0"
+            VALUE "LegalCopyright", "Copyright (C) 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Zuschnitt.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Anwendung Torzuschnitt\0"
+            VALUE "ProductVersion", "1, 1, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x407, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 199
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_TTAUSWDLG, DIALOG
+    BEGIN
+        VERTGUIDE, 50
+        HORZGUIDE, 131
+    END
+
+    IDD_TORWAHL_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 139
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Torzuschnitt"
+    IDR_TTMAINTYPE          "\n\n\n\n\nDocument\n Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Torbestellung"
+    AFX_IDS_IDLEMESSAGE     "Bereit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "ER"
+    ID_INDICATOR_CAPS       "UF"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "RF"
+    ID_INDICATOR_OVR        "ÜB"
+    ID_INDICATOR_REC        "MA"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Erstellt ein neues Dokument.\nNeu"
+    ID_FILE_OPEN            "Öffnet ein bestehendes Dokument.\nÖffnen"
+    ID_FILE_CLOSE           "Schließt das aktive Dokument.\nSchließen"
+    ID_FILE_SAVE            "Speichert das aktive Dokument.\nSpeichern"
+    ID_FILE_SAVE_AS         "Speichert das aktive Dokument unter neuem Namen.\nSpeichern unter"
+    ID_FILE_PAGE_SETUP      "Ändert die Druckoptionen.\nSeite einrichten"
+    ID_FILE_PRINT_SETUP     "Ändert den Drucker und die Druckoptionen.\nDruckereinrichtung"
+    ID_FILE_PRINT           "Druckt das aktive Dokument.\nDrucken"
+    ID_FILE_PRINT_PREVIEW   "Zeigt ganze Seiten an.\nSeitenansicht"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Zeigt Programm-Informationen, Versionsnummer und Copyright an.\nInfo"
+    ID_APP_EXIT             "Verläßt die Anwendung; fragt, ob Dokumente gespeichert werden sollen.\nBeenden"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE2       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE3       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE4       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE5       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE6       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE7       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE8       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE9       "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE10      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE11      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE12      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE13      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE14      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE15      "Öffnet dieses Dokument."
+    ID_FILE_MRU_FILE16      "Öffnet dieses Dokument."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Wechselt zum nächsten Fensterausschnitt.\nNächster Ausschnitt"
+    ID_PREV_PANE            "Springt zum vorherigen Fensterausschnitt zurück.\nVorheriger Ausschnitt"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_NEW           "Öffnet ein weiteres Fenster für das aktive Dokument.\nNeues Fenster"
+    ID_WINDOW_ARRANGE       "Ordnet die Symbole im unteren Bereich des Fensters an.\nSymbole anordnen"
+    ID_WINDOW_CASCADE       "Ordnet die Fenster überlappend an.\nÜberlappende Fenster"
+    ID_WINDOW_TILE_HORZ     "Ordnet die Fenster nebeneinander an.\nFenster nebeneinander"
+    ID_WINDOW_TILE_VERT     "Ordnet die Fenster nebeneinander an.\nFenster nebeneinander"
+    ID_WINDOW_SPLIT         "Teilt das aktive Fenster in Ausschnitte.\nTeilen"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Löscht die Markierung.\nLöschen"
+    ID_EDIT_CLEAR_ALL       "Löscht alles.\nAlles löschen"
+    ID_EDIT_COPY            "Kopiert die Markierung und überträgt sie in die Zwischenablage.\nKopieren"
+    ID_EDIT_CUT             "Entfernt die Markierung und überträgt sie in die Zwischenablage.\nAusschneiden"
+    ID_EDIT_FIND            "Sucht den angegebenen Text.\nSuchen"
+    ID_EDIT_PASTE           "Fügt den Inhalt der Zwischenablage ein.\nEinfügen"
+    ID_EDIT_REPEAT          "Wiederholt die letzte Aktion.\nWiederholen"
+    ID_EDIT_REPLACE         "Ersetzt einen bestimmten Text durch einen anderen.\nErsetzen"
+    ID_EDIT_SELECT_ALL      "Markiert das gesamte Dokument.\nAlles markieren"
+    ID_EDIT_UNDO            "Macht die letzte Aktion rückgängig.\nRückgängig"
+    ID_EDIT_REDO            "Wiederholt die vorher rückgängig gemachte Aktion.\nWiederherstellen"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Blendet die Symbolleiste ein oder aus.\nSymbolleiste ein-/ausschalten"
+    ID_VIEW_STATUS_BAR      "Blendet die Statusleiste ein oder aus.\nStatusleiste ein-/ausschalten"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Ändert die Fenstergröße."
+    AFX_IDS_SCMOVE          "Ändert die Position des Fensters."
+    AFX_IDS_SCMINIMIZE      "Verkleinert das Fenster zu einem Symbol."
+    AFX_IDS_SCMAXIMIZE      "Vergrößert das Fenster zu voller Größe."
+    AFX_IDS_SCNEXTWINDOW    "Wechselt zum nächsten Dokumentfenster."
+    AFX_IDS_SCPREVWINDOW    "Wechselt zum vorherigen Dokumentfenster."
+    AFX_IDS_SCCLOSE         "Schließt das aktive Fenster und fordert zur Dokumentspeicherung auf."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Stellt das Fenster in seiner normalen Größe wieder her."
+    AFX_IDS_SCTASKLIST      "Aktiviert die Task-Liste."
+    AFX_IDS_MDICHILD        "Aktiviert dieses Fenster."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Beendet die Seitenansicht.\nSeitenansicht beenden"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_TOR_HINZU            "Tor oder Tür hinzufügen\nHinzufügen"
+    ID_KREISBERECHNUNG      "Berechnung von Bogenparametern\nBerechnung von Bogenparametern"
+    ID_TOR_AENDERN_1        "Ändern von Tor 1 (oben)"
+    ID_TOR_AENDERN_2        "Ändern von Tor 2 (unten)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_TOR_AENDERN          "Tor ändern\nÄndern"
+    ID_PU_TOR_AENDERN       "Tür / Tor ändern"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE 7, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\ttmain.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.deu\afxres.rc"          // Standard components
+#include "l.deu\afxprint.rc"        // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
