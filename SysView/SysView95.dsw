@@ -1,0 +1,69 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Chart"=".\Chart\Chart.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/SysView/Chart", HCAAAAAA
+    .\Chart
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SysHook"=".\SysHook\SysHook.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/SysView/SysHook", EDAAAAAA
+    .\syshook
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SysView95"=".\SysView95.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/SysView/SysView95", LDAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/SysView", FCAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

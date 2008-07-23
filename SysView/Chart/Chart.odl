@@ -1,0 +1,78 @@
+// Chart.odl : type library source for ActiveX Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (Chart.tlb) that will become a resource in
+// Chart.ocx.
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(7186232B-CEAC-11D4-8E7B-C3BDF0D38D3C), version(1.0),
+  helpfile("Chart.hlp"),
+  helpstring("Chart ActiveX Control module"),
+  control ]
+library CHARTLib
+{
+	importlib(STDOLE_TLB);
+	importlib(STDTYPE_TLB);
+
+	//  Primary dispatch interface for CChartCtrl
+
+	[ uuid(7186232C-CEAC-11D4-8E7B-C3BDF0D38D3C),
+	  helpstring("Dispatch interface for Chart Control"), hidden ]
+	dispinterface _DChart
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CChartCtrl)
+			[id(DISPID_BACKCOLOR), bindable, requestedit] OLE_COLOR BackColor;
+			[id(2)] OLE_COLOR LineColor;
+			[id(1)] OLE_COLOR GridColor;
+			[id(3)] long RefreshTime;
+			[id(4)] OLE_COLOR BgColor;
+			//}}AFX_ODL_PROP
+
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CChartCtrl)
+			[id(5)] void MinMax(long ulMin, long ulMax);
+			[id(6)] void Clear();
+			[id(7)] boolean Update(long dwValue);
+			[id(8)] void SetControlInfo(BSTR strControlName, IUnknown* pManager);
+			//}}AFX_ODL_METHOD
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+	};
+
+	//  Event dispatch interface for CChartCtrl
+
+	[ uuid(7186232D-CEAC-11D4-8E7B-C3BDF0D38D3C),
+	  helpstring("Event interface for Chart Control") ]
+	dispinterface _DChartEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+			// NOTE - ClassWizard will maintain event information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_EVENT(CChartCtrl)
+			//}}AFX_ODL_EVENT
+	};
+
+	//  Class information for CChartCtrl
+
+	[ uuid(7186232E-CEAC-11D4-8E7B-C3BDF0D38D3C),
+	  helpstring("Chart Control"), control ]
+	coclass Chart
+	{
+		[default] dispinterface _DChart;
+		[default, source] dispinterface _DChartEvents;
+	};
+
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};
