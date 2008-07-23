@@ -1,0 +1,119 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by SysView95.rc
+//
+#define IDC_BROWSE                      3
+#define IDD_ABOUTBOX                    100
+#define IDD_PROCESS_PG                  107
+#define IDD_PERFORMANCE_PG              108
+#define IDD_TASK_PG                     109
+#define IDR_MAINFRAME                   128
+#define IDR_SYSVIETYPE                  129
+#define IDR_PROCESSLIST_PAGE            132
+#define IDR_PERFORMANCE_PAGE            133
+#define IDD_SPAWN_PROCESS               139
+#define IDR_TASK_PAGE                   140
+#define IDI_DEFAULT                     141
+#define IDI_PART_0                      142
+#define IDI_PART_1                      143
+#define IDI_PART_2                      144
+#define IDI_PART_3                      145
+#define IDI_PART_4                      146
+#define IDI_PART_5                      147
+#define IDI_PART_6                      148
+#define IDI_PART_7                      149
+#define IDI_PART_8                      150
+#define IDI_PART_9                      151
+#define IDR_TASKMENU                    152
+#define IDD_SYS_INTEGRATION             153
+#define IDR_TRAYMENU                    154
+#define IDD_TEST_PTIMES                 155
+#define IDD_MEM_USAGE                   156
+#define IDI_MSDOS                       157
+#define IDI_DEFAULTAPP                  159
+#define IDC_HAND                        160
+#define IDR_PROCMENU                    204
+#define IDC_CPUUSGAE_FRAME              1000
+#define IDC_CPUUSAGE                    1001
+#define IDC_PROCESSLISTFRAME            1002
+#define IDC_MEMUSGAE_FRAME              1002
+#define IDC_MEMUSAGE                    1003
+#define IDC_PROCESSNAME                 1003
+#define IDC_TASKLISTFRAME               1004
+#define IDC_STATIC_CPUUSAGE             1005
+#define IDC_STATIC_MEMUSAGE             1006
+#define IDC_END_TASK                    1007
+#define IDC_ACTIVATE_TASK               1008
+#define IDC_SYS_INT_MENU                1009
+#define IDC_SYS_INT_AUTO                1010
+#define IDC_PT_LIST                     1013
+#define IDC_PT_REFRESH                  1014
+#define IDC_PT_ENTRIES                  1015
+#define IDC_PT_TICKCOUNT                1016
+#define IDC_CODE_ALLOCATED              1017
+#define IDC_CODE_IN_MEM                 1018
+#define IDC_CODE_IN_USE                 1019
+#define IDC_DATA_ALLOCATED              1020
+#define IDC_DATA_IN_MEM                 1021
+#define IDC_DATA_IN_USE                 1022
+#define IDC_MEM_USAGE_INFO              1023
+#define IDC_MEM_USAGE_TABLES_NP         1024
+#define IDC_LINK_MAIL                   1025
+#define ID_REALTIME                     32771
+#define ID_HIGH                         32772
+#define ID_NORMAL                       32773
+#define ID_TERMINATE                    32774
+#define ID_IDLE                         32776
+#define ID_REFRESH                      32778
+#define ID_RR_HIGH                      32780
+#define ID_RR_MID                       32781
+#define ID_RR_LOW                       32782
+#define IDPROCESSNAME                   32783
+#define ID_PID                          32784
+#define ID_CNTTHREADS                   32785
+#define ID_PRIORITY                     32786
+#define ID_CNTUSAGE                     32787
+#define ID_MODULEID                     32788
+#define ID_HEAPID                       32789
+#define ID_PARENT_PID                   32790
+#define ID_FLAGS                        32791
+#define ID_PROCESSNAME                  32792
+#define ID_DEBUG                        32793
+#define ID_SPAWN_PROCESS                32794
+#define ID_PERF_STOP                    32795
+#define ID_STOP_APPWALK                 32796
+#define ID_START_APPWALK                32797
+#define ID_HOOK                         32798
+#define ID_UNHOOK                       32799
+#define ID_SWITCHTO                     32801
+#define ID_KILL_TASK                    32802
+#define ID_SWITCHTO_PROCESS             32803
+#define ID_FOREGROUND                   32804
+#define ID_MINIMIZE_AT_START            32805
+#define ID_HIDE_ATMIN                   32806
+#define ID_MANUAL                       32807
+#define ID_SYSINTEGRATION               32809
+#define ID_OPEN_WINTOP                  32810
+#define ID_ALL_WINTOP                   32811
+#define ID_START_WINTOP                 32812
+#define ID_DATA_WINTOP                  32813
+#define ID_PT_DLG                       32814
+#define ID_CPU_TIME                     32815
+#define ID_CPU_PERCENT                  32816
+#define ID_PROC_MEMUSAGE                32817
+#define ID_DEBUG1                       32818
+#define ID_PROCESSES                    61204
+#define ID_CPUUSAGE                     61205
+#define ID_MEMUSAGE                     61206
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_3D_CONTROLS                     1
+#define _APS_NEXT_RESOURCE_VALUE        161
+#define _APS_NEXT_COMMAND_VALUE         32819
+#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif

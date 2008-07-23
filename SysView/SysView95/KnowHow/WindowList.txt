@@ -1,0 +1,40 @@
+Q. When I select the Applications tab in the Windows NT® Task Manager, in the listview control, the Task Manager shows which applications are running and whether they are responding. What is the definition of “Not Responding,” and how does the Task Manager determine whether an application is responding?
+
+Michael Schoettner
+
+A. First of all, the Task Manager’s Applications tab (see Figure 1) does not actually show applications—it shows the captions of visible, top-level windows (since this is how users typically decide which application they want to switch to). The Task Manager builds this list by walking through all of the top-level windows in the system (using something like EnumWindows), and adds to the list the windows that have the WS_VISIBLE style bit turned on.
+
+
+
+Figure 1: Task Manager
+
+A window is not responding if the thread that created that window has not called GetMessage, PeekMessage, WaitMessage, or SendMessage within the past five seconds. The code in Figure 2 demonstrates this. First, build and run the application in Figure 2, then run the Task Manager. The Task Manager will indicate that the application is Running. Next, click the right mouse button over the message box. This causes the thread to sleep for 10 seconds, not calling the message box’s GetMessage loop. If you now watch the Task Manager, it will update its display (in about five seconds) to show that the application is Not Responding. If you wait another five seconds or so, the Task Manager will again update its display to show that the application is Responding.
+
+Figure 2: Task manager Test App
+
+LRESULT WINAPI GetMsgProc(int code, WPARAM wParam, LPARAM lParam) {
+   PMSG pmsg = (PMSG) lParam;
+   if (pmsg->message == WM_RBUTTONDOWN) 
+      Sleep(10000);
+   return(0);
+}
+
+
+int WINAPI WinMain (HINSTANCE hinstExe, HINSTANCE hinstExePrev,
+                    LPSTR pszCmdLine, int nCmdShow) {
+
+   HHOOK hhook = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, NULL,
+                                  GetCurrentThreadId());
+   MessageBox(NULL, "Click right mouse button to hang this thread",
+              "MSJ Win32 Q & A App", MB_OK);
+   UnhookWindowsHookEx(hhook);
+}
+
+Every few seconds, the Task Manager walks through its list of displayed windows. For each window, the Task Manager makes the following call:
+
+DWORD dwResult;
+BOOL fResponding = SendMessageTimeout(hwndInQuestion,
+     WM_NULL, 0, 0, SMTO_ABORTIFHUNG, 5000, &dwResult);
+// fResponding is TRUE if the thread is responding and // FALSE if not.
+
+This call attempts to send a WM_NULL message (what should be a benign message) to a window. If the thread that created that window has not called GetMessage, PeekMessage, WaitMessage, or SendMessage within the past five seconds, SendMessageTimeout returns immediately because the SMTO_ABORTIFHUNG flag was specified. If the system doesn’t think the thread that created the window is hung, then it tries to send the message to the window. If the thread isn’t busy, it will process the message immediately and return. If the thread is busy, the Task Manager’s thread waits for up to 5,000 milliseconds for the message to be processed. If the message cannot be processed, SendMessageTimeout returns FALSE, which indicates the window—more correctly, the thread—is not responding.

@@ -1,0 +1,228 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "1 TYPELIB ""Chart.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Chart ActiveX Control Module\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Chart\0"
+            VALUE "LegalCopyright", "Copyright (C) 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Chart.OCX\0"
+            VALUE "ProductName", "Chart ActiveX Control Module\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "OLESelfRegister", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ABOUTDLL            ICON    DISCARDABLE     "Chart.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_CHART               BITMAP  DISCARDABLE     "ChartCtl.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX_CHART DIALOG DISCARDABLE  34, 22, 260, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Chart Control"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_ABOUTDLL,IDC_STATIC,10,10,20,20
+    LTEXT           "Chart Control, Version 1.0",IDC_STATIC,40,10,170,8
+    LTEXT           "Copyright (C) 2000, ",IDC_STATIC,40,25,170,8
+    DEFPUSHBUTTON   "OK",IDOK,221,7,32,14,WS_GROUP
+END
+
+IDD_PROPPAGE_CHART DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD | WS_BORDER
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Refresh-Time:",IDC_STATIC,7,17,44,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_REFRESH,54,13,40,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_GRIDCOLOR,125,45,13,14,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    LTEXT           "Grid:",IDC_STATIC,35,50,18,9
+    PUSHBUTTON      "Change...",IDC_CHANGEGRIDCOLOR,85,45,36,14
+    CONTROL         "",IDC_GRIDCOLORFRAME,"Static",SS_BLACKFRAME,58,47,22,12
+    LTEXT           "Line:",IDC_STATIC,35,67,15,9
+    LTEXT           "Background:",IDC_STATIC,11,84,40,9
+    GROUPBOX        "Colors",IDC_STATIC,7,33,165,70
+    CONTROL         "",IDC_LINECOLORFRAME,"Static",SS_BLACKFRAME,58,64,22,12
+    CONTROL         "",IDC_BGCOLORFRAME,"Static",SS_BLACKFRAME,58,81,22,12
+    PUSHBUTTON      "Change...",IDC_CHANGELINECOLOR,85,63,36,14
+    PUSHBUTTON      "Change...",IDC_CHANGEBGCOLOR,85,80,36,14
+    EDITTEXT        IDC_LINECOLOR,125,63,13,14,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_BGCOLOR,125,80,13,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX_CHART, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_PROPPAGE_CHART, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_CHARTMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Dummy"
+    BEGIN
+        MENUITEM "Reset",                       ID_RESET
+        MENUITEM "Options...",                  ID_OPTIONS
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CHART               "Chart Control"
+    IDS_CHART_PPG           "Chart Property Page"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CHART_PPG_CAPTION   "General"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_OPTIONS              "Options"
+    ID_RESET                "Reset"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "Chart.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
