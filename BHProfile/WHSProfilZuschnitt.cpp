@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "..\stdafx.h"
 #include "..\ttdata.h"
 #include "..\tordoor.h"
 #include "..\Node.h"

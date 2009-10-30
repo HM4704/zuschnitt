@@ -25,20 +25,25 @@ Typ[600], OKF[ja], Rahmen[Z]: 25
 Typ[600], OKF[ja], Rahmen[W]: 25
 Typ[600], OKF[nein], Art[Schiebetür]: 0
 Typ[600], OKF[nein], Art[Schiebetor]: 0
+Typ[600], OKF[nein], Art[*], Rahmen[R]: -30
 Typ[400], Art[Schiebetür]: 45
 Typ[400], Art[Schiebetor]: 45
 
 
 # Abschnitt für waagrechte Zuschnittzugaben in [mm]
 [Quer]
-Typ[400], Art[Tür]: 10
-Typ[400], Art[Tor], Flügelanzahl[2]: 25
 Typ[400], Art[Tor], Flügelanzahl[3]: 25
+Typ[400], Art[Tor], Flügelanzahl[2], Rahmen[R]: -15
+Typ[400], Art[Tor], Flügelanzahl[2], Rahmen[*]: 25
 Typ[400], Art[Tor], Flügelanzahl[*]: 30
 Typ[400], Art[Schiebetür]: 45
 Typ[400], Art[Schiebetor]: 45
+Typ[400], Art[Tür], Rahmen[R]: -60
+Typ[400], Art[Tür], Rahmen[*]: 10
 Typ[600], Art[Schiebetür]: 0
 Typ[600], Art[Schiebetor]: 0
+Typ[600], Art[Tür], Rahmen[R]: -60
+Typ[600], Art[Tor], Rahmen[R]: -8
 
 
 # Abschnitt für Zuschnittzugaben bei Oberteilen in [mm]

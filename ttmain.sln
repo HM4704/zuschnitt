@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ttmain", "ttmain.vcproj", "{BEBDC4EB-2900-49B5-A3AA-A9039E483469}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PS312Sim", "AnsteuerungPS312\sim\PS312Sim.vcproj", "{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}"

@@ -269,7 +269,7 @@ class CTorDoor : public CObject
    int RahmenArt;
    int DIN;
    int Fuellung;
-   char strFuellung[100];
+   char strFuellung[300];
    BOOL OKF;
    BOOL bBogen;
    BOOL b400R;      // nur bei Typ 400: Typ 400R

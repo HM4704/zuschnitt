@@ -71,6 +71,8 @@ private:
     void  DrawData(CDC* pDC);
     void  PrintCutList(CDC* pDC, CPtrArray* pList, int& iY, int iX, int iWidth);
 
+public:
+    afx_msg void OnFilePrintPreview();
 };
 
 /////////////////////////////////////////////////////////////////////////////

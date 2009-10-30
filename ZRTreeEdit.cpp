@@ -43,7 +43,7 @@ HBRUSH CZRTreeEdit::CtlColor(CDC* pDC, UINT nCtlColor)
 	// TODO: Change any attributes of the DC here
 
     ::SetWindowLong(GetSafeHwnd(), GWL_STYLE, GetStyle()|
-        ES_WANTRETURN|ES_MULTILINE|ES_AUTOVSCROLL|ES_NUMBER);
+        ES_WANTRETURN|ES_MULTILINE|ES_AUTOVSCROLL/*|ES_NUMBER*/);
 	// TODO: Return a non-NULL brush if the parent's handler should not be called
 	return NULL;
 }
@@ -57,7 +57,11 @@ void CZRTreeEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
         PostMessage(WM_CLOSE, 0, 0);
     }
     else
-	    CEdit::OnChar(nChar, nRepCnt, nFlags);
+    {
+        // nur Zahlen auch negativ zulassen
+        if ((nChar >= '0' && nChar <= '9') || (nChar == '-') || (nChar == '\b'))
+	        CEdit::OnChar(nChar, nRepCnt, nFlags);
+    }
 }
 
 void CZRTreeEdit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 

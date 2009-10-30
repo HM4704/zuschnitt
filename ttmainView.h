@@ -124,6 +124,7 @@ protected:
 	afx_msg void OnUpdateZuschnittregelFluegel(CCmdUI* pCmdUI);
 	afx_msg void OnPuProfileBearbeiten();
 	afx_msg void OnUpdatePuProfileBearbeiten(CCmdUI* pCmdUI);
+	afx_msg void OnFilePrintPreview();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -92,7 +92,8 @@ BEGIN_MESSAGE_MAP(CTtmainView, CScrollView)
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CScrollView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CTtmainView::OnFilePrintPreview)
+//	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -350,7 +351,7 @@ void CTtmainView::fillGrid(HDC hdc, int fact)
     //Fuellung
     actX += bSchwei;
     pTTor->printFuellung(hdc, (actX),  (actY+10),
-		    (actX+bDIN), m_boldFont);
+		    /*(actX+bDIN)*/m_iPageLen, m_boldFont);
     actY += m_iAryTorHoehe[i];
   }
   // untere Begrenzung
@@ -1022,4 +1023,9 @@ void CTtmainView::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pD
 {
 	
 	CScrollView::OnActivateView(bActivate, pActivateView, pDeactiveView);
+}
+
+void CTtmainView::OnFilePrintPreview()
+{
+	AFXPrintPreview(this);
 }

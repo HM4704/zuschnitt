@@ -64,9 +64,10 @@ BEGIN_MESSAGE_MAP(CHoleProfileView, CScrollView)
 	ON_COMMAND(ID_HP_AENDERN, OnHoleProfileAendern)
 	ON_UPDATE_COMMAND_UI(ID_HP_AENDERN, OnUpdateHoleProfileAendern)
 	//}}AFX_MSG_MAP
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CHoleProfileView::OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT, CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CScrollView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CHoleProfileView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,13 +149,11 @@ void CHoleProfileView::Dump(CDumpContext& dc) const
 
 /////////////////////////////////////////////////////////////////////////////
 // CHoleProfileView message handlers
-#if 0
 void CHoleProfileView::OnFilePrintPreview() 
 {
-	// TODO: Add your command handler code here
-	
+	AFXPrintPreview(this);
 }
-
+#if 0
 void CHoleProfileView::OnFilePrint() 
 {
 	// TODO: Add your command handler code here

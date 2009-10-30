@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="ttmain"
 	ProjectGUID="{BEBDC4EB-2900-49B5-A3AA-A9039E483469}"
 	RootNamespace="ttmain"
@@ -9,6 +9,7 @@
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="MFCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -94,6 +95,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Release/zuschnitt.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -115,9 +118,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -194,6 +194,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Release/zuschnitt.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -215,9 +217,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -295,6 +294,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/zuschnitt.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -316,9 +317,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -395,6 +393,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/zuschnitt.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -416,9 +416,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -815,6 +812,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\HoleProfileFrame.cpp"
+				>
 			</File>
 			<File
 				RelativePath="HoleProfileView.cpp"
@@ -2267,6 +2268,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HoleProfileFrame.h"
+				>
+			</File>
+			<File
 				RelativePath="HoleProfileView.h"
 				>
 			</File>
@@ -2614,6 +2619,7 @@
 			>
 			<File
 				RelativePath="Hilfe\aenderungen.htm"
+				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -2638,10 +2644,12 @@
 			</File>
 			<File
 				RelativePath="Hilfe\Kontakt.htm"
+				DeploymentContent="true"
 				>
 			</File>
 			<File
 				RelativePath="Hilfe\kreisdlg_hilfe.htm"
+				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -2662,10 +2670,12 @@
 			</File>
 			<File
 				RelativePath="Hilfe\Zuschnitt_hilfe.htm"
+				DeploymentContent="true"
 				>
 			</File>
 			<File
 				RelativePath="Hilfe\zuschnittregeln_dlg_hilfe.htm"
+				DeploymentContent="true"
 				>
 			</File>
 		</Filter>
@@ -3770,6 +3780,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\ClassDiagram1.cd"
+			>
+		</File>
 		<File
 			RelativePath="ReadMe.txt"
 			>

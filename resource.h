@@ -283,6 +283,7 @@
 #define ID_EXTRAS_TEST_PS312            32818
 #define ID_EXTRAS_A                     32819
 #define ID_EXTRAS_START_PS312           32820
+#define ID_TEST_TEST1                   32821
 #define IDC_WHS_EDIT_CUTLIST_SETT       57608
 
 // Next default values for new objects
@@ -290,8 +291,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        245
-#define _APS_NEXT_COMMAND_VALUE         32821
+#define _APS_NEXT_RESOURCE_VALUE        248
+#define _APS_NEXT_COMMAND_VALUE         32822
 #define _APS_NEXT_CONTROL_VALUE         1110
 #define _APS_NEXT_SYMED_VALUE           103
 #endif

@@ -48,7 +48,7 @@ typedef struct {
 
 #define HILFE_VERZEICHNIS  "Hilfe"
 
-class CTtmainApp : public CWinApp
+class CTtmainApp : public CWinAppEx
 {
 public:
 	CTtmainApp();

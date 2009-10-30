@@ -32,9 +32,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
 
-IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
+IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
 
-BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
+BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_COMMAND(ID_TOR_HINZU, OnTorHinzu)
@@ -70,6 +70,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
     ON_COMMAND(ID_WHSPROFILE, &CMainFrame::OnWhsprofile)
     ON_COMMAND(ID_EXTRAS_TEST_PS312, &CMainFrame::OnTestPs312)
     ON_COMMAND(ID_EXTRAS_START_PS312, &CMainFrame::OnExtrasStartPs312)
+	ON_REGISTERED_MESSAGE(AFX_WM_RESETMENU, OnResetMenu)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -111,17 +112,55 @@ CMainFrame::~CMainFrame()
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-
-	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
+#if 1
+    if (-1 == __super::OnCreate(lpCreateStruct))
+    {
+        return -1;
+    }
+#else
+	if (CMDIFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
+#endif // 1
 	
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+	// Visuellen Manager zum Zeichnen aller Benutzeroberflächenelemente festlegen
+	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerVS2005));
+
+	CMDITabInfo mdiTabParams;
+	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE; // Weitere Stile verfügbar...
+	mdiTabParams.m_bActiveTabCloseButton = TRUE;      // Auf "FALSE" festlegen, um die Schaltfläche "Schließen" rechts auf der Registerkarte zu platzieren
+	mdiTabParams.m_bTabIcons = FALSE;    // Auf "TRUE" festlegen, um Dokumentsymbole auf MDI-Registerkarten zu aktivieren
+	mdiTabParams.m_bAutoColor = TRUE;    // Auf "FALSE" festlegen, um automatische Farben für MDI-Registerkarten zu deaktivieren
+	mdiTabParams.m_bDocumentMenu = TRUE; // Dokumentmenü am rechten Rand des Registerkartenbereichs aktivieren
+	EnableMDITabbedGroups(TRUE, mdiTabParams);
+
+	if (!m_wndMenuBar.Create(this))
+	{
+		TRACE0("Fehler beim Erstellen der Menüleiste.\n");
+		return -1;      // Fehler beim Erstellen
+	}
+
+    m_wndMenuBar.SetPaneStyle(m_wndMenuBar.GetPaneStyle() | CBRS_SIZE_DYNAMIC/* | CBRS_TOOLTIPS | CBRS_FLYBY*/);
+
+	//------------- Example --------------------//
+	// do not allow modification of the dummy item in customize mode
+	CList<UINT, UINT> lstProtectedCmds;
+	lstProtectedCmds.AddTail (ID_REFTOR_SPEICHERN);
+	CMFCToolBarButton::SetProtectedCommands (lstProtectedCmds);
+
+    // Verhindern, dass die Menüleiste beim Aktivieren den Fokus erhält
+	CMFCPopupMenu::SetForceMenuFocus(FALSE);
+
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
+		TRACE0("Fehler beim Erstellen der Symbolleiste.\n");
+		return -1;      // Fehler beim Erstellen
 	}
+
+	CString strToolBarName = _T("Standard");
+//	strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
+	//ASSERT(bNameValid);
+	m_wndToolBar.SetWindowText(strToolBarName);
 
 	if (!m_wndStatusBar.Create(this) ||
 		!m_wndStatusBar.SetIndicators(indicators,
@@ -131,11 +170,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
-	// TODO: Delete these three lines if you don't want the toolbar to
-	//  be dockable
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockControlBar(&m_wndToolBar);
 
     if (m_ridWindowStyles.GetVal() & WS_MINIMIZE)
         ShowWindow(SW_SHOWMINIMIZED);
@@ -146,10 +180,38 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     }
 //        ShowWindow(SW_SHOWMAXIMIZED);    
 
+	// TODO: Delete these three lines if you don't want the toolbar to
+	//  be dockable
+	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_wndMenuBar);
+	DockPane(&m_wndToolBar);
+
+	// Andockfensterverhalten wie in Visual Studio 2005 aktivieren
+	CDockingManager::SetDockingMode(DT_SMART);
+	// Automatisches Ausblenden von Andockfenstern wie in Visual Studio 2005 aktivieren
+	EnableAutoHidePanes(CBRS_ALIGN_ANY);
+
+	// Dialogfeld für erweiterte Fensterverwaltung aktivieren
+//	EnableWindowsDialog(ID_WINDOW_MANAGER, IDS_WINDOWS_MANAGER, TRUE);
+
+	// Umpositionieren des Menüs für Symbolleisten und Andockfenster aktivieren
+//	EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);
+
+	// Schnelles Anpassen von Symbolleisten mit Alt+Ziehen aktivieren
+//	CMFCToolBar::EnableQuickCustomization();
+
+#if 1 //???
+	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
+//	DockControlBar(&m_wndToolBar);
+#endif // 0
     if (m_pTestMan == NULL)
     {
         m_pTestMan = new CTTTestManager;
     }
+#if 1
     if (m_pTestMan)
     {
         CTtmainApp *pApp = (CTtmainApp*) AfxGetApp();
@@ -158,13 +220,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
             // Testsystem Menu hinzu
             AppendTestsystemMenu();
     }
+#endif // 0
 
 	return 0;
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {	
-	if( !CMDIFrameWnd::PreCreateWindow(cs) )
+	if( !CMDIFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
 
     CRect rect;
@@ -176,8 +239,10 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
     cs.y = rect.top;
     cs.cx = rect.Width();
     cs.cy = rect.Height();
+#if 0
     if (m_ridWindowStyles.GetVal() & WS_MINIMIZE)
         cs.style |= WS_MINIMIZE;
+#endif // 0
 
 
 	return TRUE;
@@ -393,7 +458,7 @@ void CMainFrame::OnUpdateTestEinstellungen(CCmdUI* pCmdUI)
 
 BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
 {
-	return CMDIFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+	return CMDIFrameWndEx::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
 void CMainFrame::OnZuschnittregelnAnzeigen() 
@@ -471,7 +536,7 @@ void CMainFrame::OnMove(int x, int y)
 {
     CRect rc;
 
-	CMDIFrameWnd::OnMove(x, y);
+	CMDIFrameWndEx::OnMove(x, y);
 	
 //    m_riPosX = x-4;
 //    m_riPosY = y-50; //42;   //52;        //??	
@@ -482,7 +547,7 @@ void CMainFrame::OnMove(int x, int y)
 
 void CMainFrame::OnSize(UINT nType, int cx, int cy) 
 {
-	CMDIFrameWnd::OnSize(nType, cx, cy);
+	CMDIFrameWndEx::OnSize(nType, cx, cy);
 	
     if (nType == SIZE_RESTORED)
     {
@@ -613,16 +678,25 @@ void CMainFrame::SplitSheet(void)
 
 void CMainFrame::AppendTestsystemMenu(void)
 {
+#if 0
     CMenu* pMenu = GetMenu();
 
     m_menuTest.LoadMenu(IDM_TESTSYSTEM);
 
     HMENU hTestMenu = m_menuTest.m_hMenu;
 
-    if (pMenu->AppendMenu(MF_POPUP, (UINT)hTestMenu, "&Testsystem") == FALSE)
+    if (m_wndMenuBar.AppendMenu(MF_POPUP, (UINT)hTestMenu, "&Testsystem") == FALSE)
     {
         int i=0;
     }
+#else
+    CMenu menu;
+    menu.LoadMenu(IDM_TESTSYSTEM);
+
+	m_wndMenuBar.InsertButton (CMFCToolBarMenuButton (0, menu, -1, _T ("&Test")));
+	m_wndMenuBar.AdjustLayout();
+	m_wndMenuBar.AdjustSizeImmediate ();
+#endif // 0
 }
 
 void CMainFrame::OnProfileBearbeiten() 
@@ -684,4 +758,17 @@ void CMainFrame::OnExtrasStartPs312()
     CPS312CtrlDlg dlg;
 
     dlg.DoModal();
+}
+
+LRESULT CMainFrame::OnResetMenu(WPARAM,LPARAM)
+{
+    if (m_pTestMan)
+    {
+        CTtmainApp *pApp = (CTtmainApp*) AfxGetApp();
+        m_pTestMan->Initialize(this, pApp->GetRegistryManager());
+        if (pApp->IsInTestMode() == TRUE)
+            // Testsystem Menu hinzu
+            AppendTestsystemMenu();
+    }
+	return 0;
 }

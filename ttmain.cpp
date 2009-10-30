@@ -11,6 +11,7 @@
 
 #include "MainFrm.h"
 #include "ChildFrm.h"
+#include "HoleProfileFrame.h"
 #include "ttmainDoc.h"
 #include "ttmainView.h"
 #include "HoleProfileDoc.h"
@@ -29,7 +30,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CTtmainApp
 
-BEGIN_MESSAGE_MAP(CTtmainApp, CWinApp)
+BEGIN_MESSAGE_MAP(CTtmainApp, CWinAppEx)
 	//{{AFX_MSG_MAP(CTtmainApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_ZUSCHNITTDATEI_AUSLESEN, OnZuschnittdateiAuslesen)
@@ -41,10 +42,10 @@ BEGIN_MESSAGE_MAP(CTtmainApp, CWinApp)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, /*CWinApp::OnFileNew*/OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+	ON_COMMAND(ID_FILE_OPEN, CWinAppEx::OnFileOpen)
 	ON_COMMAND(ID_REFTOR_LADEN, OnFileOpen)
 	// Standard print setup command
-	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
+	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,7 +79,31 @@ CTtmainApp theApp;
 
 BOOL CTtmainApp::InitInstance()
 {
+//    SetRegistryKey("Moosburger\\Zuschnitt");
+
+	// InitCommonControlsEx() ist für Windows XP erforderlich, wenn ein Anwendungsmanifest
+	// die Verwendung von ComCtl32.dll Version 6 oder höher zum Aktivieren
+	// von visuellen Stilen angibt. Ansonsten treten beim Erstellen von Fenstern Fehler auf.
+	INITCOMMONCONTROLSEX InitCtrls;
+	InitCtrls.dwSize = sizeof(InitCtrls);
+	// Legen Sie dies fest, um alle allgemeinen Steuerelementklassen einzubeziehen,
+	// die Sie in Ihrer Anwendung verwenden möchten.
+	InitCtrls.dwICC = ICC_WIN95_CLASSES;
+	InitCommonControlsEx(&InitCtrls);
+
+	CWinAppEx::InitInstance();
+
+    VERIFY(InitContextMenuManager());
+
 	AfxEnableControlContainer();
+
+	InitKeyboardManager();
+
+	InitTooltipManager();
+	CMFCToolTipInfo ttParams;
+	ttParams.m_bVislManagerTheme = TRUE;
+	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
+		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
 
     // SEH fuer C++ aktivieren
     MyExceptInit();
@@ -126,7 +151,7 @@ BOOL CTtmainApp::InitInstance()
     pHPTemplate = new CMultiDocTemplate(
       IDR_HOLE_PROFILE,
       RUNTIME_CLASS(CHoleProfileDoc),
-      RUNTIME_CLASS(CMDIChildWnd),        // standard MDI child frame
+      RUNTIME_CLASS(/*CHoleProfileFrame*/CMDIChildWndEx),        // standard MDI child frame
       RUNTIME_CLASS(CHoleProfileView));
     AddDocTemplate(pHPTemplate);
 
@@ -141,6 +166,8 @@ BOOL CTtmainApp::InitInstance()
 
     if (cmdInfo.m_strFileName == "test")
         m_bTestMode = TRUE;
+
+	LoadCustomState ();
 
     char szPath[MAX_PATH];
     ::GetCurrentDirectory(MAX_PATH, szPath);
@@ -187,7 +214,7 @@ void CTtmainApp::OnFileNew()
 
 void CTtmainApp::OnFileOpen()
 {
-	CWinApp::OnFileOpen();
+	CWinAppEx::OnFileOpen();
 }
 
 void CTtmainApp::SetPrintOrientation(short dmOrientation)
@@ -348,7 +375,7 @@ void CTtmainApp::OnUpdateZuschnittdateiAuslesen(CCmdUI* pCmdUI)
 
 BOOL CTtmainApp::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
 {
-	return CWinApp::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+	return CWinAppEx::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
 void CTtmainApp::OnZuschnittregelnSpeichern() 
@@ -368,7 +395,7 @@ int CTtmainApp::ExitInstance()
 
     AfxGetApp()->WriteProfileInt("Settings", "LastStartedMode", m_iLastMode);
 	
-	return CWinApp::ExitInstance();
+	return CWinAppEx::ExitInstance();
 }
 
 

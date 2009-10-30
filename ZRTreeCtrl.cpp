@@ -339,12 +339,14 @@ void CZRTreeCtrl::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
             return;
         }
         int iValue = atoi(pTVDispInfo->item.pszText);
+#if 0  //?? auch negative Werte zulassen
         if (iValue < 0)
         {
             // Fehler, nicht uebernehmen
     	    *pResult = FALSE;
             return;
         }
+#endif // 0
         if (pNode->GetNodeValue() != iValue)
         {
             pNode->SetNodeValue(iValue);

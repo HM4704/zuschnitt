@@ -17,13 +17,19 @@
 #include <afxdisp.h>        // MFC Automation classes
 #include <afxdtctl.h>		// MFC support for Internet Explorer 4 Common Controls
 #include <afxtempl.h>
+#include <afxole.h>
 #include <atlbase.h>
+#include <afxwinappex.h>
+#include <afxmdichildwndex.h>
+#include <afxmdiframewndex.h>
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include "PrintEx\\PrintExtension.h"
 #define UNUSED_PARAMETER(x) x;
+
+#include <afxcontrolbars.h>     // MFC-Unterstützung für Multifunktionsleisten und Steuerleisten
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

@@ -22,7 +22,7 @@ const char szZuschnittHilfe[] = "Zuschnitt_hilfe.htm";
 class CZRSheet;
 class CTTTestManager;
 
-class CMainFrame : public CMDIFrameWnd
+class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
 public:
@@ -56,8 +56,8 @@ public:
 #endif
 
 protected:  // control bar embedded members
-	CStatusBar  m_wndStatusBar;
-	CToolBar    m_wndToolBar;
+//	CStatusBar  m_wndStatusBar;
+//	CToolBar    m_wndToolBar;
     CRegistryItemDword      m_riPosX, m_riPosY;
     CRegistryItemDword      m_riSizeX, m_riSizeY;
     CRegistryItemDword      m_ridWindowStyles;
@@ -67,6 +67,12 @@ protected:  // control bar embedded members
 
     CTTTestManager* m_pTestMan;
     CMenu       m_menuTest;
+
+protected:  // Eingebettete Member der Steuerleiste
+	CMFCMenuBar       m_wndMenuBar;
+	CMFCToolBar       m_wndToolBar;
+	CMFCStatusBar     m_wndStatusBar;
+	CMFCToolBarImages m_UserImages;
 
 // Generated message map functions
 protected:
@@ -103,6 +109,7 @@ protected:
 	afx_msg void OnProfileBearbeiten();
 	afx_msg void OnUpdateProfileBearbeiten(CCmdUI* pCmdUI);
 	afx_msg void OnBhTest();
+	afx_msg LRESULT OnResetMenu(WPARAM,LPARAM);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:

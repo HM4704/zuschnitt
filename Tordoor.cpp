@@ -2787,7 +2787,7 @@ int CTorDoor::printFenster(HDC hdc, int y,
 int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
     HFONT bFont)
 {
-  char temp[150];
+  char temp[300];
   TDataScan dataScan;
 
 #if 0 //?? immer Fuellung ausgeben
@@ -2804,7 +2804,29 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
     TextOut(hdc, x, -y, strFuellung, strlen(strFuellung));
   }
 #else
-  TextOut(hdc, x, -y, strFuellung, strlen(strFuellung));
+  int iPrinted = 0;
+  int iLen = strlen(strFuellung);
+  int iToPrint = iLen;
+  while (iPrinted < iLen)
+  {
+     SIZE sSize;
+     strncpy(temp, &strFuellung[iPrinted], iToPrint);
+     temp[iToPrint] = 0;
+     if (GetTextExtentPoint32(hdc, temp, strlen(temp), &sSize))
+     {
+         if (sSize.cx < maxX - x)
+         {
+             TextOut(hdc, x, -y, temp, strlen(temp));
+             y += rowH;
+             iPrinted += strlen(temp);
+             iToPrint = iLen - iPrinted;
+         }
+         else
+         {
+            iToPrint--;             
+         }
+     }
+  }
 #endif  // 0
 
   y +=  rowH;
