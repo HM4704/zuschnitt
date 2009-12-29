@@ -55,7 +55,8 @@ BEGIN
     "#include ""res\\ttmain.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""l.deu\\afxres.rc""          // Standard components\r\n"
     "#include ""l.deu\\afxprint.rc""        // printing/print preview resources\r\n"
-    "#include ""l.deu\\afxribbon.rc""        // tab ctrl#endif\r\n"
+    "#include ""l.deu\\afxribbon.rc""        // tab ctrl\r\n"
+    "#endif\r\n"
     "\0"
 END
 
@@ -382,7 +383,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Info"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Torzuschnitt\n Version 1.83",IDC_STATIC,47,16,46,21,SS_NOPREFIX
+    LTEXT           "Torzuschnitt\n Version 1.84",IDC_STATIC,47,16,46,21,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,64,93,50,14,WS_GROUP
     ICON            IDR_MAINFRAME,IDC_STATIC,19,14,20,20
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,13,7,101,75,WS_EX_CLIENTEDGE
@@ -861,8 +862,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,8,3,0
- PRODUCTVERSION 1,8,3,0
+ FILEVERSION 1,8,4,0
+ PRODUCTVERSION 1,8,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -878,12 +879,12 @@ BEGIN
         BLOCK "040704b0"
         BEGIN
             VALUE "FileDescription", "Torzuschnitt"
-            VALUE "FileVersion", "1, 8, 3, 0"
+            VALUE "FileVersion", "1, 8, 4, 0"
             VALUE "InternalName", "Zuschnitt"
             VALUE "LegalCopyright", "Copyright (C) 2009"
             VALUE "OriginalFilename", "Zuschnitt.exe"
             VALUE "ProductName", "Anwendung Torzuschnitt"
-            VALUE "ProductVersion", "1, 8, 3, 0"
+            VALUE "ProductVersion", "1, 8, 4, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1254,8 +1255,9 @@ LANGUAGE 7, 1
 #include "res\ttmain.rc2"  // non-Microsoft Visual C++ edited resources
 #include "l.deu\afxres.rc"          // Standard components
 #include "l.deu\afxprint.rc"        // printing/print preview resources
-#include "l.deu\afxribbon.rc"        // tab ctrl#endif
+#include "l.deu\afxribbon.rc"        // tab ctrl
 #endif
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

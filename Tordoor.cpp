@@ -1236,7 +1236,7 @@ BOOL CTorDoor::TorHasSF(void)
 void CTorDoor::updateFuellung(void)
 {
     int iSaveSenkProf = 0x7fffffff, iSaveSenkOberProf = 0x7fffffff, 
-        iSaveQuerProf  = 0x7fffffff;
+        iSaveQuerProf  = 0;
     BOOL bOberteil = FALSE;
 
     // alles löschen
@@ -1255,7 +1255,7 @@ void CTorDoor::updateFuellung(void)
         }
     }
 
-    // Profile durchsuchen nach kleinstem Wert
+    // Profile durchsuchen nach kleinstem Wert, bei waagrechten nach längstem Profil
     for (int i=0; i<Profile->GetSize(); i++)
     {
         CProfileElem* pF = (CProfileElem*)Profile->GetAt(i);
@@ -1290,7 +1290,7 @@ void CTorDoor::updateFuellung(void)
             else
             {
                 // waagrechtes Profile
-                if (pF->Laenge < iSaveQuerProf)
+                if (pF->Laenge > iSaveQuerProf)
                     iSaveQuerProf = pF->Laenge;
             }
         }
