@@ -57,7 +57,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="D:\User\Hmo\Projekte\vc++\Components\RegMan"
+				AdditionalIncludeDirectories="F:\User\Hmo\Projekte\vc++\Components\RegMan"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				ExceptionHandling="2"
@@ -256,7 +256,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\User\Hmo\Projekte\vc++\Components\RegMan"
+				AdditionalIncludeDirectories="F:\User\Hmo\Projekte\vc++\Components\RegMan"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="2"

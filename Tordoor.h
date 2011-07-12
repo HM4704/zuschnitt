@@ -369,7 +369,7 @@ class CTorDoor : public CObject
    // Testsystem
    void SaveToFile(char* strFileName);
    BOOL LoadFromFile(char* strFileName);
-   virtual BOOL Serialize( CArchive& archive, BOOL bReadVersion);
+   virtual int Serialize( CArchive& archive, BOOL bReadVersion);
    void SerializePtrArray(CArchive& archive, CPtrArray** ppPAry, int iObjType); 
 
  private:

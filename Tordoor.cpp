@@ -2999,7 +2999,7 @@ void CTTSize::Serialize( CArchive& archive, int iVersion )
 }
 
 // Return: FALSE  Problem beim Lesen der Version, 
-BOOL CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
+int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
 {
     CString strKunde, strKommission, strArtikel, strFuellung;
     
@@ -3020,18 +3020,25 @@ BOOL CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
     CATCH(CArchiveException, pEx)
     {
        // Simply show an error message to the user.
-        if (archive.IsLoading() && (
-            pEx->m_cause == CArchiveException::badIndex || 
-            pEx->m_cause == CArchiveException::badClass || 
-            pEx->m_cause == CArchiveException::badSchema) )
-        {
-            return FALSE;
-        }
-        else
-        {
-            AfxMessageBox("Fehler beim Öffnen einer Datei", MB_OK, 0);
-            return TRUE;
-        }
+        if (archive.IsLoading())
+		{
+			if (pEx->m_cause == CArchiveException::badIndex || 
+				pEx->m_cause == CArchiveException::badClass || 
+				pEx->m_cause == CArchiveException::badSchema)
+			{
+				return 2;
+			}
+			else
+			if (pEx->m_cause == CArchiveException::endOfFile)
+			{
+				return 1;
+			}
+			else
+			{
+				AfxMessageBox("Fehler beim Öffnen der Datei", MB_OK, 0);
+				return 2;
+			}
+		}
     }
     END_CATCH
 
@@ -3080,7 +3087,7 @@ BOOL CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
     SerializePtrArray(archive, &RiegelElemente, TTOBJ_TYPE_RIEGEL_ELEM);
     SerializePtrArray(archive, &HolzElemente, TTOBJ_TYPE_HOLZ_ELEM);
     SerializePtrArray(archive, &BetoPlanElemente, TTOBJ_TYPE_HOLZ_ELEM);
-    return TRUE;
+    return 0;
 }
 
 

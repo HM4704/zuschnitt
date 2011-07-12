@@ -94,6 +94,10 @@ BEGIN_MESSAGE_MAP(CTtmainView, CScrollView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CTtmainView::OnFilePrintPreview)
 //	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
+ON_COMMAND(ID_FILE_SAVE, &CTtmainView::OnFileSave)
+ON_COMMAND(ID_FILE_SAVE_AS, &CTtmainView::OnFileSaveAs)
+ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, &CTtmainView::OnUpdateFileSaveAs)
+ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CTtmainView::OnUpdateFileSave)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -387,7 +391,13 @@ void CTtmainView::OnInitialUpdate()
     }
     else
     {
-        openTorDoor(strFile);
+        if (openTorDoor(strFile) == -1)
+		{
+			AfxMessageBox("Fehler: Datei kann nicht gelesen werden!", MB_ICONSTOP);
+		    CWnd* pWnd = GetParent();
+		    pWnd->PostMessage(WM_CLOSE);
+		    return;
+		}
     }
 
     if (sbTestMenuAppended == FALSE)
@@ -532,6 +542,12 @@ int CTtmainView::addTorDoor()
 		    pT->HolzElemente = NULL;
 		    pT->RiegelElemente = NULL;
 		    pT->BetoPlanElemente = NULL;
+
+            CTtmainDoc* pDoc = GetDocument();
+            if (pDoc)
+            {
+                pDoc->SetModifiedFlag(TRUE);
+            }
 	    }
         delete pT;	
     }
@@ -597,6 +613,11 @@ void CTtmainView::OnLButtonDown(UINT nFlags, CPoint point)
 				CAuswDlg dlg(this, "Kunde", pTT, TRUE);
 				if (dlg.DoModal() == IDOK)
 				{
+                    CTtmainDoc* pDoc = GetDocument();
+                    if (pDoc)
+                    {
+                        pDoc->SetModifiedFlag(TRUE);
+                    }
 					InvalidateRect(NULL, TRUE);
 				}
 				goto Ende;
@@ -627,12 +648,103 @@ int CTtmainView::editTorDoor(int iTorNr)
                 return -1;
             }
 			InvalidateRect(NULL, TRUE);
+            CTtmainDoc* pDoc = GetDocument();
+            if (pDoc)
+            {
+                pDoc->SetModifiedFlag(TRUE);
+            }
 		}
     }
 
     return iRet;
 }
 
+BOOL CTtmainView::saveAll(char* strFileName)
+{
+	BOOL result = TRUE;
+    CFile file;
+
+	TRY
+	{
+		if (file.Open(strFileName, CFile::modeWrite|CFile::modeCreate) == FALSE)
+			return FALSE;
+		CArchive archive(&file, CArchive::store);
+#if 1
+        result = saveAll(archive);
+#else
+		int i;
+		int iMagic = TT_DOC_TYPE;
+		int iVersion = TT_DOC_VERSION;
+		archive << iMagic; 
+		archive << iVersion;
+		archive << m_pTore.GetCount();
+		for (i = 0; i < m_pTore.GetCount(); i++)
+		{
+			CTorDoor* pTT = (CTorDoor*)m_pTore.GetAt(i);
+			if (pTT)
+			{
+				if (pTT->Serialize(archive, TRUE) != 0) // Version mit abspeichern
+				{
+					return FALSE;
+				}
+			}
+		}
+
+		archive.Close();
+		file.Close();
+        CTtmainDoc* pDoc = GetDocument();
+        if (pDoc)
+        {
+            pDoc->SetModifiedFlag(FALSE);
+        }
+#endif // 1
+	}
+	CATCH_ALL(e)
+	{
+		return FALSE;
+	}
+	END_CATCH_ALL
+	return result;
+}
+
+BOOL CTtmainView::saveAll(CArchive& archive)
+{
+	BOOL result;
+
+	TRY
+	{
+		int i;
+		int iMagic = TT_DOC_TYPE;
+		int iVersion = TT_DOC_VERSION;
+		archive << iMagic; 
+		archive << iVersion;
+		archive << m_pTore.GetCount();
+		for (i = 0; i < m_pTore.GetCount(); i++)
+		{
+			CTorDoor* pTT = (CTorDoor*)m_pTore.GetAt(i);
+			if (pTT)
+			{
+				if (pTT->Serialize(archive, TRUE) != 0) // Version mit abspeichern
+				{
+					return FALSE;
+				}
+			}
+		}
+
+//		archive.Close();
+        CTtmainDoc* pDoc = GetDocument();
+        if (pDoc)
+        {
+            pDoc->SetModifiedFlag(FALSE);
+        }
+	}
+	CATCH_ALL(e)
+	{
+		return FALSE;
+	}
+	END_CATCH_ALL
+	return TRUE;
+}
 
 int CTtmainView::saveTorDoor(int iTorNr, char* strFileName)
 {
@@ -649,7 +761,7 @@ int CTtmainView::saveTorDoor(int iTorNr, char* strFileName)
         if (strFileName == NULL)
         {
             //Dateiname erfragen
-            CFileDialog dlg(FALSE, "rtt", NULL, OFN_OVERWRITEPROMPT, 
+            CFileDialog dlg(FALSE, "tor", NULL, OFN_OVERWRITEPROMPT, 
                 NULL, NULL);
 
             if (dlg.DoModal() != IDOK)
@@ -669,6 +781,11 @@ int CTtmainView::saveTorDoor(int iTorNr, char* strFileName)
 
         archive.Close();
         file.Close();
+        CTtmainDoc* pDoc = GetDocument();
+        if (pDoc)
+        {
+            pDoc->SetModifiedFlag(FALSE);
+        }
     }
 
     return iRet;
@@ -680,76 +797,106 @@ int CTtmainView::openTorDoor(CString& strFileName)
 	CTorDoor* pTTor;
     CFile file;
 
-    CTorDoor* pT = new CTorDoor;
 
-    if (file.Open(strFileName, CFile::modeRead) == FALSE)
-    {
-        return -1;
-    }
-    CArchive archive(&file, CArchive::load);
-
-    if (pT->Serialize(archive, TRUE) == FALSE)
-    {
-        // kann Version nicht lesen, ohne probieren
-        archive.Abort();
-        file.SeekToBegin();
-        CArchive archive1(&file, CArchive::load);
-        pT->Serialize(archive1, FALSE);
-        archive1.Close();
-    }
-    else
-        archive.Close();
-    file.Close();
-
-	switch(pT->Art)
+	TRY
 	{
-		case ATOR:
-			pTTor = new CTorN(pT);
-		break;
-		case ATUER:
-			pTTor = new CTuerN(pT);
-		break;
-		case FT3:
-		case FT4:
-		case FT5:
-			pTTor = new CFTor(pT);
-		break;
-        case STUER:
-            pTTor = new CSchiebeTuer(pT);
-            break;
-        case STOR:
-            pTTor = new CSchiebeTor(pT);
-            break;
-		default:
-			pTTor = new CTorDoor(pT);
-		break;
+		if (file.Open(strFileName, CFile::modeRead) == FALSE)
+		{
+			return -1;
+		}
+		CArchive archive(&file, CArchive::load);
+
+		int iType, iVersion, iCount;
+		archive >> iType;
+		if (iType != TT_DOC_TYPE)
+		{
+			// wrong type
+			return -1;
+		}
+		archive >> iVersion;
+		archive >> iCount;
+		while (m_pTore.GetSize() < iCount)
+		{
+			CTorDoor* pT = new CTorDoor;
+
+
+			if ((iRet = pT->Serialize(archive, TRUE)) == 2)
+			{
+				// kann Version nicht lesen, ohne probieren
+				archive.Abort();
+				file.SeekToBegin();
+				CArchive archive1(&file, CArchive::load);
+				pT->Serialize(archive1, FALSE);
+				archive1.Close();
+			}
+			else
+			if (iRet == 1)
+			{
+				// end of file 
+				delete pT;
+				break;
+			}
+
+			switch(pT->Art)
+			{
+				case ATOR:
+					pTTor = new CTorN(pT);
+				break;
+				case ATUER:
+					pTTor = new CTuerN(pT);
+				break;
+				case FT3:
+				case FT4:
+				case FT5:
+					pTTor = new CFTor(pT);
+				break;
+				case STUER:
+					pTTor = new CSchiebeTuer(pT);
+					break;
+				case STOR:
+					pTTor = new CSchiebeTor(pT);
+					break;
+				default:
+					pTTor = new CTorDoor(pT);
+				break;
+			}
+
+			pT->FlParam = NULL;
+			pT->Profile = NULL;
+			pT->GlasProfile = NULL;
+			pT->HolzElemente = NULL;
+			pT->RiegelElemente = NULL;
+			pT->BetoPlanElemente = NULL;
+
+			delete pT;	
+
+			if (pTTor->Profile == NULL)
+			{
+				// keine Referenzdatei, also neu berechnen
+				pTTor->updateValues();
+			}
+			m_iAryTorHoehe[m_pTore.GetSize()] = __max(MIN_Y_EINTRAG, pTTor->getLineBegin(CA_Y_BOTTOMLINE));
+
+			m_pTore.Add(pTTor);
+
+			if (m_pTore.GetSize() > 1)
+			{
+				POINT pt;
+				pt.x = 0;//m_iPageLen/2;
+				pt.y = -(m_iPageHeight+100)/2;
+				ScrollToPosition(pt);
+			}
+		}
+		archive.Close();
+		file.Close();
+	}
+	CATCH_ALL(e)
+	{
+//		return FALSE;
+		iRet = -1;
 	}
 
-	pT->FlParam = NULL;
-	pT->Profile = NULL;
-	pT->GlasProfile = NULL;
-	pT->HolzElemente = NULL;
-	pT->RiegelElemente = NULL;
-	pT->BetoPlanElemente = NULL;
-
-    delete pT;	
-
-    if (pTTor->Profile == NULL)
-    {
-        // keine Referenzdatei, also neu berechnen
-        pTTor->updateValues();
-    }
-    m_iAryTorHoehe[m_pTore.GetSize()] = __max(MIN_Y_EINTRAG, pTTor->getLineBegin(CA_Y_BOTTOMLINE));
-
-	m_pTore.Add(pTTor);
-
-	if (m_pTore.GetSize() > 1)
-	{
-		POINT pt;
-		pt.x = 0;//m_iPageLen/2;
-		pt.y = -(m_iPageHeight+100)/2;
-		ScrollToPosition(pt);
-	}
+	END_CATCH_ALL
 
 	return iRet;
 }
@@ -1002,6 +1149,11 @@ int CTtmainView::editProfiles(int iTorNr)
                 return -1;
             }
 			InvalidateRect(NULL, TRUE);
+            CTtmainDoc* pDoc = GetDocument();
+            if (pDoc)
+            {
+                pDoc->SetModifiedFlag(TRUE);
+            }
 		}
     }
 
@@ -1028,4 +1180,111 @@ void CTtmainView::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pD
 void CTtmainView::OnFilePrintPreview()
 {
 	AFXPrintPreview(this);
+}
+
+void CTtmainView::OnFileSave()
+{
+	// TODO: Fügen Sie hier Ihren Befehlsbehandlungscode ein.
+	CTtmainDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+
+    CString strFile;
+    strFile = pDoc->GetPathName();
+    if (strFile.GetLength() == 0)
+    {
+		OnFileSaveAs();
+	}
+    else
+    {
+		saveAll(strFile.GetBuffer());
+    }
+}
+
+BOOL CTtmainView::DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog/*, CDocTemplate* pTemplate*/)
+{
+#if 0
+    //Dateiname erfragen
+    CFileDialog dlg(FALSE, "rtt", NULL, OFN_OVERWRITEPROMPT, 
+        NULL, NULL);
+
+    INT_PTR nResult = dlg.DoModal();
+    
+    fileName = dlg.GetPathName();
+#else
+
+	CFileDialog dlgFile(bOpenFileDialog, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, NULL, NULL, 0);
+
+	CString title;
+//	ENSURE(title.LoadString(nIDSTitle));
+
+	dlgFile.m_ofn.Flags |= lFlags;
+
+	CString strFilter;
+
+#if 0
+	CString strDefault;
+	if (pTemplate != NULL)
+	{
+		ASSERT_VALID(pTemplate);
+		_AfxAppendFilterSuffix(strFilter, dlgFile.m_ofn, pTemplate, &strDefault);
+	}
+	else
+	{
+		// do for all doc template
+		POSITION pos = m_templateList.GetHeadPosition();
+		BOOL bFirst = TRUE;
+		while (pos != NULL)
+		{
+			pTemplate = (CDocTemplate*)m_templateList.GetNext(pos);
+			_AfxAppendFilterSuffix(strFilter, dlgFile.m_ofn, pTemplate,
+				bFirst ? &strDefault : NULL);
+			bFirst = FALSE;
+		}
+	}
+#endif // 0
+
+	// append the "*.*" all files filter
+//	CString allFilter;
+//	VERIFY(allFilter.LoadString(AFX_IDS_ALLFILTER));
+//	strFilter += allFilter;
+    strFilter += _T("*.tor");
+	strFilter += (TCHAR)'\0';   // next string please
+	strFilter += _T("*.*");
+	strFilter += (TCHAR)'\0';   // last string
+	dlgFile.m_ofn.nMaxCustFilter++;
+
+	dlgFile.m_ofn.lpstrFilter = strFilter;
+//	dlgFile.m_ofn.lpstrTitle = title;
+	dlgFile.m_ofn.lpstrFile = fileName.GetBuffer(_MAX_PATH);
+
+	INT_PTR nResult = dlgFile.DoModal();
+	fileName.ReleaseBuffer();
+#endif // 0
+
+	return nResult == IDOK;
+}
+
+void CTtmainView::OnFileSaveAs()
+{
+	CString file;
+	if (DoPromptFileName(file, 0, 0, FALSE/*, CDocTemplate* pTemplate*/) == TRUE)
+	{
+        file += ".tor";
+		saveAll(file.GetBuffer());
+		CDocument* pDoc = GetDocument();
+        if (pDoc)
+        {
+            pDoc->SetPathName(file.GetBuffer(), TRUE /*bAddToMRU*/);
+        }
+	}
+}
+
+void CTtmainView::OnUpdateFileSaveAs(CCmdUI *pCmdUI)
+{
+
+}
+
+void CTtmainView::OnUpdateFileSave(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(TRUE);
 }

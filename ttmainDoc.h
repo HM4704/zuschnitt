@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#define TT_DOC_TYPE		0xfe6a
+#define TT_DOC_VERSION	1
 
 class CTtmainDoc : public CDocument
 {

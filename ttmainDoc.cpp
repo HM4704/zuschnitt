@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 //#include "ttmain.h"
-
 #include "ttmainDoc.h"
+#include "ttmainView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,14 +55,24 @@ BOOL CTtmainDoc::OnNewDocument()
 
 void CTtmainDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
+    POSITION pos = GetFirstViewPosition();
+    CTtmainView* pView = (CTtmainView*)GetNextView(pos);
+    if (pView)
+    {
+	    if (ar.IsStoring())
+	    {
+		    // TODO: add storing code here
+            pView->saveAll(ar);
+	    }
+	    else
+	    {
+		    // TODO: add loading code here
+	    }
+    }
+    else
+    {
+
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////

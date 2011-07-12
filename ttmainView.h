@@ -88,6 +88,8 @@ public:
 	int editTorDoor(int iTorNr);
 	int editProfiles(int iTorNr);
 	int saveTorDoor(int iTorNr, char* strFileName);
+	BOOL saveAll(char* strFileName);
+    BOOL saveAll(CArchive& ar);
 	int openTorDoor(CString& strFileName);
 	virtual ~CTtmainView();
 #ifdef _DEBUG
@@ -108,7 +110,8 @@ public:
     BOOL canAddTor(void);
 
 protected:
-
+	BOOL DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog);
+	
 // Generated message map functions
 protected:
     void AppendTestsystemMenu(void);
@@ -127,6 +130,11 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnFileSave();
+	afx_msg void OnFileSaveAs();
+	afx_msg void OnUpdateFileSaveAs(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateFileSave(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // debug version in ttmainView.cpp

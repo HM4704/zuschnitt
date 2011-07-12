@@ -1,3 +1,4 @@
+#include "afxwin.h"
 #if !defined(AFX_AUSWDLG_H__141C613C_1243_11D4_8E7B_F82D876B953C__INCLUDED_)
 #define AFX_AUSWDLG_H__141C613C_1243_11D4_8E7B_F82D876B953C__INCLUDED_
 
@@ -66,6 +67,9 @@ public:
 	void SetFuellung(CString str);
 	void GetFluegelItems();
 protected:
+    void AddBetoColor(char* szColor);
+
+protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CAuswDlg)
@@ -78,6 +82,7 @@ protected:
 	afx_msg void OnClicked400R();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+	CComboBox m_ctrlBetoColor;
 };
 
 //{{AFX_INSERT_LOCATION}}

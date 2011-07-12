@@ -13,7 +13,7 @@
 #define TTMAXDATA (sizeof(tdata)/sizeof(TTData))
 #endif // 0
 #define TOMAXDATA 10
-#define GLASMAXDATA 11
+#define GLASMAXDATA 12
 
 
 typedef struct tagProfilData
@@ -96,7 +96,7 @@ TTData tdata[] =
     F_BETOPLAN, F_BETOPLAN, 0, 0},
   { 4515, "4515", "m. einw. PP-F¸llung", FUELLUNG,
     F_BETOPLAN, F_NONE, 0, 0},
-  { 4650, "4650", "einwandig Nord. Fichte, auﬂen aufliegend", FUELLUNG,
+  { 4650, "4650", "einwandig Lerche, auﬂen aufliegend", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
   { 4651, "4651", "einw. Holz m. Fischgr‰tmuster", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
@@ -212,11 +212,11 @@ TTData tdata[] =
     F_BLECH, F_NONE, 0, 0},
   { 6512, "6512", "doppelw. Holz, auﬂen aufliegend", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 6513, "6513", "einw. Nordische Fichte", FUELLUNG,
+  { 6513, "6513", "einw. Lerche", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
-  { 6514, "6514", "m. doppelw. Nord. Fichte", FUELLUNG,
+  { 6514, "6514", "m. doppelw. Lerche", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 6515, "6515", "auﬂen Nord. Fichte, i. Beto-Plan", FUELLUNG,
+  { 6515, "6515", "auﬂen Lerche, i. Beto-Plan", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 6516, "6516", "auﬂen Holz, innen Bohlen", FUELLUNG,
     F_HOLZ, F_BOHLEN, 0, 0},
@@ -382,7 +382,7 @@ char strTRAHMEN[3][30] =
 { "Z-Rahmen", "R-Rahmen", "W-Rahmen" };
 
 char GlasArt[GLASMAXDATA][30] =
-{ "Plexi4", "Plexi5", "SDP10", "SDP16", "SDP20", "ISO",
+{ "VSG", "Plexi4", "Plexi5", "SDP10", "SDP16", "SDP20", "ISO",
   "Klar", "Draht", "SAN4", "SAN5", "" };
 
 char* TDataScan::getArtBez(tART art)

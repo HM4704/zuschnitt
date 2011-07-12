@@ -18,6 +18,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAuswDlg dialog
 
+static char* szBetoColors[] = 
+{
+	"braun",
+	"gelb"
+};
 
 CAuswDlg::CAuswDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CAuswDlg::IDD, pParent)
@@ -76,6 +81,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_PROFILDICKE, m_edProfilDicke);
 	DDX_Text(pDX, IDC_BREITE_FL1, m_strBreiteFl1);
 	//}}AFX_DATA_MAP
+	DDX_Control(pDX, IDC_BETO_COLOR, m_ctrlBetoColor);
 }
 
 
@@ -133,6 +139,7 @@ BOOL CAuswDlg::OnInitDialog()
 		m_cbFenster[i]->AddString("Schiebe Typ2");
 		m_cbFenster[i]->SetCurSel(0);
 
+		m_cbGlasart[i]->AddString("VSG");
 		m_cbGlasart[i]->AddString("Plexi4");
 		m_cbGlasart[i]->AddString("Plexi5");
 		m_cbGlasart[i]->AddString("SDP10");
@@ -157,6 +164,11 @@ BOOL CAuswDlg::OnInitDialog()
     m_cbProfilMass.SetItemData(1, PD_60_40);
     m_cbProfilMass.SetCurSel(-1);
     m_cbProfilMass.EnableWindow(FALSE);
+
+	for (int i = 0; i < 2; i++)
+		m_ctrlBetoColor.AddString(szBetoColors[i]);
+	m_ctrlBetoColor.SetCurSel(0);
+	m_ctrlBetoColor.ShowWindow(FALSE);
 
 	if (m_bModify)
 	{
@@ -272,6 +284,34 @@ void CAuswDlg::OnSelchangeTtortyp()
 	}
 }
 
+#if 0
+void CAuswDlg::AddBetoColor(char* szColor)
+{
+    char buf[300];
+    for (int i = 0; i < m_cedFuellung.GetLineCount(); i++)
+    {
+        const char* pS;
+        memset(buf, 0, sizeof(buf));
+        m_cedFuellung.GetLine(i, buf, sizeof(buf));
+        if ((pS = strstr("Beto-Plan-Füllung", buf)) != NULL)
+        {
+            if (strstr(szColor, buf) == NULL)
+            {
+                int betoSLen = strlen("Beto-Plan-Füllung");
+                if (*(pS + betoSLen) == ',' || *(pS + betoSLen) == ' ')
+                {
+                    // Farbe einfügen
+                    memcpy(pS + betoSLen + strlen(szColor), pS + betoSLen, strlen(szColor) );
+                    memcpy(pS + betoSLen, sz);
+                }
+                // ok Farbe ist noch nicht im string drin, Farbe einfügen
+                memcpy(pS + strlen(Beto)
+            }
+        }
+    }   
+}
+#endif //0
+
 void CAuswDlg::OnSelchangeFuellung() 
 {
 	// TODO: Add your control notification handler code here
@@ -283,8 +323,21 @@ void CAuswDlg::OnSelchangeFuellung()
 	if (((iCurSel = m_cbFuellung.GetCurSel()) != CB_ERR)
 		&& (m_cbFuellung.GetLBText(iCurSel, cBuffer) != CB_ERR))
     {
+		tFUELLUNG outside, inside;
 		aNr = atoi(cBuffer);
 		m_cedFuellung.SetWindowText(dataScan.getBezeich(aNr));
+		dataScan.getFuellung(aNr, &outside, &inside);
+		if (outside == F_BETOPLAN || inside == F_BETOPLAN)
+		{
+//			m_ctrlBetoColor.ShowWindow(TRUE);
+//			int iBetoColor = m_ctrlBetoColor.GetCurSel();
+//			if (iBetoColor > 0 && iBetoColor < 2)
+//				AddBetoColor(szBetoColors[iBetoColor]);
+		}
+		else
+		{
+			m_ctrlBetoColor.ShowWindow(FALSE);
+		}
 	}
 }
 
