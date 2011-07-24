@@ -64,7 +64,7 @@ CTtmainApp::CTtmainApp()
 
     m_Help.SetFileDirectory((LPCTSTR)strHilfeVerz);
 
-    m_strZuschnittDatei = "Zuschnittregeln\\Zuschnitt-Regeln.txt";
+//    m_strZuschnittDatei = "Zuschnittregeln\\Zuschnitt-Regeln.txt";
 
     m_bTestMode = FALSE;
 }
@@ -99,6 +99,9 @@ BOOL CTtmainApp::InitInstance()
 
 	InitKeyboardManager();
 
+//    int i = 0;
+//    while (i == 0)
+//        Sleep(100);
 	InitTooltipManager();
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
@@ -132,6 +135,13 @@ BOOL CTtmainApp::InitInstance()
     m_regManager.Open(strProg, 30, TRUE);
 
     // Zuschnittregel einlesen
+    char path[MAX_PATH];
+    ::GetModuleFileName(AfxGetInstanceHandle(), path, sizeof(path));
+    char* exe = strrchr(path, '\\');
+    if (exe != NULL)
+        *exe = 0;       // remove exe name
+    m_strZuschnittDatei = path;
+    m_strZuschnittDatei += "\\Zuschnittregeln\\Zuschnitt-Regeln.txt";
     CheckDirectory(m_strZuschnittDatei);  // erzeugt die nötigen Directories
     m_ZuschnittMan.ZuschnittDateiSetzen(m_strZuschnittDatei);
     OnZuschnittdateiAuslesen();
@@ -155,14 +165,17 @@ BOOL CTtmainApp::InitInstance()
       RUNTIME_CLASS(CHoleProfileView));
     AddDocTemplate(pHPTemplate);
 
+    RegisterShellFileTypes(FALSE);
+	EnableShellOpen();
+
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
-	cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
+//	cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
 
 	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
+//	if (!ProcessShellCommand(cmdInfo))
+//		return FALSE;
 
     if (cmdInfo.m_strFileName == "test")
         m_bTestMode = TRUE;
@@ -178,6 +191,7 @@ BOOL CTtmainApp::InitInstance()
 	if (!pMainFrame->LoadFrame(IDR_MAINFRAME))
 		return FALSE;
 	m_pMainWnd = pMainFrame;
+	m_pMainWnd->DragAcceptFiles();
 
 	// The main window has been initialized, so show and update it.
 	pMainFrame->ShowWindow(m_nCmdShow);
@@ -190,11 +204,21 @@ BOOL CTtmainApp::InitInstance()
 #if 0
 	CWinApp::OnFileNew();
 #else
-    if (m_iLastMode == 0)
-        pDocTemplate->OpenDocumentFile(NULL);
+    if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew || 
+        cmdInfo.m_nShellCommand == -1)
+    {
+        if (m_iLastMode == 0)
+            pDocTemplate->OpenDocumentFile(NULL);
+        else
+            m_pMainWnd->PostMessage(WM_COMMAND, ID_WHSPROFILE, NULL);
+    }
     else
-        m_pMainWnd->PostMessage(WM_COMMAND, ID_WHSPROFILE, NULL);
+    {
+		if (!ProcessShellCommand(cmdInfo))
+			return FALSE;
+    }
 #endif //
+
 	return TRUE;
 }
 
@@ -351,11 +375,11 @@ void CTtmainApp::OnZuschnittdateiAuslesen()
     {
         char szMsg[10*MAX_PATH];
 
-        GetCurrentDirectory(MAX_PATH, szDir);
-        strcat(szDir, "\\");
-        strcat(szDir, m_strZuschnittDatei);
+//        GetCurrentDirectory(MAX_PATH, szDir);
+//        strcat(szDir, "\\");
+//        strcat(szDir, m_strZuschnittDatei);
         sprintf(szMsg, "WARNUNG!!!!\nDie Datei mit den Zuschnittregeln kann nicht geöffnet werden!\nZuschnittregeln können damit falsch sein.\nBitte überprüfen Sie die Datei %s.",
-            szDir);
+            m_strZuschnittDatei);
         // Nein, muss von Hand kopiert werden aus Sicherheitsgründen
         AfxMessageBox(szMsg, MB_OK|MB_ICONWARNING, 0);
         return;

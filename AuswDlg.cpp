@@ -18,7 +18,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAuswDlg dialog
 
-static char* szBetoColors[] = 
+static const char* szBetoColors[] = 
 {
 	"braun",
 	"gelb"
@@ -94,6 +94,7 @@ BEGIN_MESSAGE_MAP(CAuswDlg, CDialog)
 	ON_EN_CHANGE(IDC_BREITE, OnChangeBreite)
 	ON_BN_CLICKED(IDC_400R, OnClicked400R)
 	//}}AFX_MSG_MAP
+    ON_CBN_SELCHANGE(IDC_BETO_COLOR, &CAuswDlg::OnCbnSelchangeBetoColor)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,8 +168,16 @@ BOOL CAuswDlg::OnInitDialog()
 
 	for (int i = 0; i < 2; i++)
 		m_ctrlBetoColor.AddString(szBetoColors[i]);
+
+    char szBuf[300];
 	m_ctrlBetoColor.SetCurSel(0);
-	m_ctrlBetoColor.ShowWindow(FALSE);
+    for (int i = 0; i < 2; i++)
+    {
+        if (strstr(m_pTor->strFuellung, szBetoColors[i]) != NULL)
+        {
+	        m_ctrlBetoColor.SetCurSel(i);
+        }
+    }
 
 	if (m_bModify)
 	{
@@ -284,33 +293,72 @@ void CAuswDlg::OnSelchangeTtortyp()
 	}
 }
 
-#if 0
-void CAuswDlg::AddBetoColor(char* szColor)
+static bool newWordPos(char c)
 {
-    char buf[300];
-    for (int i = 0; i < m_cedFuellung.GetLineCount(); i++)
+    if (c == '-')
+        return false;
+    else
+        return true;
+}
+
+static bool insertWord(char* sentence, const char* wordBefore, const char* word)
+{
+    char* pos;
+    int lenBefore = strlen(wordBefore);
+    int lenToInsert = strlen(word) + 1;
+    if ((pos = strstr(sentence, wordBefore)) != NULL)
     {
-        const char* pS;
-        memset(buf, 0, sizeof(buf));
-        m_cedFuellung.GetLine(i, buf, sizeof(buf));
-        if ((pS = strstr("Beto-Plan-Füllung", buf)) != NULL)
+        pos += lenBefore;
+        int lenEnd = strlen(pos);
+        if (newWordPos(*pos))
         {
-            if (strstr(szColor, buf) == NULL)
-            {
-                int betoSLen = strlen("Beto-Plan-Füllung");
-                if (*(pS + betoSLen) == ',' || *(pS + betoSLen) == ' ')
-                {
-                    // Farbe einfügen
-                    memcpy(pS + betoSLen + strlen(szColor), pS + betoSLen, strlen(szColor) );
-                    memcpy(pS + betoSLen, sz);
-                }
-                // ok Farbe ist noch nicht im string drin, Farbe einfügen
-                memcpy(pS + strlen(Beto)
-            }
+            memcpy(pos + lenToInsert, pos, lenEnd);
+            *pos = ' ';
+            pos++;
+            memcpy(pos, word, lenToInsert - 1);
+            *(pos + lenToInsert - 1 + lenEnd) = 0;
+            return true;
         }
-    }   
+    }
+
+    return false;
+}
+
+#define NR_BETO_TEXT 5
+static const char betoSearchTexts[NR_BETO_TEXT][50] =
+{
+    "Beto-Plan-Füllung",
+    "Beto-Plan",
+    "Beto",
+    "PP-Füllung",
+    "PP"
+};
+
+#if 1
+void CAuswDlg::AddBetoColor(int aNr, const char* szColor)
+{
+    char szBuf[300];
+	TDataScan dataScan;
+    
+//    m_cedFuellung.GetWindowText(szBuf);
+    strncpy(szBuf, dataScan.getBezeich(aNr), sizeof(szBuf));
+    
+    for (int i = 0; i < NR_BETO_TEXT; i++)
+    {
+        if (insertWord(szBuf, betoSearchTexts[i], szColor) == true)
+        {
+	        m_cedFuellung.SetWindowText(szBuf);
+            break;
+        }
+    }
+
 }
 #endif //0
+
+void CAuswDlg::OnCbnSelchangeBetoColor()
+{
+    OnSelchangeFuellung();
+}
 
 void CAuswDlg::OnSelchangeFuellung() 
 {
@@ -329,14 +377,11 @@ void CAuswDlg::OnSelchangeFuellung()
 		dataScan.getFuellung(aNr, &outside, &inside);
 		if (outside == F_BETOPLAN || inside == F_BETOPLAN)
 		{
-//			m_ctrlBetoColor.ShowWindow(TRUE);
-//			int iBetoColor = m_ctrlBetoColor.GetCurSel();
-//			if (iBetoColor > 0 && iBetoColor < 2)
-//				AddBetoColor(szBetoColors[iBetoColor]);
+            AddBetoColor(aNr, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
 		}
 		else
 		{
-			m_ctrlBetoColor.ShowWindow(FALSE);
+//			m_ctrlBetoColor.ShowWindow(FALSE);
 		}
 	}
 }

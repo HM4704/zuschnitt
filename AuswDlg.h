@@ -67,7 +67,7 @@ public:
 	void SetFuellung(CString str);
 	void GetFluegelItems();
 protected:
-    void AddBetoColor(char* szColor);
+    void AddBetoColor(int aNr, const char* szColor);
 
 protected:
 
@@ -83,6 +83,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 	CComboBox m_ctrlBetoColor;
+public:
+    afx_msg void OnCbnSelchangeBetoColor();
 };
 
 //{{AFX_INSERT_LOCATION}}
