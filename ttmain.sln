@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ttmain", "ttmain.vcproj", "{BEBDC4EB-2900-49B5-A3AA-A9039E483469}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PS312Sim", "AnsteuerungPS312\sim\PS312Sim.vcproj", "{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectName0 = \u0022$/ttmain\u0022,\u0020BAAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = ttmain.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+		SccProjectUniqueName2 = AnsteuerungPS312\\sim\\PS312Sim.vcproj
+		SccLocalPath2 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection2 = AnsteuerungPS312\\sim\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Debug|Win32.Build.0 = Debug|Win32
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Debug|x64.ActiveCfg = Debug|x64
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Debug|x64.Build.0 = Debug|x64
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Release|Win32.ActiveCfg = Release|Win32
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Release|Win32.Build.0 = Release|Win32
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Release|x64.ActiveCfg = Release|x64
+		{BEBDC4EB-2900-49B5-A3AA-A9039E483469}.Release|x64.Build.0 = Release|x64
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Debug|Win32.Build.0 = Debug|Win32
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Debug|x64.ActiveCfg = Debug|Win32
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Release|Win32.ActiveCfg = Release|Win32
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Release|Win32.Build.0 = Release|Win32
+		{3149037C-31B6-4BFD-88A1-7FEE5CF2B6FD}.Release|x64.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
