@@ -1,0 +1,70 @@
+#####################################################
+# Datei für Zuschnitt-Regeln
+#
+# Übersicht über Schlüsselworte:
+#       Schlüsselwort         mögliche Werte
+#
+#       Art                   Tür, Tor, *
+#       Typ                   400, 600, 800, *
+#       OKF                   ja, nein, *
+#       Bogen                 ja, nein, *
+#       Flügelanzahl          1, 2, 3, 4, 5, *
+#       Rahmen                W, Z, R, *
+#       Oberteil              kein, OzO, OiF, *
+#       Geteilt               ja, nein, *
+#
+#
+# Syntax-Erklärung
+#
+# Schlüsselword[Wert], Schlüsselword[Wert],...: Zuschnitt-Zahl
+# Beispiel: Art[Tür],Typ[400],Rahmen[W]: 100
+
+# Abschnitt für senkrechte Zuschnittzugaben in [mm]
+[Senk]
+Typ[600], OKF[ja], Rahmen[Z]: 25
+Typ[600], OKF[ja], Rahmen[W]: 25
+Typ[600], OKF[nein], Art[Schiebetür]: 0
+Typ[600], OKF[nein], Art[Schiebetor]: 0
+Typ[600], OKF[nein], Art[*], Rahmen[R]: -30
+Typ[400], Art[Schiebetür]: 45
+Typ[400], Art[Schiebetor]: 45
+
+
+# Abschnitt für waagrechte Zuschnittzugaben in [mm]
+[Quer]
+Typ[400], Art[Tor], Flügelanzahl[3]: 25
+Typ[400], Art[Tor], Flügelanzahl[2], Rahmen[R]: -15
+Typ[400], Art[Tor], Flügelanzahl[2], Rahmen[*]: 25
+Typ[400], Art[Tor], Flügelanzahl[*]: 30
+Typ[400], Art[Schiebetür]: 45
+Typ[400], Art[Schiebetor]: 45
+Typ[400], Art[Tür], Rahmen[R]: -60
+Typ[400], Art[Tür], Rahmen[*]: 10
+Typ[600], Art[Schiebetür]: 0
+Typ[600], Art[Schiebetor]: 0
+Typ[600], Art[Tür], Rahmen[R]: -60
+Typ[600], Art[Tor], Rahmen[R]: -8
+
+
+# Abschnitt für Zuschnittzugaben bei Oberteilen in [mm]
+[Ober]
+Typ[400], Art[Tür], OKF[ja]: 22
+Typ[400], Art[Tür], OKF[nein]: 28
+Typ[400], Art[Tor], OKF[ja]: 22
+Typ[400], Art[Tor], OKF[nein]: 22
+
+
+# Abschnitt für Zuschnittzugaben bei Unterteilen in [mm]
+[Unter]
+Typ[400], OKF[ja]: 20
+Typ[400], OKF[nein]: 20
+
+
+# Abschnitt für Zugaben für Schiebefenster (senkrecht, waagrecht)
+[SF]
+-10, -155, -10, -190
+
+# Abschnitt für Zugaben (negativ) für Schiebefenster Typ 2 ( senkrecht, waagrecht)
+[SF2]
+-10, -179, -10, -206
+
