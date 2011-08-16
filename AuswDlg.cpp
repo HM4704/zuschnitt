@@ -375,7 +375,7 @@ void CAuswDlg::OnSelchangeFuellung()
 		aNr = atoi(cBuffer);
 		m_cedFuellung.SetWindowText(dataScan.getBezeich(aNr));
 		dataScan.getFuellung(aNr, &outside, &inside);
-		if (outside == F_BETOPLAN || inside == F_BETOPLAN)
+		if ((outside == F_BETOPLAN || inside == F_BETOPLAN) && (strstr(dataScan.getBezeich(aNr), " PP") == NULL))
 		{
             AddBetoColor(aNr, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
 		}
