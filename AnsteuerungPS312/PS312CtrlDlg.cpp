@@ -885,7 +885,7 @@ void CPS312CtrlDlg::OnClickedPs312CtrlProgSend()
 {
     int iRet, iCount, iProgNr;
     vector<CTRL_DATA_SET>::iterator iter;
-    char cBuf[20];
+//    char cBuf[20];
 
     UpdateData(TRUE);
 

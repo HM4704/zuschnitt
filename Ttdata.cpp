@@ -68,7 +68,7 @@ TTData tdata[] =
     STOR, 4, R_OHNE, L},
   { 4501, "4501", "m. doppelw. Holzfüllung", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 4502, "4502", "m. einwandiger Holzfüllung", FUELLUNG,
+  { 4502, "4502", "m. einw. Holzfüllung", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
   { 4503, "4503", "ohne Füllung", FUELLUNG,
     F_NONE, F_NONE, 0, 0},
@@ -254,7 +254,7 @@ TTData tdata[] =
   { 6527, "6527", "außen Holz Wolf, innen PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
 
-  { 6530, "6530", "doppelwandig Holz, m. Styropor", FUELLUNG,
+  { 6530, "6530", "doppelw. Holz, m. Styropor", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
   { 6531, "6531", "außen Holz, innen Beto-Plan + Styrop.", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},

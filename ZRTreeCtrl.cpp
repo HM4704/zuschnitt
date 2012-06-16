@@ -517,7 +517,8 @@ void CZRTreeCtrl::OnZrPropValueNew()
 	            item.hInsertAfter = TVI_LAST;
                 pNode->GetProperty().GetPropertyStrings(iCountStr, &pStr);
                 // Property auswählen
-                for (int x=0; x<iCountStr; x++)
+                int x;
+                for (x=0; x<iCountStr; x++)
                 {
                     if (pChild->IsPropertyPossible(pStr[x]) == TRUE)
                         break;

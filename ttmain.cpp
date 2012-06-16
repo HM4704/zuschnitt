@@ -119,7 +119,7 @@ BOOL CTtmainApp::InitInstance()
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+//	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
 	CoInitialize(NULL);
@@ -351,7 +351,7 @@ BOOL CAboutDlg::OnInitDialog()
 void CTtmainApp::OnZuschnittdateiAuslesen() 
 {
     FILE* hFile;
-    char szDir[MAX_PATH];
+//    char szDir[MAX_PATH];
 
     // current directory setzen
 #if 0

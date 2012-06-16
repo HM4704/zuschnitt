@@ -7,6 +7,7 @@
 #endif // _MSC_VER > 1000
 // AuswDlg.h : header file
 //
+#include "PersistenceManager.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CAuswDlg dialog
@@ -14,9 +15,10 @@
 class CAuswDlg : public CDialog
 {
 // Construction
+    CPersistenceManager* m_persMan;
 public:
-	CAuswDlg(CWnd* pParent = NULL);   // standard constructor
-	CAuswDlg(CWnd* pParent, char*, CTorDoor*, BOOL mod = FALSE);
+	CAuswDlg(CPersistenceManager* persMan, CWnd* pParent = NULL);   // standard constructor
+	CAuswDlg(CWnd* pParent, char*, CTorDoor*, CPersistenceManager* persMan, BOOL mod = FALSE);
 	~CAuswDlg();
 // Dialog Data
 	char* m_strKundName;
@@ -68,6 +70,7 @@ public:
 	void GetFluegelItems();
 protected:
     void AddBetoColor(int aNr, const char* szColor);
+    void AddHolzArt(char* szBuf, BOOL outside, char* szHolz);
 
 protected:
 
@@ -85,6 +88,20 @@ protected:
 	CComboBox m_ctrlBetoColor;
 public:
     afx_msg void OnCbnSelchangeBetoColor();
+    CComboBox m_cbKommission;
+    CComboBox m_cbKunde;
+private:
+    CComboBox m_cbPosition;
+public:
+    CString m_edPosition;
+
+private:
+public:
+    CComboBox m_cbHolzInnen;
+    CString m_edHolzInnen;
+    CComboBox m_cbHolzAussen;
+    afx_msg void OnCbnSelchangeHolzAussen();
+    afx_msg void OnCbnSelchangeHolzInnen();
 };
 
 //{{AFX_INSERT_LOCATION}}

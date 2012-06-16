@@ -1022,6 +1022,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PersistenceManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ProfileCutElem.cpp"
 				>
 			</File>
@@ -2297,6 +2301,10 @@
 			</File>
 			<File
 				RelativePath="Node.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PersistenceManager.h"
 				>
 			</File>
 			<File

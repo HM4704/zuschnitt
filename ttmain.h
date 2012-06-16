@@ -45,6 +45,7 @@ typedef struct {
 //
 #include "HtmlHelper.h"
 #include "RegistryManager.h"
+#include "PersistenceManager.h"
 
 #define HILFE_VERZEICHNIS  "Hilfe"
 
@@ -89,6 +90,7 @@ private:
     CRegistryManager    m_regManager;
     BOOL            m_bTestMode;
     CString         m_strAppPath;
+    CPersistenceManager m_persMan;
 
 public:
 	void SetPrintOrientation(short dmOrientation);
@@ -96,6 +98,7 @@ public:
     CRegistryManager* GetRegistryManager(void) { return &m_regManager; };
     BOOL IsInTestMode(void) { return m_bTestMode; };   // bei release auf FALSE!!!
     CString& GetAppPath(void) { return m_strAppPath; };
+    CPersistenceManager* GetPersistenceManager(void) { return &m_persMan; }
 protected:
 	BOOL CheckDirectory(CString strFileName);
 };

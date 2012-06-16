@@ -180,7 +180,7 @@ void CTtmainView::OnDraw(CDC* pDC)
         // Drucken
         int iDpiHorz = pDC->GetDeviceCaps(LOGPIXELSX);
         int iDpiVert = pDC->GetDeviceCaps(LOGPIXELSY);
-        m_iPageLen = 10*MM_PER_INCH*pDC->GetDeviceCaps(HORZRES)/iDpiHorz;
+        m_iPageLen = (10*MM_PER_INCH*pDC->GetDeviceCaps(HORZRES)/iDpiHorz) - 10;
         m_iPageHeight = 10*MM_PER_INCH*pDC->GetDeviceCaps(VERTRES)/iDpiVert;
         m_iLeftX = linksX; //10*MM_PER_INCH*pDC->GetDeviceCaps(PHYSICALOFFSETX)/iDpiHorz;//linksX;
         m_iTopY = startY;//+10*MM_PER_INCH*pDC->GetDeviceCaps(PHYSICALOFFSETY)/iDpiVert;//startY;
@@ -508,8 +508,9 @@ int CTtmainView::addTorDoor()
     }
     else
     {
-    	CTorDoor* pT = new CTorDoor;
-        CAuswDlg dlg(NULL, "Kunde", pT);
+    	CTorDoor* pT = new CTorDoor;       
+        CTtmainApp* pApp = (CTtmainApp*) AfxGetApp();
+        CAuswDlg dlg(NULL, "Kunde", pT, pApp->GetPersistenceManager());
 	    if ((iRet=dlg.DoModal()) == IDOK)
 	    {
 		    switch(pT->Art)
@@ -542,6 +543,7 @@ int CTtmainView::addTorDoor()
 		    pT->HolzElemente = NULL;
 		    pT->RiegelElemente = NULL;
 		    pT->BetoPlanElemente = NULL;
+		    pT->RahmenElemente = NULL;
 
             CTtmainDoc* pDoc = GetDocument();
             if (pDoc)
@@ -610,7 +612,8 @@ void CTtmainView::OnLButtonDown(UINT nFlags, CPoint point)
 			if (actY < mouse_y  &&
 				pTT->inBounds(posX, actY, mouse_x, mouse_y) == TRUE)
 			{
-				CAuswDlg dlg(this, "Kunde", pTT, TRUE);
+                CTtmainApp* pApp = (CTtmainApp*) AfxGetApp();
+                CAuswDlg dlg(this, "Kunde", pTT, pApp->GetPersistenceManager(), TRUE);
 				if (dlg.DoModal() == IDOK)
 				{
                     CTtmainDoc* pDoc = GetDocument();
@@ -638,7 +641,9 @@ int CTtmainView::editTorDoor(int iTorNr)
     CTorDoor* pTT = (CTorDoor*)m_pTore.GetAt(iTorNr);
     if (pTT)
     {
-		CAuswDlg dlg(this, "Kunde", pTT, TRUE);
+        CTtmainApp* pApp = (CTtmainApp*) AfxGetApp();
+
+        CAuswDlg dlg(this, "Kunde", pTT, pApp->GetPersistenceManager(), TRUE);
 		if ((iRet = dlg.DoModal()) == IDOK)
 		{
             m_iAryTorHoehe[iTorNr] = __max(MIN_Y_EINTRAG, pTT->getLineBegin(CA_Y_BOTTOMLINE));
@@ -709,7 +714,7 @@ BOOL CTtmainView::saveAll(char* strFileName)
 
 BOOL CTtmainView::saveAll(CArchive& archive)
 {
-	BOOL result;
+//	BOOL result;
 
 	TRY
 	{
@@ -867,6 +872,7 @@ int CTtmainView::openTorDoor(CString& strFileName)
 			pT->HolzElemente = NULL;
 			pT->RiegelElemente = NULL;
 			pT->BetoPlanElemente = NULL;
+			pT->RahmenElemente = NULL;
 
 			delete pT;	
 
@@ -875,6 +881,11 @@ int CTtmainView::openTorDoor(CString& strFileName)
 				// keine Referenzdatei, also neu berechnen
 				pTTor->updateValues();
 			}
+            else
+            {
+                // Rahmen immer neu bestimmen
+                pTTor->updateRahmen();
+            }
 			m_iAryTorHoehe[m_pTore.GetSize()] = __max(MIN_Y_EINTRAG, pTTor->getLineBegin(CA_Y_BOTTOMLINE));
 
 			m_pTore.Add(pTTor);

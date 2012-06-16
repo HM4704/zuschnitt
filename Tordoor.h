@@ -50,6 +50,7 @@
 #define  CA_Y_BOTTOMLINE           4      // unterste Zeile
 
 
+#define  POSITION_SIGN             "A5E74EFF3-"         // String für Position im Kommissionsstring
 
 //class TNSCollection;
 class CFlParam;
@@ -67,6 +68,7 @@ typedef enum { PD_70_40=0, PD_60_40 } tProfilMass;
 #define TTOBJ_TYPE_PROFILE_ELEM   1
 #define TTOBJ_TYPE_RIEGEL_ELEM    2
 #define TTOBJ_TYPE_HOLZ_ELEM      3
+#define TTOBJ_TYPE_RAHMEN_ELEM    4
 
 
 class CTTObject : public CObject
@@ -167,6 +169,21 @@ class CProfileElem : public CTTObject
     virtual int  GetObjType(void) { return TTOBJ_TYPE_PROFILE_ELEM; };
 };
 
+class CRahmenElem : public CTTObject
+{
+public:
+    int Anzahl;
+    int Laenge;
+    tDirect Direction;
+    tRAHMEN Rahmen;
+
+    CRahmenElem() { Anzahl = 0; Laenge = 0; Direction = WAAGRECHT; Rahmen = RZ; };
+    CRahmenElem(int Anz, int Len, tDirect Dir, tRAHMEN rahmen)
+    { Anzahl = Anz; Laenge = Len; Direction = Dir; Rahmen = rahmen; };
+
+    virtual void MySerialize(CArchive& archive, int iVersion);
+    virtual int  GetObjType(void) { return TTOBJ_TYPE_PROFILE_ELEM; };
+};
 
 class CGlasProfileElem : public CProfileElem
 {
@@ -284,6 +301,8 @@ class CTorDoor : public CObject
    CPtrArray* HolzElemente;
    CPtrArray* RiegelElemente;
    CPtrArray* BetoPlanElemente;
+   CPtrArray* RahmenElemente;
+
 
    float scF;   //Skalierungsfaktor
    int   aSp;   //Außenspalte
@@ -311,6 +330,7 @@ class CTorDoor : public CObject
    void deleteHolzElemente();
    void deleteRiegelElemente();
    void deleteBetoPlanElemente();
+   void deleteRahmenElemente();
 
    virtual void drawTT(HDC hdc, int x, int y, int breite, int hoehe, HFONT fntSmall);
    void draw(HDC hdc);
@@ -333,8 +353,11 @@ class CTorDoor : public CObject
    BOOL insertHolzElement(int iAnzahl, int iBreite, int iLaenge, int iSort);
    BOOL insertRiegelElement(int iAnzahl, int iLaenge);
    BOOL insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge);
+   BOOL insertRahmenElement(int Anz, int Len, tDirect Dir, tRAHMEN Rahmen);
 
    void computeProfile(CFlParam* pFl, int count, int iActFl);
+   void computeRahmen(void);
+
    virtual float calculateScale(int breite, int hoehe);
 
    int printKundKomm(HDC hdc, int x, int y, int maxX, HFONT font);
@@ -345,9 +368,10 @@ class CTorDoor : public CObject
    int printDIN(HDC hdc, int x, int y, int maxX, HFONT font);
    int printObert(HDC hdc, int x, int y, int maxX, HFONT font);
    int printFenster(HDC hdc, int y, int posStarr,
-	int posKipp, int posSchieb, int maxX, HFONT font);
+                    int posKipp, int posSchieb, int maxX, HFONT font);
    int printFuellung(HDC hdc, int x, int y, int maxX, HFONT font);
    void drawDirection(HDC hdc, int x, int y, tDirect dir);
+   void drawRahmen(HDC hdc, int x, int y, tRAHMEN rahmen);
    void drawProfil(HDC hdc, int x, int y, int typ);
    void drawSquares(HDC hdc, int x, int y);
    void profilRP1614(HDC hdc, int x, int y);
@@ -359,10 +383,14 @@ class CTorDoor : public CObject
    void profilRPRR(HDC hdc, int x, int y);
    int  getOeffnerFluegel(void);
    void updateFuellung(void);
+   void updateRahmen(void);
+
     
    void updateValues();
 
    int getLineBegin(int iKind);
+   void CTorDoor::GetPositionKommission(char* komm, char* pos);
+
 
 
    ///////////////

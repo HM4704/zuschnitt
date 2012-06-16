@@ -45,6 +45,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    ProfilMass = ct->ProfilMass;
    FlParam    = ct->FlParam;
    Profile    = ct->Profile;
+   RahmenElemente = ct->RahmenElemente;
    GlasProfile = ct->GlasProfile;
    HolzElemente = ct->HolzElemente;
    RiegelElemente = ct->RiegelElemente;
@@ -73,6 +74,7 @@ CTorDoor::CTorDoor()
    HolzElemente = NULL;
    RiegelElemente = NULL;
    BetoPlanElemente = NULL;
+   RahmenElemente = NULL;
    StueckZahl = 0;
    Size.Breite = 0;
    Size.Hoehe = 0;
@@ -106,6 +108,7 @@ CTorDoor::~CTorDoor()
 	if (HolzElemente != NULL) delete HolzElemente;
 	if (RiegelElemente != NULL) delete RiegelElemente;
 	if (BetoPlanElemente != NULL) delete BetoPlanElemente;
+    if (RahmenElemente != NULL) delete RahmenElemente;
 }
 
 void CTorDoor::deleteFluegel()
@@ -203,6 +206,20 @@ void CTorDoor::deleteBetoPlanElemente()
 			delete pFl;
 		}
 		BetoPlanElemente->RemoveAll();
+	}
+}
+
+void CTorDoor::deleteRahmenElemente()
+{
+	if (RahmenElemente != NULL)
+	{
+		int count = RahmenElemente->GetSize();
+		for (int i=0; i<count; i++)
+		{
+			CRahmenElem* pFl = (CRahmenElem*)RahmenElemente->GetAt(i);
+			delete pFl;
+		}
+		RahmenElemente->RemoveAll();
 	}
 }
 
@@ -776,6 +793,7 @@ void CTorDoor::computeProfile(CFlParam* pFl, int count, int iActFl)
 
   computeFuellung(pFl, count, iSaveSenkProf, iSaveSenkOberProf,
                               iSaveQuerProf);
+
 }
 
 void CTorDoor::computeFuellung(CFlParam *pFl, int count, int iSaveSenkProf, int iSaveSenkOberProf,
@@ -1577,6 +1595,29 @@ BOOL CTorDoor::insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge)
   return found;
 }
 
+BOOL CTorDoor::insertRahmenElement(int Anz, int Len, tDirect Dir, tRAHMEN rahmen)
+{
+  BOOL found = FALSE;
+  int count = RahmenElemente->GetSize();
+  for (int i=0; i<count&&!found; i++)
+  {
+    CRahmenElem *tempElem = (CRahmenElem*) RahmenElemente->GetAt(i);
+    if (tempElem->Laenge == Len &&
+	    tempElem->Direction == Dir &&
+        tempElem->Rahmen == rahmen)
+    {
+      found = TRUE;
+      tempElem->Anzahl += Anz;
+    }
+  }
+  if (!found)
+  {
+     CRahmenElem* pP = new CRahmenElem(Anz, Len, Dir, rahmen);
+     RahmenElemente->Add(pP);
+  }
+  return found;
+}
+
 void CTorDoor::drawTT(HDC hdc, int x, int y, int b, int h, HFONT fntSmall)
 {
 }
@@ -1719,14 +1760,46 @@ int CTorDoor::isInOnBounds(int x, int y)
        return 1;
 }
 
+void CTorDoor::GetPositionKommission(char* komm, char* pos)
+{
+    char sTemp[MAX_PATH];
+
+    strcpy(sTemp, Kommission);
+
+    char* p = strstr(sTemp, POSITION_SIGN);
+    if (p != NULL)
+    {
+        *p = 0;
+        strcpy(komm, sTemp);
+        p += strlen(POSITION_SIGN);
+        strcpy(pos, p);
+    }
+    else
+    {
+        strcpy(komm, Kommission);
+        pos[0] = '1';
+        pos[1] = 0;
+    }
+}
+
 
 int CTorDoor::printKundKomm(HDC hdc, int x, int y, int maxX, HFONT bFont)
 {
-  char szBuf[100];
+#define POS_STRING  "Pos. "
+  char szBuf[100], kommission[100], pos[100];
   HFONT orgFont = (HFONT)SelectObject(hdc, bFont);
   TextOut(hdc, x, -y, Kunde, strlen(Kunde));
   SelectObject(hdc, orgFont);
-  TextOut(hdc, x, -(y+rowH), Kommission, strlen(Kommission));
+
+  GetPositionKommission(kommission, pos);
+  // Kommission
+  TextOut(hdc, x, -(y + rowH), kommission, strlen(kommission));
+  // Position
+  TextOut(hdc, x, -(y + 2*rowH), POS_STRING, strlen(POS_STRING));
+  TextOut(hdc, x, -(y + 2*rowH), POS_STRING, strlen(POS_STRING));
+  SIZE size;
+  GetTextExtentPoint(hdc, POS_STRING, strlen(POS_STRING), &size);
+  TextOut(hdc, x + size.cx, -(y + 2*rowH), pos, strlen(pos));
 
   y += getLineBegin(CA_Y_AFTER_ROFILES);
   maxX -= 20;
@@ -1749,7 +1822,7 @@ int CTorDoor::printKundKomm(HDC hdc, int x, int y, int maxX, HFONT bFont)
           default:
               strcpy(szBuf, "Fenster");
               break;
-          }
+          } 
       }
       else
         strcpy(szBuf, "Fenster");
@@ -1758,7 +1831,12 @@ int CTorDoor::printKundKomm(HDC hdc, int x, int y, int maxX, HFONT bFont)
   y += GlasProfile->GetSize()*rowH;
   
   y += rowH;
-
+  if (RahmenElemente != NULL && RahmenElemente->GetSize() > 0)
+  {
+      strcpy(szBuf, "Rahmen");
+      OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
+      y += 2*rowH;
+  }
   if (HolzElemente->GetSize() > 0)
   {
       strcpy(szBuf, "Bretter");
@@ -1903,6 +1981,18 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
   }
 
 
+  if (RahmenElemente != NULL)
+  {
+      for (i=0; i<HolzElemente->GetSize(); i++)
+      {
+         CRahmenElem* pF = (CRahmenElem*)RahmenElemente->GetAt(i);
+         y += rowH;
+         sprintf(buf, "%d St.", pF->Anzahl);
+	     TextOut(hdc, x, -(y), buf, strlen(buf));
+      }
+  }
+
+//  y += 2*rowH;
   // Ausgabe der Holz-Elemente
   // Ausgabe:           Stück       |       Breite         |   Höhe             | DIN
   //            --------------------|----------------------|--------------------|------
@@ -2032,6 +2122,10 @@ int CTorDoor::getLineBegin(int iKind)
   for (i=0; i<BetoPlanElemente->GetSize(); i++)
   {
      iLineCount += rowH;
+  }
+  if ((RahmenElemente != NULL) && RahmenElemente->GetSize() > 0)
+  {
+     iLineCount += 2*rowH;
   }
 
   iLineCount += rowH;
@@ -2173,8 +2267,23 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
 //      TextOut(hdc, x, -(y), temp, strlen(temp));
   }
 
-  // Ausgabe der Holz-Elemente
+  // Zeichnen der Rahmen
   y = iYOrg + getLineBegin(CA_Y_AFTER_GLASPROFILES);
+//  y += 2*rowH;
+  if (RahmenElemente != NULL && RahmenElemente->GetSize() > 0)
+  {
+      for (i=0; i<RahmenElemente->GetSize(); i++)
+      {
+         CRahmenElem* pF = (CRahmenElem*)RahmenElemente->GetAt(i);
+         if (pF != NULL)
+         {
+             y += rowH;
+             drawRahmen(hdc, x + 10, y, pF->Rahmen);
+         }
+      }
+  }
+
+  // Ausgabe der Holz-Elemente
   for (int i=0; i<HolzElemente->GetSize(); i++)
   {
      CHolzElement* pF = (CHolzElement*)HolzElemente->GetAt(i);
@@ -2632,7 +2741,21 @@ int CTorDoor::printHoehe(HDC hdc, int x, int y, int posDir, int maxX,
   if (i > 0)
       y += rowH;
 
+  // Ausgabe der Rahmenelemente
+  if (RahmenElemente != NULL)
+  {
+      for (i=0; i<RahmenElemente->GetSize(); i++)
+      {
+         CRahmenElem* pF = (CRahmenElem*)RahmenElemente->GetAt(i);
+         y += rowH;
+         sprintf(buf, "%d", pF->Laenge);
+	     TextOut(hdc, x, -(y), buf, strlen(buf));
+         drawDirection(hdc, posDir, y,
+	       pF->Direction);
+      }
+  }
   // Ausgabe der Fuellungen
+//  y += 2*rowH;
   for (i=0; i<HolzElemente->GetSize(); i++)
   {
      CHolzElement* pF = (CHolzElement*)HolzElemente->GetAt(i);
@@ -2680,6 +2803,49 @@ void CTorDoor::drawDirection(HDC hdc, int x, int y, tDirect dir)
     LineTo(hdc, x+40, -(y+24));   // --
     MoveToEx(hdc, x+50, -(y+10), NULL);
     LineTo(hdc, x+30, -(y+38));   //  /
+  }
+}
+
+void CTorDoor::drawRahmen(HDC hdc, int x, int y, tRAHMEN rahmen)
+{
+  if (rahmen == RZ)
+  {
+    x += 5;
+    MoveToEx(hdc, x, -y, NULL);
+    x += 40;
+    LineTo(hdc, x, -y);
+    y += 35;
+    LineTo(hdc, x, -y);
+    x += 35;
+    LineTo(hdc, x, -y);
+    y += 5;
+    LineTo(hdc, x, -y);
+    x -= 40;
+    LineTo(hdc, x, -y);
+    y -= 35;
+    LineTo(hdc, x, -y);
+    x -= 35;
+    LineTo(hdc, x, -y);
+    y -= 5;
+    LineTo(hdc, x, -y);
+  }
+  else
+  if (rahmen == RW)
+  {
+    x += 5;
+    MoveToEx(hdc, x, -y, NULL);
+    x += 5;
+    LineTo(hdc, x, -y);
+    y += 40;
+    LineTo(hdc, x, -y);
+    x += 40;
+    LineTo(hdc, x, -y);
+    y += 5;
+    LineTo(hdc, x, -y);
+    x -= 45;
+    LineTo(hdc, x, -y);
+    y -= 45;
+    LineTo(hdc, x, -y);
   }
 }
 
@@ -2861,6 +3027,15 @@ void CTorDoor::drawSquares(HDC hdc, int x, int y)
 
 }
 
+void CTorDoor::updateRahmen()
+{
+   if (RahmenElemente == NULL)
+      RahmenElemente = new CPtrArray;
+   else
+      deleteRahmenElemente();
+   computeRahmen();
+}
+
 void CTorDoor::updateValues()
 {
    //Profilemaße löschen
@@ -2887,6 +3062,10 @@ void CTorDoor::updateValues()
       BetoPlanElemente = new CPtrArray;
    else
       deleteBetoPlanElemente();
+   if (RahmenElemente == NULL)
+      RahmenElemente = new CPtrArray;
+   else
+      deleteRahmenElemente();
 
    int count = FlParam->GetSize();
    for (int i=0; i<count; i++)
@@ -2901,8 +3080,81 @@ void CTorDoor::updateValues()
         computeProfile(FluegelP, count, i);
      }
    }
+
+   computeRahmen();
 }
 
+void CTorDoor::computeRahmen(void)
+{
+    int iHoehe, iBreite;
+
+    iBreite = Size.Breite*10;
+    iHoehe = Size.Hoehe*10;
+    if (Typ == 4)
+    {
+        // Typ 400
+        if (RahmenArt == RW || RahmenArt == RZ)
+        {
+            // Z- und W-Rahmen
+            if (Art == ATUER)
+            {
+                // Türen ohne Abzuege
+            }
+            else
+            if (Art == ATOR)
+            {
+                iBreite -= 8;
+                iHoehe  -= 8;
+            }
+            else
+            if (Art == FT3 || Art == FT4 || Art == FT5)
+            {
+                iBreite -= 20;
+                iHoehe  -= 8;
+            }
+            else
+            {
+                // alles andere nicht
+                iBreite = iHoehe = 0;
+            }
+        }
+    }
+    else
+    if (Typ == 6)
+    {
+        // Typ 600
+        if (RahmenArt == RW || RahmenArt == RZ)
+        {
+            // Z- und W-Rahmen
+            if (Art == ATUER)
+            {
+                // Türen ohne Abzuege
+            }
+            else
+            if (Art == ATOR)
+            {
+                iBreite -= 8;
+                iHoehe  -= 8;
+            }
+            else
+            if (Art == FT3 || Art == FT4 || Art == FT5)
+            {
+                iBreite -= 20;
+                iHoehe  -= 8;
+            }
+            else
+            {
+                // alles andere nicht
+                iBreite = iHoehe = 0;
+            }
+        }        
+    }
+    if (iBreite != 0 && iHoehe != 0)
+    {
+        insertRahmenElement(2*StueckZahl, iHoehe, SENKRECHT, (tRAHMEN)RahmenArt);
+        insertRahmenElement(2*StueckZahl, iBreite, WAAGRECHT, (tRAHMEN)RahmenArt);
+    }
+}
 
 // Function name	: CTorDoor::OutputAligned
 // Description	    : gibt Text aligned wie durch Übergabe spezifiziert aus
@@ -3225,6 +3477,10 @@ void CRiegelElement::MySerialize(CArchive& archive, int iVersion)
     {
         archive >> m_iAnzahl >> m_iLaenge;
     }
+}
+
+void CRahmenElem::MySerialize(CArchive& archive, int iVersion)
+{
 }
 
 #pragma warning( pop ) 

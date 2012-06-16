@@ -248,8 +248,11 @@
 #define IDC_PS312_DEST_EDIT_LENGTH      1107
 #define IDC_PS312_DSET_EDIT_MASS_ABS    1108
 #define IDC_PS312_DSET_EDIT_MASS_KETTE  1109
-#define IDC_COMBO1                      1111
 #define IDC_BETO_COLOR                  1111
+#define IDC_HOLZ_AUSSEN                 1112
+#define IDC_HOLZ_AUSSEN2                1113
+#define IDC_HOLZ_INNEN                  1113
+#define IDC_POSITION                    1114
 #define ID_TOR_HINZU                    32771
 #define ID_DATEI_FFNEN                  32772
 #define ID_KREISBERECHNUNG              32773
@@ -295,7 +298,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32824
-#define _APS_NEXT_CONTROL_VALUE         1112
+#define _APS_NEXT_CONTROL_VALUE         1115
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

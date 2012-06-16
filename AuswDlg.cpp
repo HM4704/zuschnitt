@@ -24,13 +24,23 @@ static const char* szBetoColors[] =
 	"gelb"
 };
 
-CAuswDlg::CAuswDlg(CWnd* pParent /*=NULL*/)
+static const char* szHolzArt[] = 
+{
+	"",
+	"Fichte",
+	"Lärche"
+};
+
+CAuswDlg::CAuswDlg(CPersistenceManager* persMan, CWnd* pParent /*=NULL*/)
 	: CDialog(CAuswDlg::IDD, pParent)
+    , m_edPosition(_T("1"))
+    , m_edHolzInnen(_T(""))
 {
     m_iCurFlCnt = 0;
+    m_persMan = persMan;
 }
 
-CAuswDlg::	CAuswDlg(CWnd* pParent, char* strKName, CTorDoor* pT, 
+CAuswDlg::	CAuswDlg(CWnd* pParent, char* strKName, CTorDoor* pT, CPersistenceManager* persMan, 
 		BOOL modi) : CDialog(CAuswDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CAuswDlg)
@@ -44,6 +54,7 @@ CAuswDlg::	CAuswDlg(CWnd* pParent, char* strKName, CTorDoor* pT,
 	m_edSehnenHoehe = _T("");
 	m_edProfilDicke = _T("");
 	m_strBreiteFl1 = _T("");
+    m_edPosition = _T("1");
 	//}}AFX_DATA_INIT
 
 	m_bModify = modi;
@@ -51,6 +62,7 @@ CAuswDlg::	CAuswDlg(CWnd* pParent, char* strKName, CTorDoor* pT,
 	m_strKundName = strKName;
 	m_cTorTyp = ' ';
     m_iCurFlCnt = 0;
+    m_persMan = persMan;
 }
 
 CAuswDlg::~CAuswDlg()
@@ -59,29 +71,37 @@ CAuswDlg::~CAuswDlg()
 
 void CAuswDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAuswDlg)
-	DDX_Control(pDX, IDC_PROFILMASS, m_cbProfilMass);
-	DDX_Control(pDX, IDC_400R, m_ck400R);
-	DDX_Control(pDX, IDC_BREITE_FL1, m_edBreiteFl1);
-	DDX_Control(pDX, IDC_BOGEN, m_ckBogen);
-	DDX_Control(pDX, IDC_OKF, m_cckOKF);
-	DDX_Control(pDX, IDS_FUELLUNG, m_cedFuellung);
-	DDX_Control(pDX, IDC_FUELLUNG, m_cbFuellung);
-	DDX_Control(pDX, IDS_TTORTYP, m_cedTorTyp);
-	DDX_Control(pDX, IDC_TTORTYP, m_cbTTorTyp);
-	DDX_Text(pDX, IDC_KUNDE, m_edKunde);
-	DDX_Text(pDX, IDC_KOMMISSION, m_edKommission);
-	DDX_Text(pDX, IDC_HOEHE, m_edHoehe);
-	DDX_Text(pDX, IDC_OBERHOEHE, m_edOberHoehe);
-	DDX_Text(pDX, IDS_FUELLUNG, m_edFuellung);
-	DDX_Text(pDX, IDC_ANZAHL, m_edAnzahl);
-	DDX_Text(pDX, IDC_BREITE, m_edBreite);
-	DDX_Text(pDX, IDC_SEHNENHOEHE, m_edSehnenHoehe);
-	DDX_Text(pDX, IDC_PROFILDICKE, m_edProfilDicke);
-	DDX_Text(pDX, IDC_BREITE_FL1, m_strBreiteFl1);
-	//}}AFX_DATA_MAP
-	DDX_Control(pDX, IDC_BETO_COLOR, m_ctrlBetoColor);
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAuswDlg)
+    DDX_Control(pDX, IDC_PROFILMASS, m_cbProfilMass);
+    DDX_Control(pDX, IDC_400R, m_ck400R);
+    DDX_Control(pDX, IDC_BREITE_FL1, m_edBreiteFl1);
+    DDX_Control(pDX, IDC_BOGEN, m_ckBogen);
+    DDX_Control(pDX, IDC_OKF, m_cckOKF);
+    DDX_Control(pDX, IDS_FUELLUNG, m_cedFuellung);
+    DDX_Control(pDX, IDC_FUELLUNG, m_cbFuellung);
+    DDX_Control(pDX, IDS_TTORTYP, m_cedTorTyp);
+    DDX_Control(pDX, IDC_TTORTYP, m_cbTTorTyp);
+    DDX_Text(pDX, IDC_KUNDE, m_edKunde);
+    DDX_Text(pDX, IDC_KOMMISSION, m_edKommission);
+    DDX_Text(pDX, IDC_HOEHE, m_edHoehe);
+    DDX_Text(pDX, IDC_OBERHOEHE, m_edOberHoehe);
+    DDX_Text(pDX, IDS_FUELLUNG, m_edFuellung);
+    DDX_Text(pDX, IDC_ANZAHL, m_edAnzahl);
+    DDX_Text(pDX, IDC_BREITE, m_edBreite);
+    DDX_Text(pDX, IDC_SEHNENHOEHE, m_edSehnenHoehe);
+    DDX_Text(pDX, IDC_PROFILDICKE, m_edProfilDicke);
+    DDX_Text(pDX, IDC_BREITE_FL1, m_strBreiteFl1);
+    //}}AFX_DATA_MAP
+    DDX_Control(pDX, IDC_BETO_COLOR, m_ctrlBetoColor);
+    DDX_Control(pDX, IDC_KOMMISSION, m_cbKommission);
+    DDX_Control(pDX, IDC_KUNDE, m_cbKunde);
+    DDX_Control(pDX, IDC_POSITION, m_cbPosition);
+    DDX_CBString(pDX, IDC_POSITION, m_edPosition);
+    DDV_MaxChars(pDX, m_edPosition, 2);
+    DDX_Control(pDX, IDC_HOLZ_INNEN, m_cbHolzInnen);
+    DDX_CBString(pDX, IDC_HOLZ_INNEN, m_edHolzInnen);
+    DDX_Control(pDX, IDC_HOLZ_AUSSEN, m_cbHolzAussen);
 }
 
 
@@ -95,6 +115,8 @@ BEGIN_MESSAGE_MAP(CAuswDlg, CDialog)
 	ON_BN_CLICKED(IDC_400R, OnClicked400R)
 	//}}AFX_MSG_MAP
     ON_CBN_SELCHANGE(IDC_BETO_COLOR, &CAuswDlg::OnCbnSelchangeBetoColor)
+    ON_CBN_SELCHANGE(IDC_HOLZ_AUSSEN, &CAuswDlg::OnCbnSelchangeHolzAussen)
+    ON_CBN_SELCHANGE(IDC_HOLZ_INNEN, &CAuswDlg::OnCbnSelchangeHolzInnen)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -102,6 +124,8 @@ END_MESSAGE_MAP()
 
 BOOL CAuswDlg::OnInitDialog() 
 {
+    char ctemp[10];
+
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
@@ -169,6 +193,11 @@ BOOL CAuswDlg::OnInitDialog()
 	for (int i = 0; i < 2; i++)
 		m_ctrlBetoColor.AddString(szBetoColors[i]);
 
+	for (int i = 0; i < 3; i++)
+		m_cbHolzAussen.AddString(szHolzArt[i]);
+	for (int i = 0; i < 3; i++)
+		m_cbHolzInnen.AddString(szHolzArt[i]);
+
     char szBuf[300];
 	m_ctrlBetoColor.SetCurSel(0);
     for (int i = 0; i < 2; i++)
@@ -179,34 +208,29 @@ BOOL CAuswDlg::OnInitDialog()
         }
     }
 
+    for (int i = 1; i < 21; i++)
+    {
+        m_cbPosition.AddString(itoa(i, ctemp, 10));
+    }
+
 	if (m_bModify)
 	{
-
-		char ctemp[10];
+        char kommission[MAX_PATH], pos[MAX_PATH];
 		m_edKunde = m_pTor->Kunde;
-		m_edKommission = m_pTor->Kommission;
+        m_pTor->GetPositionKommission(kommission, pos);
+		m_edKommission = kommission;
+        m_edPosition = pos;
 
 		m_cbTTorTyp.SelectString(-1, m_pTor->sArtikel);
 		SetFuellung(m_pTor->sArtikel);
 		EnableControls(m_pTor->sArtikel);
 
-#if 0   //?? immer Fuellungs-Text verwenden
-		if (m_pTor->Fuellung != -1)
-		{
-			itoa(m_pTor->Fuellung, ctemp, 10);
-			m_cbFuellung.SelectString(-1, ctemp);
-			m_edFuellung = dataScan.getBezeich(m_pTor->Fuellung);
-		}
-		else
-			m_edFuellung = m_pTor->strFuellung;
-#else
 		m_edFuellung = m_pTor->strFuellung;
 		if (m_pTor->Fuellung != -1)
 		{
 			itoa(m_pTor->Fuellung, ctemp, 10);
 			m_cbFuellung.SelectString(-1, ctemp);
 		}
-#endif   // 0
 
 		itoa(m_pTor->StueckZahl, ctemp, 10);
 		m_edAnzahl = ctemp;
@@ -272,6 +296,14 @@ BOOL CAuswDlg::OnInitDialog()
 		str.Empty();
 		EnableControls(str);
 	}
+    for( POSITION pos = m_persMan->GetListKunde().GetHeadPosition(); pos != NULL; )
+    {
+        m_cbKunde.AddString(m_persMan->GetListKunde().GetNext( pos ));
+    }
+    for( POSITION pos = m_persMan->GetListKommission().GetHeadPosition(); pos != NULL; )
+    {
+        m_cbKommission.AddString(m_persMan->GetListKommission().GetNext( pos ));
+    }
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -334,7 +366,39 @@ static const char betoSearchTexts[NR_BETO_TEXT][50] =
     "PP"
 };
 
-#if 1
+typedef struct _HOLZ_ADD_TEXTS
+{
+    char searchText[60];
+    char addText[60];
+} HOLZ_ADD_TEXTS;
+
+#define NR_HOLZ_AUSSEN_TEXT  10
+static const HOLZ_ADD_TEXTS holzAussenSearchTexts[NR_HOLZ_AUSSEN_TEXT] =
+{
+    { "doppelw. Holzfüllung", "außen " },
+    { "einw. Holzfüllung", "" },
+    { "außen Holz", "" },
+    { "doppelw. Holz", "außen " },
+    { "doppelw. Holz (2 x 14 mm)", "außen " },
+    { "einwandig Holz (1 x 16 mm)", "" },
+    { "einwandig Holz (1 x 16 mm)", "" },
+    { "m. einw. Holz", "" },
+    { "doppelw. Holz", "außen " },
+    { "m. einw. Holzfüllung", "" }
+    
+};
+
+#define NR_HOLZ_INNEN_TEXT  6
+static const HOLZ_ADD_TEXTS holzInnenSearchTexts[NR_HOLZ_INNEN_TEXT] =
+{
+    { "doppelw. Holzfüllung", "innen " },
+    { "innen Holz", "" },
+    { "doppelw. Holz", "innen " },
+    { "doppelw. Holz (2 x 14 mm)", "innen " },
+    { "doppelw. Holz", "innen " },
+    { "doppelw. Holz", "innen " }    
+};
+
 void CAuswDlg::AddBetoColor(int aNr, const char* szColor)
 {
     char szBuf[300];
@@ -353,7 +417,39 @@ void CAuswDlg::AddBetoColor(int aNr, const char* szColor)
     }
 
 }
-#endif //0
+
+void CAuswDlg::AddHolzArt(char* szBuf, BOOL outside, char* szHolz)
+{
+    
+//    m_cedFuellung.GetWindowText(szBuf);
+//    strncpy(szBuf, dataScan.getBezeich(aNr), sizeof(szBuf));
+    char szWord[200];
+
+    const HOLZ_ADD_TEXTS* holzAddTexts;
+    int Len;
+    
+    if (outside)
+    {
+        Len = NR_HOLZ_AUSSEN_TEXT;
+        holzAddTexts = holzAussenSearchTexts;
+    }
+    else
+    {
+        Len = NR_HOLZ_INNEN_TEXT;
+        holzAddTexts = holzInnenSearchTexts;        
+    }
+    for (int i = 0; i < Len; i++)
+    {
+        strncpy(szWord, holzAddTexts[i].addText, sizeof(szWord));
+        strncat(szWord, szHolz, sizeof(szWord));
+        if (insertWord(szBuf, holzAddTexts[i].searchText, szWord) == true)
+        {
+	        m_cedFuellung.SetWindowText(szBuf);
+            break;
+        }
+    }
+
+}
 
 void CAuswDlg::OnCbnSelchangeBetoColor()
 {
@@ -379,9 +475,26 @@ void CAuswDlg::OnSelchangeFuellung()
 		{
             AddBetoColor(aNr, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
 		}
-		else
+        if (inside == F_HOLZ && m_cbHolzInnen.GetCurSel() > 0 /* != "" */)
 		{
-//			m_ctrlBetoColor.ShowWindow(FALSE);
+            char szHolz[60];
+            m_cbHolzInnen.GetLBText(m_cbHolzInnen.GetCurSel(), szHolz);
+            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
+            AddHolzArt(cBuffer, FALSE, szHolz);
+		}
+        if (outside == F_HOLZ_I && m_cbHolzInnen.GetCurSel() > 0 /* != "" */)
+		{
+            char szHolz[60];
+            m_cbHolzInnen.GetLBText(m_cbHolzInnen.GetCurSel(), szHolz);
+            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
+            AddHolzArt(cBuffer, TRUE, szHolz);
+		}
+        if (outside == F_HOLZ && m_cbHolzAussen.GetCurSel() > 0 /* != "" */)
+		{
+            char szHolz[60];
+            m_cbHolzAussen.GetLBText(m_cbHolzAussen.GetCurSel(), szHolz);
+            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
+            AddHolzArt(cBuffer, TRUE, szHolz);
 		}
 	}
 }
@@ -510,7 +623,11 @@ void CAuswDlg::OnOK( )
 
 	strcpy(m_pTor->Kunde, m_edKunde);
 
+    // Kommission + Position
 	strcpy(m_pTor->Kommission, m_edKommission);
+    strcat(m_pTor->Kommission, POSITION_SIGN);
+    strcat(m_pTor->Kommission, m_edPosition);
+
 
 	if (((iCurSel = m_cbTTorTyp.GetCurSel()) != CB_ERR)
 		&& (m_cbTTorTyp.GetLBText(iCurSel, cBuffer) != CB_ERR))
@@ -655,15 +772,16 @@ void CAuswDlg::OnOK( )
 		}
 	}
 
+    m_persMan->AddKundeToList(m_edKunde);       
+    m_persMan->AddKommssionToList(m_edKommission);       
+
 	m_pTor->updateValues();
 	CDialog::OnOK();
 }
 
 
-
 void CAuswDlg::OnBogen() 
 {
-	// TODO: Add your control notification handler code here
     if (m_ckBogen.GetCheck() == BF_CHECKED)
     {
         GetDlgItem(IDC_SEHNENHOEHE)->EnableWindow(TRUE);
@@ -738,4 +856,16 @@ void CAuswDlg::OnClicked400R()
                 break;
             }
     }
+}
+
+void CAuswDlg::OnCbnSelchangeHolzAussen()
+{
+    // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
+    OnSelchangeFuellung();
+}
+
+void CAuswDlg::OnCbnSelchangeHolzInnen()
+{
+    // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
+    OnSelchangeFuellung();
 }
