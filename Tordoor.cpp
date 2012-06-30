@@ -1980,10 +1980,10 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
       TextOut(hdc, x, -(y), buf, strlen(buf));
   }
 
-
+#if 1
   if (RahmenElemente != NULL)
   {
-      for (i=0; i<HolzElemente->GetSize(); i++)
+      for (i=0; i<RahmenElemente->GetSize(); i++)
       {
          CRahmenElem* pF = (CRahmenElem*)RahmenElemente->GetAt(i);
          y += rowH;
@@ -1991,6 +1991,7 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
 	     TextOut(hdc, x, -(y), buf, strlen(buf));
       }
   }
+#endif
 
 //  y += 2*rowH;
   // Ausgabe der Holz-Elemente

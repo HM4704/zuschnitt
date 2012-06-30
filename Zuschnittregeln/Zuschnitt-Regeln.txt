@@ -73,5 +73,5 @@ Typ[400], OKF[nein]: 20
 
 # Abschnitt für Zugaben (negativ) für Schiebefenster Typ 2 ( senkrecht, waagrecht)
 [SF2]
--10, -179, -10, -206
+-10, -179, -10, -216
 
