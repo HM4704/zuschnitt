@@ -3126,7 +3126,7 @@ void CTorDoor::drawFestellung(HDC hdc, int x, int y)
             CFlParam* pFl = (CFlParam*)FlParam->GetAt(0);
             TextOut(hdc, x+Size.ZBreite-spaceSquare - 40, y_pos, pFst, strlen(pFst));
             MoveToEx(hdc, x+Size.ZBreite+spaceSquare - 40, y_pos - 4, NULL);
-            LineTo(hdc, x + pFl->iZBreite + 10, -(y+Size.ZGesamtHoehe - 30) ); 
+            LineTo(hdc, x + pFl->iZBreite + 21, -(y+Size.ZGesamtHoehe - 30) ); 
         }
      }
   }
