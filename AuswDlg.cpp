@@ -24,6 +24,13 @@ static const char* szBetoColors[] =
 	"gelb"
 };
 
+static const char* szSchlossArt[] =
+{
+    "",
+    "PZ",
+    "PZ/GS"
+};
+
 static const char* szHolzArt[] = 
 {
 	"",
@@ -102,6 +109,14 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_HOLZ_INNEN, m_cbHolzInnen);
     DDX_CBString(pDX, IDC_HOLZ_INNEN, m_edHolzInnen);
     DDX_Control(pDX, IDC_HOLZ_AUSSEN, m_cbHolzAussen);
+    DDX_Control(pDX, IDC_SCHLOSS_ART, m_ctrlSchlossArt);
+    DDX_Control(pDX, IDC_STYROPOR, m_ctrlStyropor);
+    DDX_Control(pDX, IDC_TEB_LINKS, m_ctrlTEBLinks);
+    DDX_Control(pDX, IDC_TEB_RECHTS, m_ctrlTEBRechts);
+    DDX_Control(pDX, IDC_TEB_OBEN, m_ctrlTEBOben);
+    DDX_Control(pDX, IDC_TEB_UNTEN, m_ctrlTEBUnten);
+    DDX_Control(pDX, IDC_TOR_FEST_LINKS, m_ctrlTorFestLinks);
+    DDX_Control(pDX, IDC_TOR_FEST_RECHTS, m_ctrlTorFestRechts);
 }
 
 
@@ -117,6 +132,7 @@ BEGIN_MESSAGE_MAP(CAuswDlg, CDialog)
     ON_CBN_SELCHANGE(IDC_BETO_COLOR, &CAuswDlg::OnCbnSelchangeBetoColor)
     ON_CBN_SELCHANGE(IDC_HOLZ_AUSSEN, &CAuswDlg::OnCbnSelchangeHolzAussen)
     ON_CBN_SELCHANGE(IDC_HOLZ_INNEN, &CAuswDlg::OnCbnSelchangeHolzInnen)
+    ON_BN_CLICKED(IDC_STYROPOR, &CAuswDlg::OnBnClickedStyropor)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -198,7 +214,6 @@ BOOL CAuswDlg::OnInitDialog()
 	for (int i = 0; i < 3; i++)
 		m_cbHolzInnen.AddString(szHolzArt[i]);
 
-    char szBuf[300];
 	m_ctrlBetoColor.SetCurSel(0);
     for (int i = 0; i < 2; i++)
     {
@@ -212,6 +227,35 @@ BOOL CAuswDlg::OnInitDialog()
     {
         m_cbPosition.AddString(itoa(i, ctemp, 10));
     }
+
+    // Schlossart
+	for (int i = 0; i < 3; i++)
+    {
+	    m_ctrlSchlossArt.AddString(szSchlossArt[i]);
+    }
+    m_ctrlSchlossArt.SetCurSel(m_pTor->PzGs);
+
+    // Toreinbau
+	for (int teb = TEB_LEER; teb < TEB_MAX; teb++)
+    {
+	    m_ctrlTEBLinks.AddString(dataScan.getTorEinbau(teb));
+	    m_ctrlTEBRechts.AddString(dataScan.getTorEinbau(teb));
+	    m_ctrlTEBOben.AddString(dataScan.getTorEinbau(teb));
+	    m_ctrlTEBUnten.AddString(dataScan.getTorEinbau(teb));
+    }
+    m_ctrlTEBLinks.SetCurSel(m_pTor->TorEinbau[TS_LINKS]);
+    m_ctrlTEBRechts.SetCurSel(m_pTor->TorEinbau[TS_RECHTS]);
+    m_ctrlTEBOben.SetCurSel(m_pTor->TorEinbau[TS_OBEN]);
+    m_ctrlTEBUnten.SetCurSel(m_pTor->TorEinbau[TS_UNTEN]);
+
+    // Torfeststellung
+	for (int tfs = TFS_LEER; tfs < TFS_MAX; tfs++)
+    {
+	    m_ctrlTorFestLinks.AddString(dataScan.getTorFeststellung(tfs));
+	    m_ctrlTorFestRechts.AddString(dataScan.getTorFeststellung(tfs));
+    }
+    m_ctrlTorFestLinks.SetCurSel(m_pTor->TorFeststellung[TS_LINKS]);
+    m_ctrlTorFestRechts.SetCurSel(m_pTor->TorFeststellung[TS_RECHTS]);
 
 	if (m_bModify)
 	{
@@ -289,6 +333,7 @@ BOOL CAuswDlg::OnInitDialog()
 
 		UpdateData(FALSE);
 
+        m_ctrlStyropor.SetCheck(FuellungMitStyropor());
 	}
 	else
 	{
@@ -356,6 +401,21 @@ static bool insertWord(char* sentence, const char* wordBefore, const char* word)
     return false;
 }
 
+static bool cutoutStringSequence(char* sentence, const char* sequence)
+{
+    char* pos;
+    int lenSentence = strlen(sentence);
+    int lenToCut = strlen(sequence);
+    if ((pos = strstr(sentence, sequence)) != NULL)
+    {
+        int lenToEnd = lenSentence - ((pos - sentence) + lenToCut);
+        strncpy(pos, pos + lenToCut, lenToEnd);
+        *(pos + lenToEnd) = 0;
+        return true;
+    }
+    return false;
+}
+
 #define NR_BETO_TEXT 5
 static const char betoSearchTexts[NR_BETO_TEXT][50] =
 {
@@ -416,6 +476,40 @@ void CAuswDlg::AddBetoColor(int aNr, const char* szColor)
         }
     }
 
+}
+
+const char* szMitStyropor = " m. Styropor";
+void CAuswDlg::AddRemoveStyropor(bool add, int aNr)
+{
+    char szBuf[300];
+	TDataScan dataScan;
+    bool setText = false;
+    
+    m_cedFuellung.GetWindowText(szBuf, sizeof(szBuf));
+//    strncpy(szBuf, dataScan.getBezeich(aNr), sizeof(szBuf));
+    
+    if (add == true)
+    {
+        strcat(szBuf, szMitStyropor);
+        setText = true;
+    }
+    else
+    {
+        setText = cutoutStringSequence(szBuf, szMitStyropor);
+    }
+    if (setText)
+    {
+        m_cedFuellung.SetWindowText(szBuf);
+    }
+}
+
+bool CAuswDlg::FuellungMitStyropor(void)
+{
+    char szBuf[300];
+    
+    m_cedFuellung.GetWindowText(szBuf, sizeof(szBuf));
+
+    return (strstr(szBuf, szMitStyropor) != NULL);
 }
 
 void CAuswDlg::AddHolzArt(char* szBuf, BOOL outside, char* szHolz)
@@ -496,6 +590,8 @@ void CAuswDlg::OnSelchangeFuellung()
             m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
             AddHolzArt(cBuffer, TRUE, szHolz);
 		}
+
+        AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
 	}
 }
 
@@ -710,6 +806,18 @@ void CAuswDlg::OnOK( )
         m_pTor->Size.iProfilDicke = 0;
     }
 
+    m_pTor->PzGs = (tPzGs)m_ctrlSchlossArt.GetCurSel();
+
+    // Toreinbau
+    m_pTor->TorEinbau[TS_LINKS]  = (tTorEinbau)m_ctrlTEBLinks.GetCurSel();
+    m_pTor->TorEinbau[TS_RECHTS] = (tTorEinbau)m_ctrlTEBRechts.GetCurSel();
+    m_pTor->TorEinbau[TS_OBEN]   = (tTorEinbau)m_ctrlTEBOben.GetCurSel();
+    m_pTor->TorEinbau[TS_UNTEN]  = (tTorEinbau)m_ctrlTEBUnten.GetCurSel();
+
+    // Torfeststellung
+    m_pTor->TorFeststellung[TS_LINKS]  = (tTorFeststellung)m_ctrlTorFestLinks.GetCurSel();
+    m_pTor->TorFeststellung[TS_RECHTS] = (tTorFeststellung)m_ctrlTorFestRechts.GetCurSel();
+
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{
 		CFlParam* FlP;
@@ -868,4 +976,10 @@ void CAuswDlg::OnCbnSelchangeHolzInnen()
 {
     // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
     OnSelchangeFuellung();
+}
+
+void CAuswDlg::OnBnClickedStyropor()
+{
+    // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
+    AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
 }

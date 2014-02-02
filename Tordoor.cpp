@@ -43,6 +43,9 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    FluegelAnz = ct->FluegelAnz;
    b400R      = ct->b400R;
    ProfilMass = ct->ProfilMass;
+   PzGs       = ct->PzGs;
+   memcpy(&TorEinbau, &ct->TorEinbau, sizeof(TorEinbau));
+   memcpy(&TorFeststellung, &ct->TorFeststellung, sizeof(TorFeststellung));
    FlParam    = ct->FlParam;
    Profile    = ct->Profile;
    RahmenElemente = ct->RahmenElemente;
@@ -92,6 +95,15 @@ CTorDoor::CTorDoor()
    strcpy(Kunde, " ");
    strcpy(Kommission, " ");
    m_iVersion = TORDOOR_VERSION;  // immer aktuelle Version
+   PzGs = PZ_GS_NONE;
+   for (int i = 0; i < TS_MAX; i++)
+   {
+       TorEinbau[i] = TEB_LEER;
+   }
+   for (int i = 0; i < 2; i++)
+   {
+       TorFeststellung[i] = TFS_LEER;
+   }   
 }
 
 CTorDoor::~CTorDoor() 
@@ -2862,7 +2874,28 @@ int CTorDoor::printDIN(HDC hdc, int x, int y, int maxX, HFONT bFont)
   SelectObject(hdc, orgFont);
   return y;
 }
+int CTorDoor::printPZ_GS(HDC hdc, int x, int y, int maxX, HFONT font)
+{
+    char strPzGs[10];
+    int actY = y + rowH;
 
+
+    if (PzGs == PZ)
+    {
+        strcpy(strPzGs, "PZ");
+    }
+    else
+    if (PzGs == PZ_GS)
+    {
+        strcpy(strPzGs, "PZ/GS");
+    }
+    else
+    {
+        strPzGs[0] = 0;
+    }
+    TextOut(hdc, x, -(actY), strPzGs, strlen(strPzGs));
+    return actY; //temp., später richtig!!!
+}
 int CTorDoor::printObert(HDC hdc, int x, int y, int maxX, HFONT bFont)
 {
   char Buf[30];
@@ -3014,18 +3047,89 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
 //x, y: Koordinaten des Tores links oben
 void CTorDoor::drawSquares(HDC hdc, int x, int y)
 {
+  const char* pTeb;
+  TDataScan dataScan;
   int abstandX = rnd((Size.ZBreite-squareW)/2);
+
+  // oben
   Rectangle(hdc, x+abstandX, -(y-2*spaceSquare-squareH), x+abstandX+squareW,
 	    -(y-2*spaceSquare));
+  pTeb = dataScan.getTorEinbau(TorEinbau[TS_OBEN]);
+  TextOut(hdc, x+abstandX+9, -(y-2*spaceSquare-squareH+6), pTeb, strlen(pTeb));
+
+  // unten
   Rectangle(hdc, x+abstandX, -(y+Size.ZGesamtHoehe+2*spaceSquare),
       x+abstandX+squareW, -(y+Size.ZGesamtHoehe+2*spaceSquare+squareH));
+  pTeb = dataScan.getTorEinbau(TorEinbau[TS_UNTEN]);
+  TextOut(hdc, x+abstandX+9, -(y+Size.ZGesamtHoehe+2*spaceSquare+6), pTeb, strlen(pTeb));
 
+  // links
   int abstandY = rnd((Size.ZGesamtHoehe-squareH)/2);
   Rectangle(hdc, x-spaceSquare-squareW, -(y+abstandY),
       x-spaceSquare, -(y+abstandY+squareH));
+  pTeb = dataScan.getTorEinbau(TorEinbau[TS_LINKS]);
+  TextOut(hdc, x-spaceSquare-squareW+9, -(y+abstandY+6), pTeb, strlen(pTeb));
+
+  // Rechts
   Rectangle(hdc, x+Size.ZBreite+spaceSquare, -(y+abstandY),
       x+Size.ZBreite+spaceSquare+squareW, -(y+abstandY+squareH));
+  pTeb = dataScan.getTorEinbau(TorEinbau[TS_RECHTS]);
+  TextOut(hdc, x+Size.ZBreite+spaceSquare+9, -(y+abstandY+6), pTeb, strlen(pTeb));
+}
 
+void CTorDoor::drawFestellung(HDC hdc, int x, int y)
+{
+  const char* pFst;
+  TDataScan dataScan;
+  int abstandX = rnd((Size.ZBreite-squareW)/2);
+
+  // unten
+  if ((Art == TUER) || (Art == TOR))
+  {
+     int y_pos = -(y+Size.ZGesamtHoehe+2*spaceSquare+squareH + 10);
+     pFst = dataScan.getTorFeststellung(TorFeststellung[0]);
+     int len = strlen(pFst);
+     if ((DIN == R) || Art == TOR)
+     {
+        // Beschriftung links
+         if (len > 0)
+         {
+            TextOut(hdc, x-spaceSquare-squareW-5, y_pos, pFst, strlen(pFst));
+            MoveToEx(hdc, x-spaceSquare, y_pos - 4, NULL);
+            if (Art == TOR)
+            {
+                LineTo(hdc, x + Size.ZBreite/2 - 10, -(y+Size.ZGesamtHoehe - 30) ); 
+            }
+            else
+            {
+                LineTo(hdc, x + 30, -(y+Size.ZGesamtHoehe - 30) ); 
+            }
+         }
+     }
+     else
+     {
+        // Beschriftung rechts für Tür
+        if (len > 0)
+        {
+            TextOut(hdc, x+Size.ZBreite+spaceSquare, y_pos, pFst, strlen(pFst));
+            MoveToEx(hdc, x+Size.ZBreite+spaceSquare+20, y_pos - 4, NULL);
+            LineTo(hdc, x + Size.ZBreite - 25, -(y+Size.ZGesamtHoehe - 30) ); 
+        }
+     }
+     if (Art == TOR)
+     {
+        // Beschriftung rechts für Tor
+        pFst = dataScan.getTorFeststellung(TorFeststellung[1]);
+        len = strlen(pFst);
+        if (len > 0)
+        {
+            CFlParam* pFl = (CFlParam*)FlParam->GetAt(0);
+            TextOut(hdc, x+Size.ZBreite-spaceSquare - 40, y_pos, pFst, strlen(pFst));
+            MoveToEx(hdc, x+Size.ZBreite+spaceSquare - 40, y_pos - 4, NULL);
+            LineTo(hdc, x + pFl->iZBreite + 10, -(y+Size.ZGesamtHoehe - 30) ); 
+        }
+     }
+  }
 }
 
 void CTorDoor::updateRahmen()
@@ -3312,7 +3416,16 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          archive << StueckZahl;
          // ab hier Version 2
          archive << b400R << (int)ProfilMass;
-
+         // ab hier Version 3
+         archive << PzGs;
+         for (int i = 0; i < TS_MAX; i++)
+         {
+            archive << TorEinbau[i];
+         }
+         for (int i = 0; i < 2; i++)
+         {
+            archive << TorFeststellung[i];
+         }         
     }
     else 
     {
@@ -3323,8 +3436,27 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          archive >> StueckZahl;
          // ab hier Version 2
          iProfilMass = PD_70_40; b400R = FALSE;  // defaults
+         // ab hier Version 3
          if (m_iVersion > 1)
+         {
             archive >> b400R >> (int)iProfilMass;
+         }
+         if (m_iVersion > 2)
+         {
+            int iPzGs = PZ_GS_NONE, iTorEinbau, iTorFeststellung;
+            archive >> (int)iPzGs;
+            PzGs = (tPzGs)iPzGs;
+            for (int i = 0; i < TS_MAX; i++)
+            {
+                archive >> (int)iTorEinbau;
+                TorEinbau[i] = (tTorEinbau)iTorEinbau;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                archive >> (int)iTorFeststellung;
+                TorFeststellung[i] = (tTorFeststellung)iTorFeststellung;
+            }
+         }
 
          ProfilMass = (tProfilMass)iProfilMass;
 

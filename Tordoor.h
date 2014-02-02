@@ -3,7 +3,7 @@
 
 
 // Klassen-Version
-#define TORDOOR_VERSION 2
+#define TORDOOR_VERSION 3
 
 #define DINBREITE   15    //Breite des Türgriffs
 #define DINHOEHE    4     //Hoehe des Türgriffs
@@ -60,6 +60,8 @@ typedef enum { WAAGRECHT, SENKRECHT } tDirect;
 typedef enum { HOLZAUF, HOLZUNTEN} tTypWaagrecht;
 typedef enum { NA=0, U, RP } tSprosse;
 typedef enum { PD_70_40=0, PD_60_40 } tProfilMass;
+typedef enum { PZ_GS_NONE = 0, PZ, PZ_GS } tPzGs;
+typedef enum { TS_LINKS = 0, TS_RECHTS, TS_OBEN, TS_UNTEN, TS_MAX } tTorSeite;
     
 //////////////////////////////////////////////////////////////////
 // Basis-Klasse für typsicheres Serialisieren von PtrArrays
@@ -294,6 +296,9 @@ class CTorDoor : public CObject
    CTTSize Size;
    int StueckZahl;
    tProfilMass ProfilMass;    // 60/40 oder 70/40 Profil bei Typ 400R
+   tPzGs PzGs;                // PZ, Gleichschliessend
+   tTorEinbau TorEinbau[TS_MAX];    // Toreinbau: Mauer, Holz, Beton
+   tTorFeststellung TorFeststellung[2];
 
    CPtrArray* FlParam;
    CPtrArray* Profile;
@@ -366,6 +371,7 @@ class CTorDoor : public CObject
        HFONT thinFont);
    int printHoehe(HDC hdc, int x, int y, int posDir, int maxX, HFONT font);
    int printDIN(HDC hdc, int x, int y, int maxX, HFONT font);
+   int printPZ_GS(HDC hdc, int x, int y, int maxX, HFONT font);
    int printObert(HDC hdc, int x, int y, int maxX, HFONT font);
    int printFenster(HDC hdc, int y, int posStarr,
                     int posKipp, int posSchieb, int maxX, HFONT font);
@@ -374,6 +380,7 @@ class CTorDoor : public CObject
    void drawRahmen(HDC hdc, int x, int y, tRAHMEN rahmen);
    void drawProfil(HDC hdc, int x, int y, int typ);
    void drawSquares(HDC hdc, int x, int y);
+   void drawFestellung(HDC hdc, int x, int y);
    void profilRP1614(HDC hdc, int x, int y);
    void profilRP1615(HDC hdc, int x, int y);
    void profilRP1093(HDC hdc, int x, int y);

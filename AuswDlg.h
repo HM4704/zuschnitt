@@ -51,7 +51,7 @@ public:
 	//}}AFX_DATA
 
 	CButton*   m_ckGeteilt[5];
-	CComboBox*   m_cbFenster[5];
+	CComboBox*  m_cbFenster[5];
 	CComboBox*	m_cbGlasart[5];
 	CComboBox*	m_cbOberTeil[5];
 	CComboBox*	m_cbSprosse[5];
@@ -71,6 +71,8 @@ public:
 protected:
     void AddBetoColor(int aNr, const char* szColor);
     void AddHolzArt(char* szBuf, BOOL outside, char* szHolz);
+    void AddRemoveStyropor(bool add, int aNr);
+    bool FuellungMitStyropor(void);
 
 protected:
 
@@ -102,6 +104,15 @@ public:
     CComboBox m_cbHolzAussen;
     afx_msg void OnCbnSelchangeHolzAussen();
     afx_msg void OnCbnSelchangeHolzInnen();
+    CComboBox m_ctrlSchlossArt;
+    afx_msg void OnBnClickedStyropor();
+    CButton m_ctrlStyropor;
+    CComboBox m_ctrlTEBLinks;
+    CComboBox m_ctrlTEBRechts;
+    CComboBox m_ctrlTEBOben;
+    CComboBox m_ctrlTEBUnten;
+    CComboBox m_ctrlTorFestLinks;
+    CComboBox m_ctrlTorFestRechts;
 };
 
 //{{AFX_INSERT_LOCATION}}

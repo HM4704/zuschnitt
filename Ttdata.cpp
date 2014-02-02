@@ -270,6 +270,9 @@ TTData tdata[] =
   { 6536, "6536", "doppelw. PP m. Styropor", FUELLUNG,
     F_BETOPLAN, F_BETOPLAN, 0, 0},
 
+  { 6537, "6537", "Stenger-Paneeele-Füllung auß. RAL", FUELLUNG,
+    F_NONE, F_NONE, 0, 0},
+
   { 6580, "6580", "m. doppelw. Blechfüllung", FUELLUNG,
     F_BLECH, F_BLECH, 0, 0},
   { 6590, "6590", "außen Beto-Plan, innen Holz", FUELLUNG,
@@ -611,4 +614,20 @@ tProfil TDataScan::getProfilForName(char* szName)
             return g_ProfilData[i].ProfilTyp;
     }
     return NP;
+}
+
+static const char TorEinbau[TEB_MAX][30] =
+{ "", "Mauer", "Beton", "Holz" };
+
+const char* TDataScan::getTorEinbau(int teb)
+{
+    return TorEinbau[teb];
+}
+
+static const char TorFeststellung[TFS_MAX][30] =
+{ "", "Torhaken", "Feststeller 40", "Feststeller 60", "Feststeller 80" };
+
+const char* TDataScan::getTorFeststellung(int tfs)
+{
+    return TorFeststellung[tfs];
 }

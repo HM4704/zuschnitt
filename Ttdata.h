@@ -19,6 +19,10 @@ typedef enum { NP=0, RPRR /*Rechteck-Rohr*/, RP1087, RP1093, RP1094, RP1348, RP1
                RP1114, RP1071, RP1163, RP1072,
                RP1191, RP6_8 /* Profil Typ600/800 */  } tProfil;
 
+typedef enum { TEB_LEER = 0, TEB_MAUERWERK, TEB_BETON, TEB_HOLZ, TEB_MAX } tTorEinbau;
+
+typedef enum { TFS_LEER = 0, TFS_HAKEN, TFS_STELLER_40, TFS_STELLER_60, TFS_STELLER_80, TFS_MAX } tTorFeststellung;
+
 typedef struct tagTTData{
 	int  artNr;
         char sartNr[5];
@@ -60,6 +64,8 @@ class TDataScan
      char* getRahmenBez(tRAHMEN rahmen);
      void  getSpecTT(CStringArray*, tART art);
      char* getGlasArt(int Glasart);
+     const char* getTorEinbau(int teb);
+     const char* getTorFeststellung(int tfs);
      BOOL  getFuellung(int iNrFuellung, tFUELLUNG* pfAussen, tFUELLUNG* pfInnen);
      BOOL  getHolzZuschnitt(int iLenRiegel, HolzZuschnitt** ppHzE);
      char* getNameForProfil(tProfil prfl);

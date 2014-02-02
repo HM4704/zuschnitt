@@ -33,11 +33,11 @@ static char THIS_FILE[] = __FILE__;
 #define bStueck  200//70//60
 #define bBreite  150//50
 #define bHoehe   150//70//50
-#define bDIN     90//30
+#define bDIN     150//90//30
 #define bObert   200//70//50
-#define bStarr   200//70//50
-#define bKipp    200//70//50
-#define bSchieb  200//70//50
+#define bStarr   180//70//50
+#define bKipp    180//70//50
+#define bSchieb  180//70//50
 #define bNr	 80//30
 #define bSchwei	 170//50
 #define bFuell	 600//60
@@ -312,10 +312,10 @@ void CTtmainView::fillGrid(HDC hdc, int fact)
 	CTorDoor* pTTor = (CTorDoor*)m_pTore.GetAt(i);
 
     int posX = pTor+m_iLeftX+squareW+3*spaceSquare;
-    pTTor->drawTT(hdc, posX, actY+2*(rowH+spaceSquare+squareH),
-                m_iPageLen-posX-squareW-3*spaceSquare,
+    pTTor->drawTT(hdc, posX, actY+2*(rowH+spaceSquare+squareH), m_iPageLen-posX-squareW-3*spaceSquare,
 		m_iAryTorHoehe[i]-2*(rowH+2*(spaceSquare+squareH)), m_smallFont);
     pTTor->drawSquares(hdc, posX, actY+2*(rowH+spaceSquare+squareH));
+    pTTor->drawFestellung(hdc, posX, actY+2*(rowH+spaceSquare+squareH));
 
     //Kunde
     pTTor->printKundKomm(hdc, actX, (actY+10),
@@ -339,6 +339,12 @@ void CTtmainView::fillGrid(HDC hdc, int fact)
     actX += bHoehe;
     pTTor->printDIN(hdc, actX,  (actY+10),
 		    (actX+bDIN), m_boldFont);
+
+    // PZ/Gleichschliessend
+    pTTor->printPZ_GS(hdc, actX,  (actY+10),
+		    (actX+bDIN), m_boldFont);
+
+
     //Obert
     actX += bDIN;
     pTTor->printObert(hdc,  actX,  (actY+10),
@@ -1278,6 +1284,21 @@ BOOL CTtmainView::DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lFla
 void CTtmainView::OnFileSaveAs()
 {
 	CString file;
+
+	CTorDoor* pT = (CTorDoor*)m_pTore.GetAt(0);
+
+    if (pT)
+    {
+        char strKommission[200], strPos[40];
+        pT->GetPositionKommission(strKommission, strPos);
+        // set default file name
+        file = pT->Kunde;
+        file += ' '; // + pT->Kommission; // + " " + pT->
+        file += strKommission;
+        file += ' ';
+        file += "Pos.";        
+        file += strPos;
+    }
 	if (DoPromptFileName(file, 0, 0, FALSE/*, CDocTemplate* pTemplate*/) == TRUE)
 	{
         file += ".tor";
