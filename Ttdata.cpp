@@ -13,7 +13,7 @@
 #define TTMAXDATA (sizeof(tdata)/sizeof(TTData))
 #endif // 0
 #define TOMAXDATA 10
-#define GLASMAXDATA 12
+#define GLASMAXDATA 13
 
 
 typedef struct tagProfilData
@@ -31,6 +31,20 @@ static ProfilData g_ProfilData[] =
     { NP, "??????" }, { RP6_8, "RP6_8" }
 };
 
+typedef struct tagFuellungsData
+{
+    tFUELLUNG FuellungTyp;
+    char    strFuellungName[100];
+} FuellungData;
+
+// diese Reihenfolge nicht ändern!!!!
+static FuellungData g_FuellungsArt[] = 
+{
+    { F_NONE, "", }, {F_HOLZ, "Fichte", }, {F_HOLZ, "Lärche"},
+    { F_BETOPLAN, "Beto"}, { F_BETOPLAN, "PP" }, { F_BLECH, "Trapezblech" },
+    { F_BETOPLAN, "Isopan Paneele Ral." }, { F_BETOPLAN, "Alpha Paneele Ral." }, { F_BETOPLAN, "Agro grün" },
+    { F_HOLZ, "Wolfbretter" }
+};
 
 TTData tdata[] =
 {
@@ -72,51 +86,51 @@ TTData tdata[] =
     F_HOLZ, F_NONE, 0, 0},
   { 4503, "4503", "ohne Füllung", FUELLUNG,
     F_NONE, F_NONE, 0, 0},
-  { 4504, "4504", "außen Holz, innen Beto-Plan", FUELLUNG,
+  { 4504, "4504", "bandseitig Holz, bandgegenseitig Beto-Plan", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 4505, "4505", "m. doppelw. Beto-Plan-Füllung", FUELLUNG,
     F_BETOPLAN, F_BETOPLAN, 0, 0},
   { 4506, "4506", "m. einw. Beto-Plan-Füllung", FUELLUNG,
     F_BETOPLAN, F_NONE, 0, 0},
-  { 4507, "4507", "außen Holz, innen Blech", FUELLUNG,
+  { 4507, "4507", "bandseitig Holz, bandgegenseitig Blech", FUELLUNG,
     F_HOLZ, F_BLECH, 0, 0},
   { 4508, "4508", "m. doppelw. Blechfüllung", FUELLUNG,
     F_BLECH, F_BLECH, 0, 0},
-  { 4509, "4509", "doppelw. Blech+FH-Isolierung", FUELLUNG,
-    F_BLECH, F_BLECH, 0, 0},
+  //{ 4509, "4509", "doppelw. Blech+FH-Isolierung", FUELLUNG,
+  //  F_BLECH, F_BLECH, 0, 0},
   { 4510, "4510", "m. einw. Blechfüllung", FUELLUNG,
     F_BLECH, F_NONE, 0, 0},
-  { 4511, "4511", "m. einw. Holzfüllung innenliegend", FUELLUNG,
+  { 4511, "4511", "m. einw. Holzfüllung bandgegenseitig liegend", FUELLUNG,
     F_HOLZ_I, F_NONE, 0, 0},
   { 4512, "4512", "ohne Füllung, nur Metallrahmen", FUELLUNG,
     F_NONE, F_NONE, 0, 0},
-  { 4513, "4513", "außen Holz, innen PP", FUELLUNG,
+  { 4513, "4513", "bandseitig Holz, bandgegenseitig PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 4514, "4514", "m. doppelw. PP-Füllung", FUELLUNG,
     F_BETOPLAN, F_BETOPLAN, 0, 0},
   { 4515, "4515", "m. einw. PP-Füllung", FUELLUNG,
     F_BETOPLAN, F_NONE, 0, 0},
 
-  { 4516, "4516", "doppelw. Holz, außen Wolf", FUELLUNG,
+  { 4516, "4516", "doppelw. Holz, bandseitig Wolf", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 4517, "4517", "außen Holz Wolf, innen Beto", FUELLUNG,
+  { 4517, "4517", "bandseitig Holz Wolf, bandgegenseitig Beto", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
-  { 4518, "4518", "außen Holz Wolf, innen PP", FUELLUNG,
+  { 4518, "4518", "bandseitig Holz Wolf, bandgegenseitig PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
 
-  { 4650, "4650", "einwandig Lärche, außen aufliegend", FUELLUNG,
-    F_HOLZ, F_NONE, 0, 0},
+  //{ 4650, "4650", "einwandig Lärche, bandseitig aufliegend", FUELLUNG,
+  //  F_HOLZ, F_NONE, 0, 0},
   { 4651, "4651", "einw. Holz m. Fischgrätmuster", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
-  { 4652, "4652", "doppelw. Holz, außen Fischgrät", FUELLUNG,
+  { 4652, "4652", "doppelw. Holz, bandseitig Fischgrät", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 4657, "4657", "außen Beto-Plan, innen Holz", FUELLUNG,
+  { 4657, "4657", "bandseitig Beto-Plan, bandgegenseitig Holz", FUELLUNG,
     F_BETOPLAN, F_HOLZ, 0, 0},
-  { 4658, "4658", "außen Holz, Beto bandseitig", FUELLUNG,
+  { 4658, "4658", "bandseitig Holz, bandgegenseitig Beto", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
-  { 4659, "4659", "außen PP, innen Holz", FUELLUNG,
+  { 4659, "4659", "bandseitig PP, bandgegenseitig Holz", FUELLUNG,
     F_BETOPLAN, F_HOLZ, 0, 0},
-  { 4660, "4660", "außen Holz, PP bandseitig", FUELLUNG,
+  { 4660, "4660", "bandseitig Holz, bandgegenseitig PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 4653, "4653", "Aufpreis f. Rundbogen", ANDERES,
     0, 0, 0, 0},
@@ -194,95 +208,95 @@ TTData tdata[] =
     F_HOLZ, F_NONE, 0, 0},
   { 6503, "6503", "ohne Füllung", FUELLUNG,
     F_NONE, F_NONE, 0, 0},
-  { 6504, "6504", "außen Holz, innen Beto-Plan", FUELLUNG,
+  { 6504, "6504", "bandseitig Holz, bandgegenseitig Beto-Plan", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 6505, "6505", "m. doppelw. Beto-Plan-Füllung", FUELLUNG,
     F_BETOPLAN, F_BETOPLAN, 0, 0},
   { 6506, "6506", "m. einw. Beto-Plan-Füllung", FUELLUNG,
     F_BETOPLAN, F_NONE, 0, 0},
-  { 6507, "6507", "außen Holz, innen Blech", FUELLUNG,
+  { 6507, "6507", "bandseitig Holz, bandgegenseitig Blech", FUELLUNG,
     F_HOLZ, F_BLECH, 0, 0},
   { 6508, "6508", "m. doppelw. Blechfüllung", FUELLUNG,
     F_BLECH, F_BLECH, 0, 0},
 #if 0
   { 6506, "6506", "m. einw. Beto-Plan-Füllung", FUELLUNG,
     0, 0, 0, 0},
-  { 6507, "6507", "außen Holz, innen Blech", FUELLUNG,
+  { 6507, "6507", "bandseitig Holz, bandgegenseitig Blech", FUELLUNG,
     0, 0, 0, 0},
   { 6508, "6508", "m. doppelw. Blechfüllung", FUELLUNG,
     0, 0, 0, 0},
 #endif
-  { 6509, "6509", "doppelw. Blech + und FH-Isolierung", FUELLUNG,
-    F_BLECH, F_BLECH, 0, 0},
+  //{ 6509, "6509", "doppelw. Blech + und FH-Isolierung", FUELLUNG,
+  //  F_BLECH, F_BLECH, 0, 0},
   { 6510, "6510", "m. einwandiger Blechfüllung", FUELLUNG,
     F_BLECH, F_NONE, 0, 0},
   { 6511, "6511", "einwandig Sickenblech", FUELLUNG,
     F_BLECH, F_NONE, 0, 0},
-  { 6512, "6512", "doppelw. Holz, außen aufliegend", FUELLUNG,
+  { 6512, "6512", "doppelw. Holz, bandseitig aufliegend", FUELLUNG,
     F_HOLZ, F_HOLZ, 0, 0},
-  { 6513, "6513", "einw. Lärche", FUELLUNG,
-    F_HOLZ, F_NONE, 0, 0},
-  { 6514, "6514", "m. doppelw. Lärche", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 6515, "6515", "außen Lärche, i. Beto-Plan", FUELLUNG,
+  //{ 6513, "6513", "einw. Lärche", FUELLUNG,
+  //  F_HOLZ, F_NONE, 0, 0},
+  //{ 6514, "6514", "m. doppelw. Lärche", FUELLUNG,
+  //  F_HOLZ, F_HOLZ, 0, 0},
+  { 6515, "6515", "bandseitig Lärche, i. Beto-Plan", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
-  { 6516, "6516", "außen Holz, innen Bohlen", FUELLUNG,
+  { 6516, "6516", "bandseitig Holz, bandgegenseitig Bohlen", FUELLUNG,
     F_HOLZ, F_BOHLEN, 0, 0},
-  { 6517, "6517", "m. einw. Holz, außen aufliegend", FUELLUNG,
+  { 6517, "6517", "m. einw. Holz, bandseitig aufliegend", FUELLUNG,
     F_HOLZ, F_NONE, 0, 0},
 
-  { 6518, "6518", "außen Blech, innen Beto-Plan", FUELLUNG,
-    F_BLECH, F_BETOPLAN, 0, 0},
-  { 6519, "6519", "außen Holz, innen V2A-Blech", FUELLUNG,
+  //{ 6518, "6518", "bandseitig Blech, bandgegenseitig Beto-Plan", FUELLUNG,
+  //  F_BLECH, F_BETOPLAN, 0, 0},
+  { 6519, "6519", "bandseitig Holz, bandgegenseitig V2A-Blech", FUELLUNG,
     F_HOLZ, F_BLECH, 0, 0},
-  { 6520, "6520", "außen Holz, innen Blech+FH-Iso", FUELLUNG,
-    F_HOLZ, F_BLECH, 0, 0},
+  //{ 6520, "6520", "bandseitig Holz, bandgegenseitig Blech+FH-Iso", FUELLUNG,
+  //  F_HOLZ, F_BLECH, 0, 0},
 
-  { 6521, "6521", "außen Holz, innen PP", FUELLUNG,
+  { 6521, "6521", "bandseitig Holz, bandgegenseitig PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
   { 6522, "6522", "m. doppelw. PP-Füllung", FUELLUNG,
     F_BETOPLAN, F_BETOPLAN, 0, 0},
   { 6523, "6523", "m. einw. PP-Füllung", FUELLUNG,
     F_BETOPLAN, F_NONE, 0, 0},
-  { 6524, "6524", "außen Blech, innen PP", FUELLUNG,
+  { 6524, "6524", "bandseitig Blech, bandgegenseitig PP", FUELLUNG,
     F_BLECH, F_BETOPLAN, 0, 0},
 
-  { 6525, "6525", "doppelw. Holz, außen Wolf", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 6526, "6526", "außen Holz Wolf, innen Beto", FUELLUNG,
+  //{ 6525, "6525", "doppelw. Holz, bandseitig Wolf", FUELLUNG,
+  //  F_HOLZ, F_HOLZ, 0, 0},
+  { 6526, "6526", "bandseitig Holz Wolf, bandgegenseitig Beto", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
-  { 6527, "6527", "außen Holz Wolf, innen PP", FUELLUNG,
+  { 6527, "6527", "bandseitig Holz Wolf, bandgegenseitig PP", FUELLUNG,
     F_HOLZ, F_BETOPLAN, 0, 0},
 
-  { 6530, "6530", "doppelw. Holz, m. Styropor", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 6531, "6531", "außen Holz, innen Beto-Plan + Styrop.", FUELLUNG,
-    F_HOLZ, F_BETOPLAN, 0, 0},
-  { 6532, "6532", "doppelw. Beto-Plan m. Styropor", FUELLUNG,
-    F_BETOPLAN, F_BETOPLAN, 0, 0},
-  { 6533, "6533", "außen Holz, innen Blech, m. Styropor", FUELLUNG,
+  //{ 6530, "6530", "doppelw. Holz, m. Styropor", FUELLUNG,
+  //  F_HOLZ, F_HOLZ, 0, 0},
+  //{ 6531, "6531", "bandseitig Holz, bandgegenseitig Beto-Plan + Styrop.", FUELLUNG,
+  //  F_HOLZ, F_BETOPLAN, 0, 0},
+  //{ 6532, "6532", "doppelw. Beto-Plan m. Styropor", FUELLUNG,
+  //  F_BETOPLAN, F_BETOPLAN, 0, 0},
+  { 6533, "6533", "bandseitig Holz, bandgegenseitig Blech, m. Styropor", FUELLUNG,
     F_HOLZ, F_BLECH, 0, 0},
   { 6534, "6534", "doppelwandig Blech, m. Styropor", FUELLUNG,
     F_BLECH, F_BLECH, 0, 0},
 
-  { 6535, "6535", "außen Holz, innen PP + Styrop.", FUELLUNG,
-    F_HOLZ, F_BETOPLAN, 0, 0},
-  { 6536, "6536", "doppelw. PP m. Styropor", FUELLUNG,
-    F_BETOPLAN, F_BETOPLAN, 0, 0},
+  //{ 6535, "6535", "bandseitig Holz, bandgegenseitig PP + Styrop.", FUELLUNG,
+  //  F_HOLZ, F_BETOPLAN, 0, 0},
+  //{ 6536, "6536", "doppelw. PP m. Styropor", FUELLUNG,
+  //  F_BETOPLAN, F_BETOPLAN, 0, 0},
 
   { 6537, "6537", "Stenger-Paneeele-Füllung auß. RAL", FUELLUNG,
     F_NONE, F_NONE, 0, 0},
 
-  { 6580, "6580", "m. doppelw. Blechfüllung", FUELLUNG,
-    F_BLECH, F_BLECH, 0, 0},
-  { 6590, "6590", "außen Beto-Plan, innen Holz", FUELLUNG,
-    F_BETOPLAN, F_HOLZ, 0, 0},
-  { 6591, "6591", "außen Holz, Beto bandseitig", FUELLUNG,
+  //{ 6580, "6580", "m. doppelw. Blechfüllung", FUELLUNG,
+  //  F_BLECH, F_BLECH, 0, 0},
+  //{ 6590, "6590", "bandseitig Beto-Plan, bandgegenseitig Holz", FUELLUNG,
+  //  F_BETOPLAN, F_HOLZ, 0, 0},
+  { 6591, "6591", "bandseitig Holz, Beto bandseitig", FUELLUNG,
     F_HOLZ, F_BETOPLAN /* ?? */, 0, 0},
 
-  { 6592, "6592", "außen PP, innen Holz", FUELLUNG,
+  { 6592, "6592", "bandseitig PP, bandgegenseitig Holz", FUELLUNG,
     F_BETOPLAN, F_HOLZ, 0, 0},
-  { 6593, "6593", "außen Holz, PP bandseitig", FUELLUNG,
+  { 6593, "6593", "bandseitig Holz, PP bandseitig", FUELLUNG,
     F_HOLZ, F_BETOPLAN /* ?? */, 0, 0},
 
   { 6701, "6701", "Falttor 3-flgl. Typ 600 m. W-Rahmen, verz. DIN R", TOR,
@@ -297,68 +311,6 @@ TTData tdata[] =
     FT5, 6, RW, R},
   { 6706, "6706", "Falttor 5-flgl. Typ 600 m. W-Rahmen, verz. DIN L", TOR,
     FT5, 6, RW, L},
-
-  { 8101, "8101", "Tür Typ 800 m. Z-Rahmen, verz. DIN R", TUER,
-    ATUER, 8, RZ, R},
-  { 8102, "8102", "Tür Typ 800 m. W-Rahmen, verz. DIN R", TUER,
-    ATUER, 8, RW, R},
-  { 8103, "8103", "Tür Typ 800 m. R-Rahmen, verz. DIN R", TUER,
-    ATUER, 8 /* früher 6 //?? */, RR, R},
-  { 8201, "8201", "Tür Typ 800 m. Z-Rahmen, verz. DIN L", TUER,
-    ATUER, 8, RZ, L},
-  { 8202, "8202", "Tür Typ 800 m. W-Rahmen, verz. DIN L", TUER,
-    ATUER, 8, RW, L},
-  { 8203, "8203", "Tür Typ 800 m. R-Rahmen, verz. DIN R", TUER,
-    ATUER, 8, RR, L},
-  { 8301, "8301", "Tor Typ 800 m. Z-Rahmen, verz. DIN R", TOR,
-    ATOR, 8, RZ, R},
-  { 8302, "8302", "Tor Typ 800 m. W-Rahmen, verz. DIN R", TOR,
-    ATOR, 8, RW, R},
-  { 8303, "8303", "Tor Typ 800 m. R-Rahmen, verz. DIN R", TOR,
-    ATOR, 8, RR, R},
-  { 8401, "8401", "Tor Typ 800 m. Z-Rahmen, verz. DIN L", TOR,
-    ATOR, 8, RZ, L},
-  { 8402, "8402", "Tor Typ 800 m. W-Rahmen, verz. DIN L", TOR,
-    ATOR, 8, RW, L},
-  { 8403, "8403", "Tor Typ 800 m. R-Rahmen, verz. DIN L", TOR,
-    ATOR, 8, RR, L},
-  { 8501, "8501", "doppelw. Holz (2 x 16 mm)", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 8502, "8502", "doppelw. Holz, außen aufliegend", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 8503, "8503", "ohne Füllung", FUELLUNG,
-    F_NONE, F_NONE, 0, 0},
-  { 8504, "8504", "außen Holz, innen Beto-Plan", FUELLUNG,
-    F_HOLZ, F_BETOPLAN, 0, 0},
-  { 8507, "8507", "außen Holz, innen Blech", FUELLUNG,
-    F_HOLZ, F_BLECH, 0, 0},
-  { 8508, "8508", "doppelw. Blech", FUELLUNG,
-    F_BLECH, F_BLECH, 0, 0},
-  { 8510, "8510", "außen Beto-Plan, innen Holz", FUELLUNG,
-    F_BETOPLAN, F_HOLZ, 0, 0},
-  { 8511, "8511", "außen Holz, Beto bandseitig", FUELLUNG,
-    F_HOLZ, F_BETOPLAN /* ?? */, 0, 0},
-
-  { 8516, "8516", "doppelw. Holz, außen Wolf", FUELLUNG,
-    F_HOLZ, F_HOLZ, 0, 0},
-  { 8517, "8517", "außen Holz Wolf, innen Beto", FUELLUNG,
-    F_HOLZ, F_BETOPLAN, 0, 0},
-  { 8518, "8518", "außen Holz Wolf, innen PP", FUELLUNG,
-    F_HOLZ, F_BETOPLAN, 0, 0},
-
-  { 8701, "8701", "Falttor 3-flgl. Typ 800 m. W-Rahmen, verz. DIN R", TOR,
-    FT3, 8, RW, R},
-  { 8702, "8702", "Falttor 3-flgl. Typ 800 m. W-Rahmen, verz. DIN L", TOR,
-    FT3, 8, RW, L},
-  { 8703, "8703", "Falttor 4-flgl. Typ 800 m. W-Rahmen, verz. DIN R", TOR,
-    FT4, 8, RW, R},
-  { 8704, "8704", "Falttor 4-flgl. Typ 800 m. W-Rahmen, verz. DIN L", TOR,
-    FT4, 8, RW, L},
-  { 8705, "8705", "Falttor 5-flgl. Typ 800 m. W-Rahmen, verz. DIN R", TOR,
-    FT5, 8, RW, R},
-  { 8706, "8706", "Falttor 5-flgl. Typ 800 m. W-Rahmen, verz. DIN L", TOR,
-    FT5, 8, RW, L}
-
 };
 
 
@@ -407,7 +359,7 @@ char strTRAHMEN[3][30] =
 { "Z-Rahmen", "R-Rahmen", "W-Rahmen" };
 
 char GlasArt[GLASMAXDATA][30] =
-{ "VSG", "Plexi4", "Plexi5", "SDP10", "SDP16", "SDP20", "ISO",
+{ "VSG", "Plexi4", "Plexi5", "Plexi6", "SDP10", "SDP16", "SDP20", "ISO",
   "Klar", "Draht", "SAN4", "SAN5", "" };
 
 char* TDataScan::getArtBez(tART art)
@@ -561,20 +513,41 @@ BOOL TDataScan::getFuellung(int iNrFuellung, tFUELLUNG* pfAussen, tFUELLUNG* pfI
 {
     *pfAussen = *pfInnen = F_NONE;
 
-    TTData* pData = getPtrToArtikel(iNrFuellung);
-    if (pData == NULL || (tkindOf)pData->kindOf != FUELLUNG)
-        return FALSE;
-
-    if (pData != NULL)
+    if (iNrFuellung > 0 && iNrFuellung < 4000)
     {
-        *pfAussen = (tFUELLUNG)pData->Art;
-        *pfInnen = (tFUELLUNG)pData->Typ;
+        *pfAussen = (tFUELLUNG)getEnumForFuellung(iNrFuellung&0x0f);
+        *pfInnen = (tFUELLUNG)getEnumForFuellung((iNrFuellung&0x0f0)>>4);
         return TRUE;
     }
     else
     {
+        TTData* pData = getPtrToArtikel(iNrFuellung);
+        if (pData == NULL || (tkindOf)pData->kindOf != FUELLUNG)
+            return FALSE;
+
+        if (pData != NULL)
+        {
+            *pfAussen = (tFUELLUNG)pData->Art;
+            *pfInnen = (tFUELLUNG)pData->Typ;
+            return TRUE;
+        }
+        else
+        {
+        }
     }
     return FALSE;
+}
+
+int TDataScan::getFuellungIndex(int iNrFuellung, bool bAussen)
+{
+    if (iNrFuellung > 0 && iNrFuellung < 4000)
+    {
+        if (bAussen)
+            return iNrFuellung&0x0f;
+        else
+            return ((iNrFuellung&0x0f0)>>4);
+    }
+    return 0;
 }
 
 BOOL TDataScan::getHolzZuschnitt(int iLenRiegel, HolzZuschnitt** ppHzE)
@@ -604,6 +577,20 @@ char* TDataScan::getNameForProfil(tProfil prfl)
     return "??????";
 }
 
+
+const char* TDataScan::getNameForFuellung(int index)
+{
+    if (index < sizeof(g_FuellungsArt)/ sizeof(FuellungData))
+        return g_FuellungsArt[index].strFuellungName;
+    return "??????";
+}
+
+int TDataScan::getEnumForFuellung(int index)
+{
+    if (index < sizeof(g_FuellungsArt)/ sizeof(FuellungData))
+        return g_FuellungsArt[index].FuellungTyp;
+    return F_NONE;
+}
 
 tProfil TDataScan::getProfilForName(char* szName)
 {

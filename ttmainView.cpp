@@ -180,8 +180,8 @@ void CTtmainView::OnDraw(CDC* pDC)
         // Drucken
         int iDpiHorz = pDC->GetDeviceCaps(LOGPIXELSX);
         int iDpiVert = pDC->GetDeviceCaps(LOGPIXELSY);
-        m_iPageLen = (10*MM_PER_INCH*pDC->GetDeviceCaps(HORZRES)/iDpiHorz) - 10;
-        m_iPageHeight = 10*MM_PER_INCH*pDC->GetDeviceCaps(VERTRES)/iDpiVert;
+        m_iPageLen = (int)(10*MM_PER_INCH*pDC->GetDeviceCaps(HORZRES)/iDpiHorz) - 10;
+        m_iPageHeight = (int)(10*MM_PER_INCH*pDC->GetDeviceCaps(VERTRES)/iDpiVert);
         m_iLeftX = linksX; //10*MM_PER_INCH*pDC->GetDeviceCaps(PHYSICALOFFSETX)/iDpiHorz;//linksX;
         m_iTopY = startY;//+10*MM_PER_INCH*pDC->GetDeviceCaps(PHYSICALOFFSETY)/iDpiVert;//startY;
     }
@@ -550,6 +550,7 @@ int CTtmainView::addTorDoor()
 		    pT->RiegelElemente = NULL;
 		    pT->BetoPlanElemente = NULL;
 		    pT->RahmenElemente = NULL;
+		    pT->Treibriegel = NULL;
 
             CTtmainDoc* pDoc = GetDocument();
             if (pDoc)
@@ -825,6 +826,10 @@ int CTtmainView::openTorDoor(CString& strFileName)
 			return -1;
 		}
 		archive >> iVersion;
+        if (iVersion > TORDOOR_VERSION)
+        {
+            return -1;
+        }
 		archive >> iCount;
 		while (m_pTore.GetSize() < iCount)
 		{
@@ -879,6 +884,7 @@ int CTtmainView::openTorDoor(CString& strFileName)
 			pT->RiegelElemente = NULL;
 			pT->BetoPlanElemente = NULL;
 			pT->RahmenElemente = NULL;
+			pT->Treibriegel = NULL;
 
 			delete pT;	
 
@@ -889,8 +895,8 @@ int CTtmainView::openTorDoor(CString& strFileName)
 			}
             else
             {
-                // Rahmen immer neu bestimmen
-                pTTor->updateRahmen();
+                // alle übrigen Daten immer neu bestimmen
+                pTTor->updateElemente();
             }
 			m_iAryTorHoehe[m_pTore.GetSize()] = __max(MIN_Y_EINTRAG, pTTor->getLineBegin(CA_Y_BOTTOMLINE));
 

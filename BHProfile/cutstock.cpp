@@ -856,7 +856,7 @@ bool FindIntegerSolution(CUTSTOCK_DATA* pData)
  ---------------------------*/
 void   optsolc(CUTSTOCK_INPUT* pInput, CUTSTOCK_OUTPUT* pOutput)
 {
-    int  i, j, c, p, iFirst, iCount, iLength, iOldCount, iNewCount;
+    int  i, j, c, p, iFirst, iLength, iOldCount, iNewCount;
     InputMap inMap;
     pair< MIIter, bool > pr;
     MIIter miter, mNewIter;

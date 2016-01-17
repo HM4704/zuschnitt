@@ -3,7 +3,7 @@
 
 
 // Klassen-Version
-#define TORDOOR_VERSION 3
+#define TORDOOR_VERSION 4
 
 #define DINBREITE   15    //Breite des Türgriffs
 #define DINHOEHE    4     //Hoehe des Türgriffs
@@ -134,8 +134,10 @@ class CBetoPlanElement : public CHolzElement
 {
 
 public:
-    CBetoPlanElement(int iAnz, int iBreite, int iLaenge)
-    { m_iAnzahl = iAnz; m_iBreite = iBreite; m_iLaenge = iLaenge; };
+    //int m_iSort;            // wird bei Beto für die Füllungsart (Beto, PP, Agro, Alpha,...) verwendet
+
+    CBetoPlanElement(int iAnz, int iBreite, int iLaenge, int iArt)
+    { m_iAnzahl = iAnz; m_iBreite = iBreite; m_iLaenge = iLaenge; m_iSort = iArt; };
 };
 
 class CProfileElem : public CTTObject
@@ -182,6 +184,21 @@ public:
     CRahmenElem() { Anzahl = 0; Laenge = 0; Direction = WAAGRECHT; Rahmen = RZ; };
     CRahmenElem(int Anz, int Len, tDirect Dir, tRAHMEN rahmen)
     { Anzahl = Anz; Laenge = Len; Direction = Dir; Rahmen = rahmen; };
+
+    virtual void MySerialize(CArchive& archive, int iVersion);
+    virtual int  GetObjType(void) { return TTOBJ_TYPE_PROFILE_ELEM; };
+};
+
+class CTreibriegelElem : public CTTObject
+{
+public:
+    int Anzahl;
+    int Laenge;
+	int ProfilType;		// 0 == 1:1, 1 == 3:1
+
+    CTreibriegelElem() { Anzahl = 0; Laenge = 0; ProfilType = 0; };
+    CTreibriegelElem(int Anz, int Len, int pt)
+    { Anzahl = Anz; Laenge = Len; ProfilType = pt; };
 
     virtual void MySerialize(CArchive& archive, int iVersion);
     virtual int  GetObjType(void) { return TTOBJ_TYPE_PROFILE_ELEM; };
@@ -307,6 +324,7 @@ class CTorDoor : public CObject
    CPtrArray* RiegelElemente;
    CPtrArray* BetoPlanElemente;
    CPtrArray* RahmenElemente;
+   CPtrArray* Treibriegel;
 
 
    float scF;   //Skalierungsfaktor
@@ -336,6 +354,7 @@ class CTorDoor : public CObject
    void deleteRiegelElemente();
    void deleteBetoPlanElemente();
    void deleteRahmenElemente();
+   void deleteTreibriegel();
 
    virtual void drawTT(HDC hdc, int x, int y, int breite, int hoehe, HFONT fntSmall);
    void draw(HDC hdc);
@@ -357,11 +376,13 @@ class CTorDoor : public CObject
                       tTypWaagrecht uTyp);
    BOOL insertHolzElement(int iAnzahl, int iBreite, int iLaenge, int iSort);
    BOOL insertRiegelElement(int iAnzahl, int iLaenge);
-   BOOL insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge);
+   BOOL insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge, int iArt);
    BOOL insertRahmenElement(int Anz, int Len, tDirect Dir, tRAHMEN Rahmen);
+   BOOL insertTreibriegel(int Anz, int Len, int Pt);
 
    void computeProfile(CFlParam* pFl, int count, int iActFl);
    void computeRahmen(void);
+   void computeTreibriegel(void);
 
    virtual float calculateScale(int breite, int hoehe);
 
@@ -388,9 +409,11 @@ class CTorDoor : public CObject
    void profilRP1348(HDC hdc, int x, int y);
    void profilRP1087(HDC hdc, int x, int y);
    void profilRPRR(HDC hdc, int x, int y);
+   void profil30_10(HDC hdc, int x, int y);
+   void profilQuad(HDC hdc, int x, int y);
    int  getOeffnerFluegel(void);
    void updateFuellung(void);
-   void updateRahmen(void);
+   void updateElemente(void);
 
     
    void updateValues();

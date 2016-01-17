@@ -69,7 +69,7 @@ public:
 	void SetFuellung(CString str);
 	void GetFluegelItems();
 protected:
-    void AddBetoColor(int aNr, const char* szColor);
+    void AddBetoColor(const char* strFuellung, const char* szColor);
     void AddHolzArt(char* szBuf, BOOL outside, char* szHolz);
     void AddRemoveStyropor(bool add, int aNr);
     bool FuellungMitStyropor(void);
@@ -81,10 +81,13 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeTtortyp();
 	afx_msg void OnSelchangeFuellung();
+	afx_msg void OnSelchangeCustomFuellung();
 	afx_msg void OnChangeFuellungStr();
 	afx_msg void OnBogen();
 	afx_msg void OnChangeBreite();
 	afx_msg void OnClicked400R();
+    afx_msg void OnCbnSelchangeHolzAussen();
+    afx_msg void OnCbnSelchangeHolzInnen();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 	CComboBox m_ctrlBetoColor;
@@ -102,8 +105,6 @@ public:
     CComboBox m_cbHolzInnen;
     CString m_edHolzInnen;
     CComboBox m_cbHolzAussen;
-    afx_msg void OnCbnSelchangeHolzAussen();
-    afx_msg void OnCbnSelchangeHolzInnen();
     CComboBox m_ctrlSchlossArt;
     afx_msg void OnBnClickedStyropor();
     CButton m_ctrlStyropor;

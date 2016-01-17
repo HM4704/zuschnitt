@@ -214,8 +214,9 @@ BOOL CTtmainApp::InitInstance()
     }
     else
     {
-		if (!ProcessShellCommand(cmdInfo))
-			return FALSE;
+		ProcessShellCommand(cmdInfo);
+		//if (!ProcessShellCommand(cmdInfo))
+		//	return FALSE;
     }
 #endif //
 

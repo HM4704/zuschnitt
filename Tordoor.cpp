@@ -49,6 +49,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    FlParam    = ct->FlParam;
    Profile    = ct->Profile;
    RahmenElemente = ct->RahmenElemente;
+   Treibriegel = ct->Treibriegel;
    GlasProfile = ct->GlasProfile;
    HolzElemente = ct->HolzElemente;
    RiegelElemente = ct->RiegelElemente;
@@ -78,6 +79,7 @@ CTorDoor::CTorDoor()
    RiegelElemente = NULL;
    BetoPlanElemente = NULL;
    RahmenElemente = NULL;
+   Treibriegel = NULL;
    StueckZahl = 0;
    Size.Breite = 0;
    Size.Hoehe = 0;
@@ -119,8 +121,10 @@ CTorDoor::~CTorDoor()
 	if (GlasProfile != NULL) delete GlasProfile;
 	if (HolzElemente != NULL) delete HolzElemente;
 	if (RiegelElemente != NULL) delete RiegelElemente;
+	if (Treibriegel != NULL) delete Treibriegel;
 	if (BetoPlanElemente != NULL) delete BetoPlanElemente;
     if (RahmenElemente != NULL) delete RahmenElemente;
+    if (Treibriegel != NULL) delete Treibriegel;
 }
 
 void CTorDoor::deleteFluegel()
@@ -234,6 +238,21 @@ void CTorDoor::deleteRahmenElemente()
 		RahmenElemente->RemoveAll();
 	}
 }
+
+void CTorDoor::deleteTreibriegel()
+{
+	if (Treibriegel != NULL)
+	{
+		int count = Treibriegel->GetSize();
+		for (int i=0; i<count; i++)
+		{
+			CTreibriegelElem* pFl = (CTreibriegelElem*)Treibriegel->GetAt(i);
+			delete pFl;
+		}
+		Treibriegel->RemoveAll();
+	}
+}
+
 
 int CTorDoor::operator== (CTorDoor& td)
 {
@@ -833,6 +852,10 @@ void CTorDoor::computeFuellung(CFlParam *pFl, int count, int iSaveSenkProf, int 
       TDataScan ds;
       if (ds.getFuellung(Fuellung, &fAussen, &fInnen) == FALSE)
           return;
+
+      int iFuellungAussen = ds.getFuellungIndex(Fuellung, true);
+      int iFuellungInnen = ds.getFuellungIndex(Fuellung, false);
+
       if ((pFl->FArt != KEIN) && (pFl->OArt == LEER))
       {
           // Fenster vorhanden und kein Oberteil
@@ -1190,16 +1213,16 @@ void CTorDoor::computeFuellung(CFlParam *pFl, int count, int iSaveSenkProf, int 
                   iLaenge = iSaveSenkProf - iSubSenk;
                   iLaengeInnen = iSaveSenkProf - iSubSenkInnen;
                   if (fAussen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuer, iLaenge);
+                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuer, iLaenge, iFuellungAussen);
                   if (fInnen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuerInnen, iLaenge);
+                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuerInnen, iLaenge, iFuellungInnen);
                   // Oberteil
                   iLaenge = iSaveSenkOberProf - iSubSenk;
                   iLaengeInnen = iSaveSenkOberProf - iSubSenkInnen;
                   if (fAussen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuer, iLaenge);
+                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuer, iLaenge, iFuellungAussen);
                   if (fInnen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuerInnen, iLaenge);
+                      insertBetoPlanElement(1*StueckZahl*1, iSaveQuerProf - iSubQuerInnen, iLaenge, iFuellungInnen);
               }
               else
               { 
@@ -1207,9 +1230,9 @@ void CTorDoor::computeFuellung(CFlParam *pFl, int count, int iSaveSenkProf, int 
                   iLaengeInnen = iSaveSenkProf - iSubSenkInnen - iFensterKor;
 
                   if (fAussen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - iSubQuer, iLaenge);
+                      insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - iSubQuer, iLaenge, iFuellungAussen);
                   if (fInnen == F_BETOPLAN)
-                      insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - iSubQuerInnen, iLaengeInnen);
+                      insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - iSubQuerInnen, iLaengeInnen, iFuellungInnen);
               }          
           }
           else
@@ -1234,16 +1257,25 @@ void CTorDoor::computeFuellung(CFlParam *pFl, int count, int iSaveSenkProf, int 
                   // mit Oberteil und kein Fenster
                   // Unterreil
                   iLaenge = iSaveSenkProf - 120;
-                  insertBetoPlanElement(1*StueckZahl*iSeitenAnz, iSaveQuerProf - 128, iLaenge);
+                  if (fAussen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungAussen);
+                  if (fInnen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungInnen);
                   // Oberteil
                   iLaenge = iSaveSenkOberProf - 120;
-                  insertBetoPlanElement(1*StueckZahl*iSeitenAnz, iSaveQuerProf - 128, iLaenge);
+                  if (fAussen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungAussen);
+                  if (fInnen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungInnen);
               }
               else
               { 
                   iLaenge = iSaveSenkProf - 120 - iFensterKor;
 
-                  insertBetoPlanElement(1*StueckZahl*iSeitenAnz, iSaveQuerProf - 128, iLaenge);
+                  if (fAussen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1/*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungAussen);
+                  if (fInnen == F_BETOPLAN)
+                    insertBetoPlanElement(1*StueckZahl*1 /*iSeitenAnz*/, iSaveQuerProf - 128, iLaenge, iFuellungInnen);
               }          
           }
       }
@@ -1585,7 +1617,7 @@ BOOL CTorDoor::insertRiegelElement(int iAnzahl, int iLaenge)
   return found;
 }
 
-BOOL CTorDoor::insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge)
+BOOL CTorDoor::insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge, int iArt)
 {
   BOOL found = FALSE;
   int count = BetoPlanElemente->GetSize();
@@ -1593,7 +1625,7 @@ BOOL CTorDoor::insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge)
   {
     CBetoPlanElement *tempElem = (CBetoPlanElement*) BetoPlanElemente->GetAt(i);
     if (tempElem->m_iLaenge == iLaenge &&
-	tempElem->m_iBreite == iBreite)
+        tempElem->m_iBreite == iBreite && tempElem->m_iSort == iArt)
     {
       found = TRUE;
       tempElem->m_iAnzahl += iAnzahl;
@@ -1601,7 +1633,7 @@ BOOL CTorDoor::insertBetoPlanElement(int iAnzahl, int iBreite, int iLaenge)
   }
   if (!found)
   {
-     CBetoPlanElement* pP = new CBetoPlanElement(iAnzahl, iBreite, iLaenge);
+     CBetoPlanElement* pP = new CBetoPlanElement(iAnzahl, iBreite, iLaenge, iArt);
      BetoPlanElemente->Add(pP);
   }
   return found;
@@ -1626,6 +1658,28 @@ BOOL CTorDoor::insertRahmenElement(int Anz, int Len, tDirect Dir, tRAHMEN rahmen
   {
      CRahmenElem* pP = new CRahmenElem(Anz, Len, Dir, rahmen);
      RahmenElemente->Add(pP);
+  }
+  return found;
+}
+
+BOOL CTorDoor::insertTreibriegel(int Anz, int Len, int Pt)
+{
+  BOOL found = FALSE;
+  int count = Treibriegel->GetSize();
+  for (int i=0; i<count&&!found; i++)
+  {
+    CTreibriegelElem *tempElem = (CTreibriegelElem*) Treibriegel->GetAt(i);
+    if (tempElem->Laenge == Len &&
+		tempElem->ProfilType == Pt)
+	{
+      found = TRUE;
+      tempElem->Anzahl += Anz;
+    }
+  }
+  if (!found)
+  {
+     CTreibriegelElem* pP = new CTreibriegelElem(Anz, Len, Pt);
+     Treibriegel->Add(pP);
   }
   return found;
 }
@@ -1847,7 +1901,13 @@ int CTorDoor::printKundKomm(HDC hdc, int x, int y, int maxX, HFONT bFont)
   {
       strcpy(szBuf, "Rahmen");
       OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
-      y += 2*rowH;
+	  y += RahmenElemente->GetSize()*rowH;
+  }
+  if (Treibriegel != NULL && Treibriegel->GetSize() > 0)
+  {
+      strcpy(szBuf, "Treibriegel");
+      OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
+	  y += Treibriegel->GetSize()*rowH;
   }
   if (HolzElemente->GetSize() > 0)
   {
@@ -1863,11 +1923,32 @@ int CTorDoor::printKundKomm(HDC hdc, int x, int y, int maxX, HFONT bFont)
   }
   y += RiegelElemente->GetSize()*rowH;
 
-  if (BetoPlanElemente->GetSize() > 0)
+  //if (BetoPlanElemente->GetSize() > 0)
+  //{
+  //    strcpy(szBuf, "Beto/PP");
+  //    OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
+  //}
+  TDataScan dataScan;
+  for (int i=0; i<BetoPlanElemente->GetSize(); i++)
   {
-      strcpy(szBuf, "Beto/PP");
-      OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
+     CBetoPlanElement* pF = (CBetoPlanElement*)BetoPlanElemente->GetAt(i);
+     const char* sFuellung = dataScan.getNameForFuellung(pF->m_iSort);
+     if (strlen(sFuellung) == 0)
+     {
+        strcpy(szBuf, "Beto/PP");
+     }
+     else
+     {
+         CString s(sFuellung);
+         int idx = s.ReverseFind(_T(' '));
+         if (idx != -1)
+            s = s.Left(idx);
+         strcpy(szBuf, (char*)s.GetString());
+     }
+     OutputAligned(hdc, E_ALIGN_RIGHT, szBuf, maxX, -y);
+     y += rowH;     
   }
+
   return y+2* rowH;
 }
 
@@ -1992,7 +2073,6 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
       TextOut(hdc, x, -(y), buf, strlen(buf));
   }
 
-#if 1
   if (RahmenElemente != NULL)
   {
       for (i=0; i<RahmenElemente->GetSize(); i++)
@@ -2003,7 +2083,17 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
 	     TextOut(hdc, x, -(y), buf, strlen(buf));
       }
   }
-#endif
+
+  if (Treibriegel != NULL)
+  {
+      for (i=0; i<Treibriegel->GetSize(); i++)
+      {
+         CTreibriegelElem* pF = (CTreibriegelElem*)Treibriegel->GetAt(i);
+         y += rowH;
+         sprintf(buf, "%d St.", pF->Anzahl);
+	     TextOut(hdc, x, -(y), buf, strlen(buf));
+      }
+  }
 
 //  y += 2*rowH;
   // Ausgabe der Holz-Elemente
@@ -2136,9 +2226,13 @@ int CTorDoor::getLineBegin(int iKind)
   {
      iLineCount += rowH;
   }
-  if ((RahmenElemente != NULL) && RahmenElemente->GetSize() > 0)
+  if (RahmenElemente != NULL)
   {
-     iLineCount += 2*rowH;
+      iLineCount += RahmenElemente->GetSize()*rowH;
+  }
+  if (Treibriegel != NULL)
+  {
+      iLineCount += Treibriegel->GetSize()*rowH;
   }
 
   iLineCount += rowH;
@@ -2283,7 +2377,7 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
   // Zeichnen der Rahmen
   y = iYOrg + getLineBegin(CA_Y_AFTER_GLASPROFILES);
 //  y += 2*rowH;
-  if (RahmenElemente != NULL && RahmenElemente->GetSize() > 0)
+  if (RahmenElemente != NULL)
   {
       for (i=0; i<RahmenElemente->GetSize(); i++)
       {
@@ -2292,6 +2386,28 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
          {
              y += rowH;
              drawRahmen(hdc, x + 10, y, pF->Rahmen);
+         }
+      }
+  }
+
+  if (Treibriegel != NULL)
+  {
+      for (i=0; i<Treibriegel->GetSize(); i++)
+      {
+         CTreibriegelElem* pF = (CTreibriegelElem*)Treibriegel->GetAt(i);
+         if (pF != NULL)
+         {
+             y += rowH;
+//             drawRahmen(hdc, x + 10, y, pF->Rahmen);
+             // TODO: drawProfil
+             if (pF->ProfilType == 1)
+             {
+                 profil30_10(hdc, x+15, y+8);
+             }
+             else
+             {
+                 profilQuad(hdc, x+15, y+8);
+             }
          }
       }
   }
@@ -2432,6 +2548,51 @@ void CTorDoor::profilRPRR(HDC hdc, int x, int y)
     LineTo(hdc, x, -y);
     MoveToEx(hdc, x, -y, NULL);
     x -= 70;
+    LineTo(hdc, x, -y);
+}
+
+void CTorDoor::profil30_10(HDC hdc, int x, int y)
+{
+    MoveToEx(hdc, x, -y, NULL);
+    y += 40;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    x += 70;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    y -= 40;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    x -= 70;
+    LineTo(hdc, x, -y);
+
+    // Schraegstrich zeichnen
+    x -= 3;
+    y += 43;
+    MoveToEx(hdc, x, -y, NULL);
+    x += 79;
+    y -= 49;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+}
+
+//
+//  quadratisches Profil
+//
+//
+void CTorDoor::profilQuad(HDC hdc, int x, int y)
+{
+    MoveToEx(hdc, x, -y, NULL);
+    y += 40;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    x += 40;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    y -= 40;
+    LineTo(hdc, x, -y);
+    MoveToEx(hdc, x, -y, NULL);
+    x -= 40;
     LineTo(hdc, x, -y);
 }
 
@@ -2767,6 +2928,24 @@ int CTorDoor::printHoehe(HDC hdc, int x, int y, int posDir, int maxX,
 	       pF->Direction);
       }
   }
+
+  // Ausgabe der Treibriegel
+  if (Treibriegel != NULL)
+  {
+      for (i=0; i<Treibriegel->GetSize(); i++)
+      {
+         CTreibriegelElem* pF = (CTreibriegelElem*)Treibriegel->GetAt(i);
+         if (pF != NULL)
+         {
+             y += rowH;
+             sprintf(buf, "%d", pF->Laenge);
+	         TextOut(hdc, x, -(y), buf, strlen(buf));
+             drawDirection(hdc, posDir, y,
+	           SENKRECHT);
+         }
+      }
+  }
+
   // Ausgabe der Fuellungen
 //  y += 2*rowH;
   for (i=0; i<HolzElemente->GetSize(); i++)
@@ -3132,13 +3311,19 @@ void CTorDoor::drawFestellung(HDC hdc, int x, int y)
   }
 }
 
-void CTorDoor::updateRahmen()
+void CTorDoor::updateElemente()
 {
    if (RahmenElemente == NULL)
       RahmenElemente = new CPtrArray;
    else
       deleteRahmenElemente();
    computeRahmen();
+
+   if (Treibriegel == NULL)
+      Treibriegel = new CPtrArray;
+   else
+      deleteTreibriegel();
+   computeTreibriegel();
 }
 
 void CTorDoor::updateValues()
@@ -3171,6 +3356,11 @@ void CTorDoor::updateValues()
       RahmenElemente = new CPtrArray;
    else
       deleteRahmenElemente();
+   if (Treibriegel == NULL)
+      Treibriegel = new CPtrArray;
+   else
+      deleteTreibriegel();
+
 
    int count = FlParam->GetSize();
    for (int i=0; i<count; i++)
@@ -3187,6 +3377,8 @@ void CTorDoor::updateValues()
    }
 
    computeRahmen();
+
+   computeTreibriegel();
 }
 
 void CTorDoor::computeRahmen(void)
@@ -3257,7 +3449,47 @@ void CTorDoor::computeRahmen(void)
     if (iBreite != 0 && iHoehe != 0)
     {
         insertRahmenElement(2*StueckZahl, iHoehe, SENKRECHT, (tRAHMEN)RahmenArt);
-        insertRahmenElement(2*StueckZahl, iBreite, WAAGRECHT, (tRAHMEN)RahmenArt);
+		if (RahmenArt == RZ)
+		{
+			insertRahmenElement(1*StueckZahl, iBreite, WAAGRECHT, (tRAHMEN)RahmenArt);
+			insertRahmenElement(1*StueckZahl, iBreite, WAAGRECHT, RW);
+		}
+		else
+		{
+			insertRahmenElement(2*StueckZahl, iBreite, WAAGRECHT, (tRAHMEN)RahmenArt);
+		}
+    }
+}
+
+void CTorDoor::computeTreibriegel(void)
+{
+    int profilType;
+
+    if (FluegelAnz == 2)
+        profilType = 0;
+    else
+        profilType = 1;
+
+    if (FluegelAnz > 1)
+    {
+        // nur bei Toren
+        if (FluegelAnz == 2)
+        {
+            // Treibriegel bei Toren fuer unten
+            this->insertTreibriegel((FluegelAnz-1)*StueckZahl, 1100, profilType);
+        }
+        else
+        {
+            this->insertTreibriegel((FluegelAnz-1)*StueckZahl, 1110, profilType);
+        }
+        if (RahmenArt == RZ)
+        {
+            this->insertTreibriegel((FluegelAnz-1)*StueckZahl, Size.Hoehe*10 - 1240, profilType);
+        }
+        else
+        {
+             this->insertTreibriegel((FluegelAnz-1)*StueckZahl, Size.Hoehe*10 - 1220, profilType);
+       }
     }
 }
 
@@ -3593,10 +3825,16 @@ void CHolzElement::MySerialize(CArchive& archive, int iVersion)
     if ( archive.IsStoring() )
     {
         archive << m_iAnzahl << m_iBreite << m_iLaenge;
+        // ab hier Version 4
+        archive << m_iSort;
     }
     else
     {
         archive >> m_iAnzahl >> m_iBreite >> m_iLaenge;
+        if (iVersion > 3)
+            archive >> m_iSort;
+        else
+            m_iSort = 0;
     }
 }
 
@@ -3613,6 +3851,10 @@ void CRiegelElement::MySerialize(CArchive& archive, int iVersion)
 }
 
 void CRahmenElem::MySerialize(CArchive& archive, int iVersion)
+{
+}
+
+void CTreibriegelElem::MySerialize(CArchive& archive, int iVersion)
 {
 }
 

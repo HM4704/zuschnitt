@@ -605,7 +605,7 @@ bool CWHSProfilZuschnitt::CheckCutList(InputMap& inputMap, vector <ProfileCutLis
                     ( pr.first )->second += 2;  //?? es werden immer zwei geschnitten
                 }
             }
-            if (dwLength > m_iProfilLänge)
+            if ((int)dwLength > m_iProfilLänge)
             {
                 TRACE("******CheckCutList ERROR: Profil Abfolge länger als Ausgangsprofil!!!");
                 return false;

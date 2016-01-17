@@ -31,12 +31,6 @@ static const char* szSchlossArt[] =
     "PZ/GS"
 };
 
-static const char* szHolzArt[] = 
-{
-	"",
-	"Fichte",
-	"Lärche"
-};
 
 CAuswDlg::CAuswDlg(CPersistenceManager* persMan, CWnd* pParent /*=NULL*/)
 	: CDialog(CAuswDlg::IDD, pParent)
@@ -183,6 +177,7 @@ BOOL CAuswDlg::OnInitDialog()
 		m_cbGlasart[i]->AddString("VSG");
 		m_cbGlasart[i]->AddString("Plexi4");
 		m_cbGlasart[i]->AddString("Plexi5");
+		m_cbGlasart[i]->AddString("Plexi6");
 		m_cbGlasart[i]->AddString("SDP10");
 		m_cbGlasart[i]->AddString("SDP16");
 		m_cbGlasart[i]->AddString("SDP20");
@@ -209,10 +204,10 @@ BOOL CAuswDlg::OnInitDialog()
 	for (int i = 0; i < 2; i++)
 		m_ctrlBetoColor.AddString(szBetoColors[i]);
 
-	for (int i = 0; i < 3; i++)
-		m_cbHolzAussen.AddString(szHolzArt[i]);
-	for (int i = 0; i < 3; i++)
-		m_cbHolzInnen.AddString(szHolzArt[i]);
+	for (int i = 0; i < 10; i++)
+		m_cbHolzAussen.AddString(dataScan.getNameForFuellung(i));
+	for (int i = 0; i < 10; i++)
+		m_cbHolzInnen.AddString(dataScan.getNameForFuellung(i));
 
 	m_ctrlBetoColor.SetCurSel(0);
     for (int i = 0; i < 2; i++)
@@ -272,8 +267,16 @@ BOOL CAuswDlg::OnInitDialog()
 		m_edFuellung = m_pTor->strFuellung;
 		if (m_pTor->Fuellung != -1)
 		{
-			itoa(m_pTor->Fuellung, ctemp, 10);
-			m_cbFuellung.SelectString(-1, ctemp);
+            if (m_pTor->Fuellung > 4000)
+            {
+			    itoa(m_pTor->Fuellung, ctemp, 10);
+			    m_cbFuellung.SelectString(-1, ctemp);
+            }
+            else
+            {
+                m_cbHolzAussen.SetCurSel(m_pTor->Fuellung&0x0f);
+                m_cbHolzInnen.SetCurSel((m_pTor->Fuellung&0xf0)>>4);
+            }
 		}
 
 		itoa(m_pTor->StueckZahl, ctemp, 10);
@@ -326,7 +329,7 @@ BOOL CAuswDlg::OnInitDialog()
             if ((i == 0) && (m_pTor->FluegelAnz == 2))
             {
                 // 1. Fulegel und Tor
-		        itoa(pFl->iBreite/10, ctemp, 10); 
+		        itoa(pFl->iBreite, ctemp, 10); 
 		        m_strBreiteFl1 = ctemp;
             }
 		}
@@ -459,13 +462,12 @@ static const HOLZ_ADD_TEXTS holzInnenSearchTexts[NR_HOLZ_INNEN_TEXT] =
     { "doppelw. Holz", "innen " }    
 };
 
-void CAuswDlg::AddBetoColor(int aNr, const char* szColor)
+void CAuswDlg::AddBetoColor(const char* strFuellung, const char* szColor)
 {
     char szBuf[300];
-	TDataScan dataScan;
     
 //    m_cedFuellung.GetWindowText(szBuf);
-    strncpy(szBuf, dataScan.getBezeich(aNr), sizeof(szBuf));
+    strncpy(szBuf, strFuellung, sizeof(szBuf));
     
     for (int i = 0; i < NR_BETO_TEXT; i++)
     {
@@ -482,11 +484,9 @@ const char* szMitStyropor = " m. Styropor";
 void CAuswDlg::AddRemoveStyropor(bool add, int aNr)
 {
     char szBuf[300];
-	TDataScan dataScan;
     bool setText = false;
     
     m_cedFuellung.GetWindowText(szBuf, sizeof(szBuf));
-//    strncpy(szBuf, dataScan.getBezeich(aNr), sizeof(szBuf));
     
     if (add == true)
     {
@@ -547,12 +547,11 @@ void CAuswDlg::AddHolzArt(char* szBuf, BOOL outside, char* szHolz)
 
 void CAuswDlg::OnCbnSelchangeBetoColor()
 {
-    OnSelchangeFuellung();
+    OnSelchangeCustomFuellung();
 }
 
 void CAuswDlg::OnSelchangeFuellung() 
 {
-	// TODO: Add your control notification handler code here
 	TDataScan dataScan;
     int aNr;
 	char cBuffer[255];
@@ -562,37 +561,55 @@ void CAuswDlg::OnSelchangeFuellung()
 		&& (m_cbFuellung.GetLBText(iCurSel, cBuffer) != CB_ERR))
     {
 		tFUELLUNG outside, inside;
+
+        m_cbHolzAussen.SetCurSel(-1);
+        m_cbHolzInnen.SetCurSel(-1);
+
 		aNr = atoi(cBuffer);
 		m_cedFuellung.SetWindowText(dataScan.getBezeich(aNr));
 		dataScan.getFuellung(aNr, &outside, &inside);
 		if ((outside == F_BETOPLAN || inside == F_BETOPLAN) && (strstr(dataScan.getBezeich(aNr), " PP") == NULL))
 		{
-            AddBetoColor(aNr, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
+            AddBetoColor(dataScan.getBezeich(aNr), szBetoColors[m_ctrlBetoColor.GetCurSel()]);
 		}
-        if (inside == F_HOLZ && m_cbHolzInnen.GetCurSel() > 0 /* != "" */)
-		{
-            char szHolz[60];
-            m_cbHolzInnen.GetLBText(m_cbHolzInnen.GetCurSel(), szHolz);
-            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
-            AddHolzArt(cBuffer, FALSE, szHolz);
-		}
-        if (outside == F_HOLZ_I && m_cbHolzInnen.GetCurSel() > 0 /* != "" */)
-		{
-            char szHolz[60];
-            m_cbHolzInnen.GetLBText(m_cbHolzInnen.GetCurSel(), szHolz);
-            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
-            AddHolzArt(cBuffer, TRUE, szHolz);
-		}
-        if (outside == F_HOLZ && m_cbHolzAussen.GetCurSel() > 0 /* != "" */)
-		{
-            char szHolz[60];
-            m_cbHolzAussen.GetLBText(m_cbHolzAussen.GetCurSel(), szHolz);
-            m_cedFuellung.GetWindowTextA(cBuffer, sizeof(cBuffer));
-            AddHolzArt(cBuffer, TRUE, szHolz);
-		}
-
         AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
 	}
+}
+
+void CAuswDlg::OnSelchangeCustomFuellung() 
+{
+	TDataScan dataScan;
+	char cBuffer[255];
+
+    cBuffer[0] = 0;
+    int fuellungAussen = m_cbHolzAussen.GetCurSel();
+    int fuellungInnen = m_cbHolzInnen.GetCurSel();
+    if (fuellungAussen > 0 || fuellungInnen > 0)
+    {
+        m_cbFuellung.SetCurSel(-1);
+        if (fuellungAussen > 0)
+        {
+            strncat(cBuffer, "bandseitig ", strlen("bandseitig "));
+            strcat(cBuffer, dataScan.getNameForFuellung(fuellungAussen));
+        }
+        if (fuellungInnen > 0)
+        {
+            if (strlen(cBuffer) > 0)
+            {
+                strcat(cBuffer, ", ");
+            }
+            strncat(cBuffer, "bandgegenseitig ", strlen("bandgegenseitig "));
+            strcat(cBuffer, dataScan.getNameForFuellung(fuellungInnen));
+        }
+        m_cedFuellung.SetWindowText(cBuffer);
+
+        AddBetoColor(cBuffer, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
+        AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
+    }
+    else
+    {
+        m_cedFuellung.SetWindowText(cBuffer);
+    }
 }
 
 void CAuswDlg::OnChangeFuellungStr() 
@@ -753,7 +770,24 @@ void CAuswDlg::OnOK( )
 		&& (m_cbFuellung.GetLBText(iCurSel, cBuffer) != CB_ERR))
 		m_pTor->Fuellung = atoi(cBuffer);
 	else
-		m_pTor->Fuellung = -1;
+    {
+        int fuellungAussen = m_cbHolzAussen.GetCurSel();
+        int fuellungInnen = m_cbHolzInnen.GetCurSel();
+        if (fuellungAussen > 0 || fuellungInnen > 0)
+        {
+		    m_pTor->Fuellung = 0;
+            if (fuellungAussen > 0)
+            {
+                m_pTor->Fuellung |= fuellungAussen;
+            }
+            if (fuellungInnen > 0)
+            {
+                m_pTor->Fuellung |= (fuellungInnen<<4);
+            }
+        }
+        else
+		    m_pTor->Fuellung = -1;
+    }
 #endif   //0
 
 	m_pTor->StueckZahl = atoi(m_edAnzahl);
@@ -856,8 +890,8 @@ void CAuswDlg::OnOK( )
             // 1.Fluegel und Tor
             if (m_strBreiteFl1.IsEmpty() == FALSE)
             {   
-                FlP->iBreite = atoi(m_strBreiteFl1)*10;
-                iBreiteFl1 = FlP->iBreite/10; 
+                FlP->iBreite = atoi(m_strBreiteFl1);
+                iBreiteFl1 = FlP->iBreite; 
             }
         }
         if ((i == 1) && (m_pTor->FluegelAnz == 2))
@@ -866,8 +900,8 @@ void CAuswDlg::OnOK( )
             if ((m_strBreiteFl1.IsEmpty()) == FALSE && (iBreiteFl1 != 0))
             {   
                 // Breite ist Tor-Breite - Breite Fl1
-                FlP->iBreite = m_pTor->Size.Breite - iBreiteFl1;
-                FlP->iBreite *= 10;
+                FlP->iBreite = m_pTor->Size.Breite*10 - iBreiteFl1;
+//                FlP->iBreite *= 10;
             }
         }
 
@@ -969,13 +1003,13 @@ void CAuswDlg::OnClicked400R()
 void CAuswDlg::OnCbnSelchangeHolzAussen()
 {
     // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
-    OnSelchangeFuellung();
+    OnSelchangeCustomFuellung();
 }
 
 void CAuswDlg::OnCbnSelchangeHolzInnen()
 {
     // TODO: Fügen Sie hier Ihren Kontrollbehandlungscode für die Benachrichtigung ein.
-    OnSelchangeFuellung();
+    OnSelchangeCustomFuellung();
 }
 
 void CAuswDlg::OnBnClickedStyropor()

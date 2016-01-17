@@ -69,6 +69,9 @@ class TDataScan
      BOOL  getFuellung(int iNrFuellung, tFUELLUNG* pfAussen, tFUELLUNG* pfInnen);
      BOOL  getHolzZuschnitt(int iLenRiegel, HolzZuschnitt** ppHzE);
      char* getNameForProfil(tProfil prfl);
+     const char* getNameForFuellung(int index);
+     int getEnumForFuellung(int index);
+     int getFuellungIndex(int iNrFuellung, bool bAussen);
      tProfil getProfilForName(char* szName);
      
    private:

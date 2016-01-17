@@ -135,13 +135,13 @@ BOOL CHoleProfileCompute::GenerateCutList(CPtrArray* pProfileList, CPtrArray* pC
 //        iOffs2Hole = HP_DEFAULT_HOLE_OFFS;
 //        iProfileLength = HP_DEFAULT_LENGTH;   // zur Zeit immer von ganzem Profil ausgehen
         CHoleProfile* pProfile = (CHoleProfile*)pProfileList->GetAt(i);
-        for (int s = 0; s < pProfile->m_dwCount; s++)
+        for (int s = 0; s < (int)pProfile->m_dwCount; s++)
         {
             while (TRUE)
             {
                 if (Compute(iOffs2Hole, pProfile->m_dwLength, iFrontCut, iNewOffs2Hole) == TRUE)
                 {
-                    if (iProfileLength < (pProfile->m_dwLength + iFrontCut))
+                    if (iProfileLength < (int)(pProfile->m_dwLength + iFrontCut))
                     {
                         // Profil nicht mehr lang genug, neues Profil nehmen
                         if (pCutList != NULL)
@@ -605,13 +605,13 @@ BOOL CHoleProfileDoc::GenerateCutList(CUT_INFO* pInfo)
             pInfo->dwUsedProfiles++;
             CHoleProfile* pProfile = (CHoleProfile*)m_Profiles.GetAt(i);
             m_CutList.Add(p);
-            for (int s = 0; s < pProfile->m_dwCount; s++)
+            for (int s = 0; s < (int)pProfile->m_dwCount; s++)
             {
                 while (TRUE)
                 {
                     if (hp.Compute(iOffs2Hole, pProfile->m_dwLength, iFrontCut, iNewOffs2Hole) == TRUE)
                     {
-                        if (iProfileLength < (pProfile->m_dwLength + iFrontCut))
+                        if (iProfileLength < (int)(pProfile->m_dwLength + iFrontCut))
                         {
                             // Profil nicht mehr lang genug, neues Profil nehmen
                             CProfileCutElem* c = new CProfileCutElem;
