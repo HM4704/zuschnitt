@@ -204,9 +204,9 @@ BOOL CAuswDlg::OnInitDialog()
 	for (int i = 0; i < 2; i++)
 		m_ctrlBetoColor.AddString(szBetoColors[i]);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 		m_cbHolzAussen.AddString(dataScan.getNameForFuellung(i));
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 		m_cbHolzInnen.AddString(dataScan.getNameForFuellung(i));
 
 	m_ctrlBetoColor.SetCurSel(0);
@@ -419,14 +419,14 @@ static bool cutoutStringSequence(char* sentence, const char* sequence)
     return false;
 }
 
-#define NR_BETO_TEXT 5
+#define NR_BETO_TEXT 3
 static const char betoSearchTexts[NR_BETO_TEXT][50] =
 {
     "Beto-Plan-Füllung",
     "Beto-Plan",
-    "Beto",
-    "PP-Füllung",
-    "PP"
+    "Beto"
+//    "PP-Füllung",
+//    "PP"
 };
 
 typedef struct _HOLZ_ADD_TEXTS

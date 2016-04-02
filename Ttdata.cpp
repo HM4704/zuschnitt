@@ -43,7 +43,7 @@ static FuellungData g_FuellungsArt[] =
     { F_NONE, "", }, {F_HOLZ, "Fichte", }, {F_HOLZ, "Lärche"},
     { F_BETOPLAN, "Beto"}, { F_BETOPLAN, "PP" }, { F_BLECH, "Trapezblech" },
     { F_BETOPLAN, "Isopan Paneele Ral." }, { F_BETOPLAN, "Alpha Paneele Ral." }, { F_BETOPLAN, "Agro grün" },
-    { F_HOLZ, "Wolfbretter" }
+    { F_HOLZ, "Wolfbretter" }, { F_BETOPLAN, "Deko Plan" }
 };
 
 TTData tdata[] =
