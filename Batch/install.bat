@@ -1,8 +1,8 @@
 REM
-REM     Install für Zuschnitt V1.90
+REM     Install für Zuschnitt V1.91
 REM
 
-set Z_DIR=Zuschnitt190
+set Z_DIR=Zuschnitt191
 set Z_DRIVE=e:
 
 REM Diskette löschen
