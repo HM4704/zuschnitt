@@ -1,0 +1,11 @@
+
+Fragen zum PS312 Protokoll
+--------------------------
+
+- kann man Sägeblattstärke auch aus Parameter 44 Ebene ACH1 auslesen?
+  Wie greife ich auf Ebene BLADE zu?
+
+
+- wie reagiert die Steuerung, wenn man mehr als die möglichen Datensätze für ein Programm
+  programmieren will?
+  
