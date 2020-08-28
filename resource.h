@@ -139,6 +139,8 @@
 #define IDD_PS312_NEXT_DSET_INFO_DLG    242
 #define IDD_WHS_EDIT_CUTLIST_SETTINGS   243
 #define IDD_PS312_DATASET_EDIT_DLG      244
+#define IDB_RP_M                        250
+#define IDB_RP1579                      251
 #define IDC_RADIUS                      1000
 #define IDC_SEHNE                       1001
 #define IDC_SEHNENHOEHE                 1002
@@ -262,6 +264,7 @@
 #define IDC_HOLZ_INNEN                  1113
 #define IDC_POSITION                    1114
 #define IDC_SCHLOSS_ART                 1115
+#define IDC_Z_WIDTH                     1116
 #define ID_TOR_HINZU                    32771
 #define ID_DATEI_FFNEN                  32772
 #define ID_KREISBERECHNUNG              32773
@@ -305,9 +308,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        248
+#define _APS_NEXT_RESOURCE_VALUE        252
 #define _APS_NEXT_COMMAND_VALUE         32824
-#define _APS_NEXT_CONTROL_VALUE         1115
+#define _APS_NEXT_CONTROL_VALUE         1117
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

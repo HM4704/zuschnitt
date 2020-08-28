@@ -66,6 +66,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    scF = (float)0.7;
    aSp = 2;
    iSp = 1;
+   ZWidth = 4;   // default 4 mm
    m_iVersion = ct->m_iVersion;
 }
 
@@ -638,7 +639,8 @@ void CTorDoor::getProfileTypes(CFlParam* pFl, int iCount, int iActFl, tProfil& p
     else
     {
         // Typ 600 + 800
-        prflLeft = prflRight = prflTop = prflBottom = RP6_8;  // erstmal default
+        prflLeft = prflRight = prflTop = RP6_8;  // erstmal default
+        prflBottom = RP1579;
     }
 }
 
@@ -757,10 +759,8 @@ void CTorDoor::computeProfile(CFlParam* pFl, int count, int iActFl)
 
     insertProfil(StueckZahl, senkProfL, SENKRECHT, HOLZUNTEN, prflLeft);     // links
     insertProfil(StueckZahl, senkProfR, SENKRECHT, HOLZUNTEN, prflRight);    // rechts
+    insertProfil(1*StueckZahl, querProf, WAAGRECHT, HOLZAUF, prflTop);
     insertProfil(1*StueckZahl, querProf, WAAGRECHT, HOLZAUF, prflBottom);
-
-    if (Typ == 4)
-        insertProfil(1*StueckZahl, querProf, WAAGRECHT, HOLZAUF, prflTop);
 //braucht man nicht, da nur HOLZAUF ausgegeben wird
   }
   if (pFl->OArt == OiF)
@@ -2005,36 +2005,16 @@ int CTorDoor::printStueck(HDC hdc, int x, int y, int maxX, HFONT bFont)
         }
      }
   }
-  if (Typ != 4)
+   // alle Profile ausgeben
+  for (i=0; i<Profile->GetSize(); i++)
   {
-      // Typ 600 + 800
-      for (i=0; i<Profile->GetSize(); i++)
-      {
-         CProfileElem* pF = (CProfileElem*)Profile->GetAt(i);
-         if (pF->Direction == WAAGRECHT)
-         {
-            y += rowH;
-            if (bBogen == TRUE)
-	            sprintf(buf, "%d St.", pF->Anzahl);
-            else
-	            sprintf(buf, "je %d St.", pF->Anzahl);
-	        TextOut(hdc, x, -(y), buf, strlen(buf));
-         }
-      }
-  }
-  else
-  {
-      // Typ 400 [R], alle Profile ausgeben
-      for (i=0; i<Profile->GetSize(); i++)
-      {
-         CProfileElem* pF = (CProfileElem*)Profile->GetAt(i);
-         if (pF->Direction == WAAGRECHT)
-         {
-            y += rowH;
-	        sprintf(buf, "%d St.", pF->Anzahl);
-	        TextOut(hdc, x, -(y), buf, strlen(buf));
-         }
-      }
+     CProfileElem* pF = (CProfileElem*)Profile->GetAt(i);
+     if (pF->Direction == WAAGRECHT)
+     {
+        y += rowH;
+        sprintf(buf, "%d St.", pF->Anzahl);
+        TextOut(hdc, x, -(y), buf, strlen(buf));
+     }
   }
 
   y += rowH;
@@ -2306,7 +2286,19 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
          }
       }  
   }
-  if (Typ == 4)
+  else 
+  {
+      // für Typ 600/800 senkrechte Profile nicht zeichnen
+      for (int i=0; i<Profile->GetSize(); i++)
+      {
+         CProfileElem* pF = (CProfileElem*)Profile->GetAt(i);
+         if (pF->Direction == SENKRECHT)
+         {
+             y += rowH;
+         }
+      }
+  }
+  if (/*Typ == 4*/TRUE)
   {
       for (int i=0; i<Profile->GetSize(); i++)
       {
@@ -2330,7 +2322,15 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
              else
              if (pF->Profil == RP1348)
                 profilRP1348(hdc, x+15, y+8);
-         }
+             else
+             if (pF->Profil == RP6_8)
+                profilRP6_8(hdc, x+15, y+8);
+             else
+             if (pF->Profil == RP1579)
+                profilRP1579(hdc, x+15, y+8);
+             if (pF->Profil == RP6_M)
+                profilRPM(hdc, x+15, y+8);
+        }
       }  
   }
   // Bogenberechnung nur für Typ 600!!!
@@ -2615,6 +2615,77 @@ void CTorDoor::profilRP1348(HDC hdc, int x, int y)
     LineTo(hdc, x+88, -(y));
     MoveToEx(hdc, x+88, -y, NULL);
     LineTo(hdc, x+70, -y);
+}
+
+//
+//    |----|---
+//    |    |
+// ___|____|___
+// 
+void CTorDoor::profilRP6_8(HDC hdc, int x, int y)
+{
+    x += 30;
+    MoveToEx(hdc, x, -y, NULL);
+    LineTo(hdc, x+50, -y);   //--
+    MoveToEx(hdc, x, -y, NULL);
+    LineTo(hdc, x, -(y+45));   // |
+    MoveToEx(hdc, x+25, -y, NULL);
+    LineTo(hdc, x+25, -(y+45));
+    MoveToEx(hdc, x+50, -(y+45), NULL);
+    LineTo(hdc, x-25, -(y+45));
+}
+
+//
+//
+//
+//
+//
+void CTorDoor::profilRP1579(HDC hdc, int x, int y)
+{
+    x += 20;
+    MoveToEx(hdc, x, -y, NULL);
+    x += 30;
+    LineTo(hdc, x, -y);   //--
+    y += 20;
+    LineTo(hdc, x, -y);
+    x += 15;
+    LineTo(hdc, x, -y);
+    y += 20;
+    LineTo(hdc, x, -y);
+    x -= 15;
+    LineTo(hdc, x, -y);
+    y += 20;
+    LineTo(hdc, x, -y);
+    x -= 50;
+    LineTo(hdc, x, -y);
+    y -= 4;
+    LineTo(hdc, x, -y);
+    x += 20;
+    LineTo(hdc, x, -y);
+    y -= 56;
+    LineTo(hdc, x, -y);
+}
+
+void CTorDoor::profilRPM(HDC hdc, int x, int y)
+{
+    y += 15;
+    MoveToEx(hdc, x, -y, NULL);
+    x += 60;
+    LineTo(hdc, x, -y);   
+    y += 30;
+    LineTo(hdc, x, -y);   
+    x -= 60;
+    LineTo(hdc, x, -y);   
+    y -= 30;
+    LineTo(hdc, x, -y);   
+    x += 20;
+    MoveToEx(hdc, x, -y, NULL);
+    y -= 15;
+    LineTo(hdc, x, -y);   
+    x += 20;
+    LineTo(hdc, x, -y);   
+    y += 15;
+    LineTo(hdc, x, -y);   
 }
 
 //____-----
@@ -3087,9 +3158,7 @@ int CTorDoor::printObert(HDC hdc, int x, int y, int maxX, HFONT bFont)
     if (pFl->OArt == OzO || pFl->OArt == OiF)
     {
        sprintf(Buf, "%d", Size.ObtHoehe*10);
-//       HFONT orgFont = (HFONT)SelectObject(hdc, bFont);
        TextOut(hdc, x, -actY, Buf, strlen(Buf));
-//       SelectObject(hdc, orgFont);
 
        actY += rowH;
        if (pFl->OArt == OzO)
@@ -3147,9 +3216,7 @@ int CTorDoor::printFenster(HDC hdc, int y,
     {
       itoa(pFl->ObtHoehe*10, Buf, 10);
 
-//      HFONT orgFont = (HFONT)SelectObject(hdc, bFont);
       TextOut(hdc, actX, -actY, Buf, strlen(Buf));
-//      SelectObject(hdc, orgFont);
 
       actY +=  rowH;
       if (pFl->GArt != -1)
@@ -3166,23 +3233,9 @@ int CTorDoor::printFenster(HDC hdc, int y,
 int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
     HFONT bFont)
 {
-  char temp[300];
+  char temp[500];
   TDataScan dataScan;
 
-#if 0 //?? immer Fuellung ausgeben
-  if (Fuellung != -1)
-  {
-    sprintf(temp, "%s", dataScan.getBezeich(Fuellung));
-
-    //  HFONT orgFont = (HFONT)SelectObject(hdc, bFont);
-    TextOut(hdc, x, -y, temp, strlen(temp));
-//  SelectObject(hdc, orgFont);
-  }
-  else
-  {
-    TextOut(hdc, x, -y, strFuellung, strlen(strFuellung));
-  }
-#else
   int iPrinted = 0;
   int iLen = strlen(strFuellung);
   int iToPrint = iLen;
@@ -3206,9 +3259,8 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
          }
      }
   }
-#endif  // 0
 
-  y +=  rowH;
+  y +=  rowH/2;
   if (bBogen == TRUE)
   {
       sprintf(temp, "%s, Radius: %0.0f mm", dataScan.getRahmenBez((tRAHMEN)RahmenArt)
@@ -3217,6 +3269,12 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
   else
   {
       sprintf(temp, "%s", dataScan.getRahmenBez((tRAHMEN)RahmenArt));
+  }
+  if (RahmenArt == RZ && ZWidth > 2) {
+      // Z Staerke ausgeben
+      char cBuf[100];
+      sprintf(cBuf, ", %d mm", ZWidth);
+      strcat(temp, cBuf);
   }
   TextOut(hdc, x, -y, temp, strlen(temp));
 
@@ -3231,7 +3289,7 @@ void CTorDoor::drawSquares(HDC hdc, int x, int y)
   int abstandX = rnd((Size.ZBreite-squareW)/2);
 
   // oben
-  Rectangle(hdc, x+abstandX, -(y-2*spaceSquare-squareH), x+abstandX+squareW,
+  Rectangle(hdc, x+2*abstandX, -(y-2*spaceSquare-squareH), x+2*abstandX+squareW,
 	    -(y-2*spaceSquare));
   pTeb = dataScan.getTorEinbau(TorEinbau[TS_OBEN]);
   TextOut(hdc, x+abstandX+9, -(y-2*spaceSquare-squareH+6), pTeb, strlen(pTeb));

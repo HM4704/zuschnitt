@@ -3,7 +3,7 @@
 
 
 // Klassen-Version
-#define TORDOOR_VERSION 4
+#define TORDOOR_VERSION 5
 
 #define DINBREITE   15    //Breite des Türgriffs
 #define DINHOEHE    4     //Hoehe des Türgriffs
@@ -330,6 +330,7 @@ class CTorDoor : public CObject
    float scF;   //Skalierungsfaktor
    int   aSp;   //Außenspalte
    int   iSp;   //Innenspalte
+   int   ZWidth;   // Z 3 oder 4 mm, 2 steht für kein
    
    // Versionskennung
    int   m_iVersion;
@@ -407,6 +408,10 @@ class CTorDoor : public CObject
    void profilRP1093(HDC hdc, int x, int y);
    void profilRP1094(HDC hdc, int x, int y);
    void profilRP1348(HDC hdc, int x, int y);
+   void profilRP6_8(HDC hdc, int x, int y);
+   void profilRP1579(HDC hdc, int x, int y);
+   void profilRPM(HDC hdc, int x, int y);
+
    void profilRP1087(HDC hdc, int x, int y);
    void profilRPRR(HDC hdc, int x, int y);
    void profil30_10(HDC hdc, int x, int y);

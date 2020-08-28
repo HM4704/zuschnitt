@@ -17,7 +17,7 @@ typedef enum {F_NONE, F_HOLZ, F_BETOPLAN, F_BLECH, F_BOHLEN, F_HOLZ_I } tFUELLUN
 
 typedef enum { NP=0, RPRR /*Rechteck-Rohr*/, RP1087, RP1093, RP1094, RP1348, RP1070, 
                RP1114, RP1071, RP1163, RP1072,
-               RP1191, RP6_8 /* Profil Typ600/800 */  } tProfil;
+               RP1191, RP1579, RP6_M, RP6_8 /* Profil Typ600/800 */  } tProfil;
 
 typedef enum { TEB_LEER = 0, TEB_MAUERWERK, TEB_BETON, TEB_HOLZ, TEB_MAX } tTorEinbau;
 

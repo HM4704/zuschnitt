@@ -28,6 +28,7 @@ static ProfilData g_ProfilData[] =
     { RP1093, "RP1093" }, { RP1094, "RP1094" }, { RP1348, "RP1348" }, 
     { RP1070, "RP1070" }, { RP1114, "RP1114" }, { RP1071, "RP1071" },
     { RP1163, "RP1163" }, { RP1072, "RP1072" }, { RP1191, "RP1191" },
+    { RP1579, "RP1579" }, { RP6_M, "RP_M" },
     { NP, "??????" }, { RP6_8, "RP6_8" }
 };
 
@@ -42,7 +43,7 @@ static FuellungData g_FuellungsArt[] =
 {
     { F_NONE, "", }, {F_HOLZ, "Fichte", }, {F_HOLZ, "Lärche"},
     { F_BETOPLAN, "Beto"}, { F_BETOPLAN, "PP" }, { F_BLECH, "Trapezblech" },
-    { F_BETOPLAN, "Isopan Paneele Ral." }, { F_BETOPLAN, "Alpha Paneele Ral." }, { F_BETOPLAN, "Agro grün" },
+    { F_BETOPLAN, "Isopan Paneele Ral." }, { F_BETOPLAN, "Alpha Paneele Ral." }, { F_BETOPLAN, "Agro grün" }, { F_BETOPLAN, "Agro braun" },
     { F_HOLZ, "Wolfbretter" }, { F_BETOPLAN, "Deko Plan" }
 };
 

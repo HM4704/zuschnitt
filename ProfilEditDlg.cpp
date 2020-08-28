@@ -300,24 +300,35 @@ void CProfilEditDlg::InitProfilList(void)
     ASSERT(m_pImgList);
 	m_pImgList->Init(36, 21, ILC_COLOR8, 2, 2);
 	CBitmap             bitmap;
-	bitmap.LoadBitmap(IDB_RPRR);
-	m_pImgList->InsertImage(ds.getNameForProfil(RPRR), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1087);
-	m_pImgList->InsertImage(ds.getNameForProfil(RP1087), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1093);
-	m_pImgList->InsertImage(ds.getNameForProfil(RP1093), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1094);
-	m_pImgList->InsertImage(ds.getNameForProfil(RP1094), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1348);
-	m_pImgList->InsertImage(ds.getNameForProfil(RP1348), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP6_8);
-	m_pImgList->InsertImage(ds.getNameForProfil(RP6_8), &bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
+    if (m_pTor->Typ == 4) {
+	    bitmap.LoadBitmap(IDB_RPRR);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RPRR), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1087);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP1087), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1093);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP1093), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1094);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP1094), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1348);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP1348), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+    }
+    else
+    {
+	    bitmap.LoadBitmap(IDB_RP6_8);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP6_8), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP_M);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP6_M), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1579);
+	    m_pImgList->InsertImage(ds.getNameForProfil(RP1579), &bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+    }
     // Richtung
 	bitmap.LoadBitmap(IDB_PROFIL_WAAG);
 	m_pImgList->InsertImage("WAAGRECHT", &bitmap, (COLORREF)0x00000000);

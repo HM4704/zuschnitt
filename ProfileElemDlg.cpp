@@ -73,76 +73,110 @@ BOOL CProfileElemDlg::OnInitDialog()
 
     CImageList          *pImageList = NULL;
 	pImageList = new CImageList();
-	pImageList->Create(36, 21, ILC_COLOR8, 2, 2);
-	CBitmap             bitmap;
-	bitmap.LoadBitmap(IDB_RPRR);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1087);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1093);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1094);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP1348);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
-	bitmap.LoadBitmap(IDB_RP6_8);
-	pImageList->Add(&bitmap, (COLORREF)0x00000000);
-	bitmap.DeleteObject();
+    pImageList->Create(36, 21, ILC_COLOR8, 2, 2);
+
+    CBitmap             bitmap;
+    if (m_pTor->Typ == 4)
+    {
+	    bitmap.LoadBitmap(IDB_RPRR);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1087);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1093);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1094);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1348);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+    }
+    else 
+    {
+	    bitmap.LoadBitmap(IDB_RP6_8);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP_M);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+	    bitmap.LoadBitmap(IDB_RP1579);
+	    pImageList->Add(&bitmap, (COLORREF)0x00000000);
+	    bitmap.DeleteObject();
+    }
     m_cbProfileType.SetImageList(pImageList );
 
     COMBOBOXEXITEM cbi;
-    cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-    cbi.iItem = 0;
-    cbi.pszText = ds.getNameForProfil(RPRR);
-    cbi.cchTextMax = 20;  //??
-    cbi.iImage = 0;
-    cbi.iSelectedImage = cbi.iImage;
-    cbi.lParam = RPRR;
-    m_cbProfileType.InsertItem(&cbi);
-    cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-    cbi.iItem = 1;
-    cbi.pszText = ds.getNameForProfil(RP1087);
-    cbi.cchTextMax = 20;  //??
-    cbi.iImage = 1;
-    cbi.iSelectedImage = cbi.iImage;
-    cbi.lParam = RP1087;
-    m_cbProfileType.InsertItem(&cbi);
-    cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-    cbi.iItem = 2;
-    cbi.pszText = ds.getNameForProfil(RP1093);
-    cbi.cchTextMax = 20;  //??
-    cbi.iImage = 2;
-    cbi.iSelectedImage = cbi.iImage;
-    cbi.lParam = RP1093;
-    m_cbProfileType.InsertItem(&cbi);
-    cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-    cbi.iItem = 3;
-    cbi.pszText = ds.getNameForProfil(RP1094);
-    cbi.cchTextMax = 20;  //??
-    cbi.iImage = 3;
-    cbi.iSelectedImage = cbi.iImage;
-    cbi.lParam = RP1094;
-    m_cbProfileType.InsertItem(&cbi);
-    cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-    cbi.iItem = 4;
-    cbi.pszText = ds.getNameForProfil(RP1348);
-    cbi.cchTextMax = 20;  //??
-    cbi.iImage = 4;
-    cbi.iSelectedImage = cbi.iImage;
-    cbi.lParam = RP1348;
-    m_cbProfileType.InsertItem(&cbi);
-    if (m_pTor->Typ != 4)
+    if (m_pTor->Typ == 4)
     {
-        cbi.mask = CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
-        cbi.iItem = 5;
-        cbi.iImage = 5;
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 0;
+        cbi.pszText = ds.getNameForProfil(RPRR);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 0;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RPRR;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 1;
+        cbi.pszText = ds.getNameForProfil(RP1087);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 1;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP1087;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 2;
+        cbi.pszText = ds.getNameForProfil(RP1093);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 2;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP1093;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 3;
+        cbi.pszText = ds.getNameForProfil(RP1094);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 3;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP1094;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 4;
+        cbi.pszText = ds.getNameForProfil(RP1348);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 4;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP1348;
+        m_cbProfileType.InsertItem(&cbi);
+    }
+    else
+    {
+        cbi.mask = CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_TEXT | CBEIF_LPARAM;
+        cbi.pszText = ds.getNameForProfil(RP6_8); //ds.getNameForProfil(RP1348);
+        cbi.cchTextMax = 20;  //??
+        cbi.iItem = 0;
+        cbi.iImage = 0;
         cbi.iSelectedImage = cbi.iImage;
         cbi.lParam = RP6_8;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 1;
+        cbi.pszText = ds.getNameForProfil(RP6_M);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 1;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP6_M;
+        m_cbProfileType.InsertItem(&cbi);
+        cbi.mask = CBEIF_TEXT | CBEIF_IMAGE | CBEIF_SELECTEDIMAGE | CBEIF_LPARAM;
+        cbi.iItem = 2;
+        cbi.pszText = ds.getNameForProfil(RP1579);
+        cbi.cchTextMax = 20;  //??
+        cbi.iImage = 2;
+        cbi.iSelectedImage = cbi.iImage;
+        cbi.lParam = RP1579;
         m_cbProfileType.InsertItem(&cbi);
     }
 
@@ -173,11 +207,6 @@ BOOL CProfileElemDlg::OnInitDialog()
 
     CopyValues(TRUE);
 
-    if (m_pTor->Typ != 4)
-    {
-        // Typ 600 +800, nur ein Profil
-        m_cbProfileType.EnableWindow(FALSE);
-    }
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

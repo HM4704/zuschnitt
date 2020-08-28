@@ -111,6 +111,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_TEB_UNTEN, m_ctrlTEBUnten);
     DDX_Control(pDX, IDC_TOR_FEST_LINKS, m_ctrlTorFestLinks);
     DDX_Control(pDX, IDC_TOR_FEST_RECHTS, m_ctrlTorFestRechts);
+    DDX_Control(pDX, IDC_Z_WIDTH, m_cbZWidth);
 }
 
 
@@ -251,6 +252,12 @@ BOOL CAuswDlg::OnInitDialog()
     }
     m_ctrlTorFestLinks.SetCurSel(m_pTor->TorFeststellung[TS_LINKS]);
     m_ctrlTorFestRechts.SetCurSel(m_pTor->TorFeststellung[TS_RECHTS]);
+
+    // Z Staerke
+    m_cbZWidth.AddString("");
+    m_cbZWidth.AddString("3");
+    m_cbZWidth.AddString("4");
+    m_cbZWidth.SetCurSel(m_pTor->ZWidth - 2);
 
 	if (m_bModify)
 	{
@@ -851,6 +858,9 @@ void CAuswDlg::OnOK( )
     // Torfeststellung
     m_pTor->TorFeststellung[TS_LINKS]  = (tTorFeststellung)m_ctrlTorFestLinks.GetCurSel();
     m_pTor->TorFeststellung[TS_RECHTS] = (tTorFeststellung)m_ctrlTorFestRechts.GetCurSel();
+
+    // Z Staerke
+    m_pTor->ZWidth = m_cbZWidth.GetCurSel() + 2;
 
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{
