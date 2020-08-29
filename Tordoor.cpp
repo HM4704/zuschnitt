@@ -67,6 +67,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    aSp = 2;
    iSp = 1;
    ZWidth = 4;   // default 4 mm
+   Band = BAND_LEER;
    m_iVersion = ct->m_iVersion;
 }
 
@@ -3260,7 +3261,7 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
      }
   }
 
-  y +=  rowH/2;
+//  y +=  rowH/2;
   if (bBogen == TRUE)
   {
       sprintf(temp, "%s, Radius: %0.0f mm", dataScan.getRahmenBez((tRAHMEN)RahmenArt)
@@ -3277,6 +3278,12 @@ int CTorDoor::printFuellung(HDC hdc, int x, int y, int maxX,
       strcat(temp, cBuf);
   }
   TextOut(hdc, x, -y, temp, strlen(temp));
+
+  if (Band != BAND_LEER) {
+      y +=  rowH;
+      sprintf(temp, "Band %s", dataScan.getBand(Band));
+      TextOut(hdc, x, -y, temp, strlen(temp));
+  }
 
   return 0; //temp., später richtig!!!
 }

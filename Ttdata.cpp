@@ -619,3 +619,11 @@ const char* TDataScan::getTorFeststellung(int tfs)
 {
     return TorFeststellung[tfs];
 }
+
+static const char BandWerte[4][20] = 
+{ "", "14", "16", "16-80" };
+
+const char* TDataScan::getBand(int band)
+{
+    return BandWerte[band];
+}

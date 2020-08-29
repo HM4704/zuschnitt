@@ -115,6 +115,7 @@ public:
     CComboBox m_ctrlTorFestLinks;
     CComboBox m_ctrlTorFestRechts;
     CComboBox m_cbZWidth;
+    CComboBox m_cbBand;
 };
 
 //{{AFX_INSERT_LOCATION}}

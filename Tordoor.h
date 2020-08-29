@@ -331,6 +331,7 @@ class CTorDoor : public CObject
    int   aSp;   //Außenspalte
    int   iSp;   //Innenspalte
    int   ZWidth;   // Z 3 oder 4 mm, 2 steht für kein
+   tBand Band;   // Band 14, 16, 16-80, kein
    
    // Versionskennung
    int   m_iVersion;

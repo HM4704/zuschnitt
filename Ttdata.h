@@ -23,6 +23,8 @@ typedef enum { TEB_LEER = 0, TEB_MAUERWERK, TEB_BETON, TEB_HOLZ, TEB_MAX } tTorE
 
 typedef enum { TFS_LEER = 0, TFS_HAKEN, TFS_STELLER_40, TFS_STELLER_60, TFS_STELLER_80, TFS_MAX } tTorFeststellung;
 
+typedef enum { BAND_LEER = 0, BAND_14, BAN_16, BAND_16_80, BAND_MAX } tBand;
+
 typedef struct tagTTData{
 	int  artNr;
         char sartNr[5];
@@ -66,6 +68,7 @@ class TDataScan
      char* getGlasArt(int Glasart);
      const char* getTorEinbau(int teb);
      const char* getTorFeststellung(int tfs);
+     const char* getBand(int band);
      BOOL  getFuellung(int iNrFuellung, tFUELLUNG* pfAussen, tFUELLUNG* pfInnen);
      BOOL  getHolzZuschnitt(int iLenRiegel, HolzZuschnitt** ppHzE);
      char* getNameForProfil(tProfil prfl);

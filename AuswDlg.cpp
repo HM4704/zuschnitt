@@ -112,6 +112,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_TOR_FEST_LINKS, m_ctrlTorFestLinks);
     DDX_Control(pDX, IDC_TOR_FEST_RECHTS, m_ctrlTorFestRechts);
     DDX_Control(pDX, IDC_Z_WIDTH, m_cbZWidth);
+    DDX_Control(pDX, IDC_BAND, m_cbBand);
 }
 
 
@@ -258,6 +259,13 @@ BOOL CAuswDlg::OnInitDialog()
     m_cbZWidth.AddString("3");
     m_cbZWidth.AddString("4");
     m_cbZWidth.SetCurSel(m_pTor->ZWidth - 2);
+
+    // Band
+	for (int band = BAND_LEER; band < BAND_MAX; band++)
+    {
+        m_cbBand.AddString(dataScan.getBand(band));
+    }
+    m_cbBand.SetCurSel(m_pTor->Band);
 
 	if (m_bModify)
 	{
@@ -861,6 +869,9 @@ void CAuswDlg::OnOK( )
 
     // Z Staerke
     m_pTor->ZWidth = m_cbZWidth.GetCurSel() + 2;
+
+    // Band
+    m_pTor->Band = (tBand)m_cbBand.GetCurSel();
 
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{
