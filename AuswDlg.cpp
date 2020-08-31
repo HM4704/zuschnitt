@@ -116,6 +116,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BAND, m_cbBand);
     DDX_Text(pDX, IDC_TEXT_UNTEN, m_edTextUnten);
     DDX_Control(pDX, IDC_KLAPPGRIFF, m_cbKlappgriff);
+    DDX_Control(pDX, IDC_SCHWELLE, m_cbSchwelle);
 }
 
 
@@ -276,6 +277,13 @@ BOOL CAuswDlg::OnInitDialog()
         m_cbKlappgriff.AddString(dataScan.getKlappgriff(klapp));
     }
     m_cbKlappgriff.SetCurSel(m_pTor->Klappgriff);
+
+    // Schwelle
+	for (int schw = SCHWELLE_LEER; schw < SCHWELLE_MAX; schw++)
+    {
+        m_cbSchwelle.AddString(dataScan.getSchwelle(schw));
+    }
+    m_cbSchwelle.SetCurSel(m_pTor->Schwelle);
 
 	if (m_bModify)
 	{
@@ -877,6 +885,9 @@ void CAuswDlg::OnOK( )
 
     // Klappgriff
     m_pTor->Klappgriff = (tKlappgriff)m_cbKlappgriff.GetCurSel();
+
+    // Schwelle
+    m_pTor->Schwelle = (tSchwelle)m_cbSchwelle.GetCurSel();
 
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{

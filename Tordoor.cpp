@@ -67,6 +67,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    Band = ct->Band;
    strcpy(TextUnten, ct->TextUnten);
    Klappgriff = ct->Klappgriff;
+   Schwelle = ct->Schwelle;
 
    scF = (float)0.7;
    aSp = 2;
@@ -112,10 +113,11 @@ CTorDoor::CTorDoor()
        TorFeststellung[i] = TFS_LEER;
    }   
 
-   ZWidth = 4;   // default 4 mm
+   ZWidth = 2;   // kein
    Band = BAND_LEER;
    TextUnten[0] = 0;
    Klappgriff = KLAPPG_LEER;
+   Schwelle = SCHWELLE_LEER;
 }
 
 CTorDoor::~CTorDoor() 
@@ -3321,6 +3323,13 @@ void CTorDoor::drawSquares(HDC hdc, int x, int y)
      TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, -(y+Size.ZGesamtHoehe+2*spaceSquare+squareH + 10), 
          TextUnten, strlen(TextUnten));
   }
+  // Schwelle ausgeben
+  if (Schwelle > SCHWELLE_LEER) {
+      char cTemp[100];
+      strcpy(cTemp, dataScan.getSchwelle(Schwelle));
+      TextOut(hdc, x+abstandX+squareW + squareW/4, -(y+Size.ZGesamtHoehe+1.5*spaceSquare), 
+          cTemp, strlen(cTemp));
+  }
 
   // links
   int abstandY = rnd((Size.ZGesamtHoehe-squareH)/2);
@@ -3334,6 +3343,7 @@ void CTorDoor::drawSquares(HDC hdc, int x, int y)
       x+Size.ZBreite+spaceSquare+squareW, -(y+abstandY+squareH));
   pTeb = dataScan.getTorEinbau(TorEinbau[TS_RECHTS]);
   TextOut(hdc, x+Size.ZBreite+spaceSquare+9, -(y+abstandY+6), pTeb, strlen(pTeb));
+
 }
 
 void CTorDoor::drawFestellung(HDC hdc, int x, int y)
@@ -3407,7 +3417,7 @@ void CTorDoor::printKlappgriff(HDC hdc, int x, int y)
         TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, posY, 
              cTemp, strlen(cTemp));
 
-        posY -= rowH;
+        posY -= sSize.cy;
         strcpy(cTemp, dataScan.getKlappgriff(Klappgriff));
         GetTextExtentPoint32(hdc, cTemp, strlen(cTemp), &sSize);
         TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, posY, 
@@ -3767,6 +3777,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          strTextUnten = TextUnten;
          archive << strTextUnten;
          archive << (int)Klappgriff;
+         archive << (int)Schwelle;
     }
     else 
     {
@@ -3799,7 +3810,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
             }
          }
          if (m_iVersion > 4) {
-             int b, k;
+             int b, k, s;
              archive >> (int)ZWidth;
              archive >> (int)b;
              archive >> strTextUnten;
@@ -3807,6 +3818,8 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
              strcpy(TextUnten, strTextUnten);
              archive >> k;
              Klappgriff = (tKlappgriff)k;
+             archive >> s;
+             Schwelle = (tSchwelle)s;
          }
 
          ProfilMass = (tProfilMass)iProfilMass;

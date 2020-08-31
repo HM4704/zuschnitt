@@ -268,6 +268,7 @@
 #define IDC_BAND                        1117
 #define IDC_TEXT_UNTEN                  1119
 #define IDC_KLAPPGRIFF                  1120
+#define IDC_SCHWELLE                    1121
 #define ID_TOR_HINZU                    32771
 #define ID_DATEI_FFNEN                  32772
 #define ID_KREISBERECHNUNG              32773
@@ -313,7 +314,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        252
 #define _APS_NEXT_COMMAND_VALUE         32824
-#define _APS_NEXT_CONTROL_VALUE         1121
+#define _APS_NEXT_CONTROL_VALUE         1122
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

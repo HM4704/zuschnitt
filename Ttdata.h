@@ -27,6 +27,8 @@ typedef enum { BAND_LEER = 0, BAND_14, BAN_16, BAND_16_80, BAND_MAX } tBand;
 
 typedef enum { KLAPPG_LEER = 0, KLAPPG_INNEN, KLAPPG_AUSSEN, KLAPPG_BEIDS, KLAPPG_MAX } tKlappgriff;
 
+typedef enum { SCHWELLE_LEER = 0, SCHWELLE_3, SCHWELLE_4, SCHWELLE_MAX } tSchwelle;
+
 
 typedef struct tagTTData{
 	int  artNr;
@@ -80,6 +82,7 @@ class TDataScan
      int getFuellungIndex(int iNrFuellung, bool bAussen);
      tProfil getProfilForName(char* szName);
      const char* getKlappgriff(int klapp);
+     const char* getSchwelle(int schwelle);
      
    private:
      TTData*  getPtrToArtikel(int iNrArtikel);

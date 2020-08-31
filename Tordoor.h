@@ -320,6 +320,7 @@ class CTorDoor : public CObject
    tBand Band;   // Band 14, 16, 16-80, kein
    char TextUnten[300];
    tKlappgriff Klappgriff;    // Klappgriff kein, innen, aussen, beidseitig
+   tSchwelle Schwelle;      // Schwelle: kein, 100/50/3, 100/50/4
 
    CPtrArray* FlParam;
    CPtrArray* Profile;

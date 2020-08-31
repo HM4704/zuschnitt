@@ -635,3 +635,11 @@ const char* TDataScan::getKlappgriff(int klapp)
 {
     return Klappgriffe[klapp];
 }
+
+static const char Schwellen[SCHWELLE_MAX][20] = 
+{ "", "100/50/3", "100/50/4" };
+
+const char* TDataScan::getSchwelle(int schwelle)
+{
+    return Schwellen[schwelle];
+}
