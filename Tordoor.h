@@ -316,6 +316,9 @@ class CTorDoor : public CObject
    tPzGs PzGs;                // PZ, Gleichschliessend
    tTorEinbau TorEinbau[TS_MAX];    // Toreinbau: Mauer, Holz, Beton
    tTorFeststellung TorFeststellung[2];
+   int   ZWidth;   // Z 3 oder 4 mm, 2 steht für kein
+   tBand Band;   // Band 14, 16, 16-80, kein
+   char TextUnten[300];
 
    CPtrArray* FlParam;
    CPtrArray* Profile;
@@ -330,8 +333,6 @@ class CTorDoor : public CObject
    float scF;   //Skalierungsfaktor
    int   aSp;   //Außenspalte
    int   iSp;   //Innenspalte
-   int   ZWidth;   // Z 3 oder 4 mm, 2 steht für kein
-   tBand Band;   // Band 14, 16, 16-80, kein
    
    // Versionskennung
    int   m_iVersion;

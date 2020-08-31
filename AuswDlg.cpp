@@ -36,6 +36,7 @@ CAuswDlg::CAuswDlg(CPersistenceManager* persMan, CWnd* pParent /*=NULL*/)
 	: CDialog(CAuswDlg::IDD, pParent)
     , m_edPosition(_T("1"))
     , m_edHolzInnen(_T(""))
+    , m_edTextUnten(_T(""))
 {
     m_iCurFlCnt = 0;
     m_persMan = persMan;
@@ -113,6 +114,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_TOR_FEST_RECHTS, m_ctrlTorFestRechts);
     DDX_Control(pDX, IDC_Z_WIDTH, m_cbZWidth);
     DDX_Control(pDX, IDC_BAND, m_cbBand);
+    DDX_Text(pDX, IDC_TEXT_UNTEN, m_edTextUnten);
 }
 
 
@@ -349,6 +351,7 @@ BOOL CAuswDlg::OnInitDialog()
             }
 		}
 
+        m_edTextUnten = m_pTor->TextUnten;
 		UpdateData(FALSE);
 
         m_ctrlStyropor.SetCheck(FuellungMitStyropor());
@@ -756,7 +759,6 @@ void CAuswDlg::OnOK( )
     strcat(m_pTor->Kommission, POSITION_SIGN);
     strcat(m_pTor->Kommission, m_edPosition);
 
-
 	if (((iCurSel = m_cbTTorTyp.GetCurSel()) != CB_ERR)
 		&& (m_cbTTorTyp.GetLBText(iCurSel, cBuffer) != CB_ERR))
 	{
@@ -770,16 +772,6 @@ void CAuswDlg::OnOK( )
 		return;
 	}
 
-#if 0       // immer Text von Fuellung merken
-	if (((iCurSel = m_cbFuellung.GetCurSel()) != CB_ERR)
-		&& (m_cbFuellung.GetLBText(iCurSel, cBuffer) != CB_ERR))
-		m_pTor->Fuellung = atoi(cBuffer);
-	else
-	{
-		m_pTor->Fuellung = -1;
-		strcpy(m_pTor->strFuellung, m_edFuellung);
-	}
-#else
     strcpy(m_pTor->strFuellung, m_edFuellung);
 	if (((iCurSel = m_cbFuellung.GetCurSel()) != CB_ERR)
 		&& (m_cbFuellung.GetLBText(iCurSel, cBuffer) != CB_ERR))
@@ -803,7 +795,6 @@ void CAuswDlg::OnOK( )
         else
 		    m_pTor->Fuellung = -1;
     }
-#endif   //0
 
 	m_pTor->StueckZahl = atoi(m_edAnzahl);
 	m_pTor->Size.Hoehe = atoi(m_edHoehe);
@@ -872,6 +863,8 @@ void CAuswDlg::OnOK( )
 
     // Band
     m_pTor->Band = (tBand)m_cbBand.GetCurSel();
+
+  	strcpy(m_pTor->TextUnten, m_edTextUnten);
 
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{

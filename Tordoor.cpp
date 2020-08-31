@@ -63,11 +63,13 @@ CTorDoor::CTorDoor(CTorDoor* ct)
 #else
    strcpy(strFuellung, ct->strFuellung);
 #endif  // 0
+   ZWidth = ct->ZWidth;   // default 4 mm
+   Band = ct->Band;
+   strcpy(TextUnten, ct->TextUnten);
+
    scF = (float)0.7;
    aSp = 2;
    iSp = 1;
-   ZWidth = 4;   // default 4 mm
-   Band = BAND_LEER;
    m_iVersion = ct->m_iVersion;
 }
 
@@ -108,6 +110,10 @@ CTorDoor::CTorDoor()
    {
        TorFeststellung[i] = TFS_LEER;
    }   
+
+   ZWidth = 4;   // default 4 mm
+   Band = BAND_LEER;
+   TextUnten[0] = 0;
 }
 
 CTorDoor::~CTorDoor() 
@@ -3299,13 +3305,20 @@ void CTorDoor::drawSquares(HDC hdc, int x, int y)
   Rectangle(hdc, x+2*abstandX, -(y-2*spaceSquare-squareH), x+2*abstandX+squareW,
 	    -(y-2*spaceSquare));
   pTeb = dataScan.getTorEinbau(TorEinbau[TS_OBEN]);
-  TextOut(hdc, x+abstandX+9, -(y-2*spaceSquare-squareH+6), pTeb, strlen(pTeb));
+  TextOut(hdc, x+2*abstandX+9, -(y-2*spaceSquare-squareH+6), pTeb, strlen(pTeb));
 
   // unten
   Rectangle(hdc, x+abstandX, -(y+Size.ZGesamtHoehe+2*spaceSquare),
       x+abstandX+squareW, -(y+Size.ZGesamtHoehe+2*spaceSquare+squareH));
   pTeb = dataScan.getTorEinbau(TorEinbau[TS_UNTEN]);
   TextOut(hdc, x+abstandX+9, -(y+Size.ZGesamtHoehe+2*spaceSquare+6), pTeb, strlen(pTeb));
+  if (strlen(TextUnten) > 0) {
+     // TextUnten ausgeben
+     SIZE sSize;
+     GetTextExtentPoint32(hdc, TextUnten, strlen(TextUnten), &sSize);
+     TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, -(y+Size.ZGesamtHoehe+2*spaceSquare+squareH + 10), 
+         TextUnten, strlen(TextUnten));
+  }
 
   // links
   int abstandY = rnd((Size.ZGesamtHoehe-squareH)/2);
@@ -3655,7 +3668,7 @@ void CTTSize::Serialize( CArchive& archive, int iVersion )
 // Return: FALSE  Problem beim Lesen der Version, 
 int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
 {
-    CString strKunde, strKommission, strArtikel, strFuellung;
+    CString strKunde, strKommission, strArtikel, strFuellung, strTextUnten;
     
     if (archive.IsLoading())
         m_iVersion = -1;
@@ -3722,7 +3735,11 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          for (int i = 0; i < 2; i++)
          {
             archive << TorFeststellung[i];
-         }         
+         }    
+         // ab hier Version 5
+         archive << ZWidth << Band;
+         strTextUnten = TextUnten;
+         archive << strTextUnten;
     }
     else 
     {
@@ -3753,6 +3770,15 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
                 archive >> (int)iTorFeststellung;
                 TorFeststellung[i] = (tTorFeststellung)iTorFeststellung;
             }
+         }
+         if (m_iVersion > 4) {
+             int z, b;
+             archive >> (int)z;
+             archive >> (int)b;
+             archive >> strTextUnten;
+             ZWidth = z;
+             Band = (tBand)b;
+             strcpy(TextUnten, strTextUnten);
          }
 
          ProfilMass = (tProfilMass)iProfilMass;
