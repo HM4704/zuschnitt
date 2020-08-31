@@ -117,6 +117,7 @@ public:
     CComboBox m_cbZWidth;
     CComboBox m_cbBand;
     CString m_edTextUnten;
+    CComboBox m_cbKlappgriff;
 };
 
 //{{AFX_INSERT_LOCATION}}

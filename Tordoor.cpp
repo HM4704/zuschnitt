@@ -66,6 +66,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    ZWidth = ct->ZWidth;   // default 4 mm
    Band = ct->Band;
    strcpy(TextUnten, ct->TextUnten);
+   Klappgriff = ct->Klappgriff;
 
    scF = (float)0.7;
    aSp = 2;
@@ -114,6 +115,7 @@ CTorDoor::CTorDoor()
    ZWidth = 4;   // default 4 mm
    Band = BAND_LEER;
    TextUnten[0] = 0;
+   Klappgriff = KLAPPG_LEER;
 }
 
 CTorDoor::~CTorDoor() 
@@ -3389,6 +3391,30 @@ void CTorDoor::drawFestellung(HDC hdc, int x, int y)
   }
 }
 
+
+//x, y: Koordinaten des Tores links oben
+void CTorDoor::printKlappgriff(HDC hdc, int x, int y)
+{
+    if (Klappgriff > KLAPPG_LEER) {
+        SIZE sSize;
+        char cTemp[200];
+        TDataScan dataScan;
+
+        int posY = -(y+Size.ZGesamtHoehe/2);
+        strcpy(cTemp, "Klappgriff");
+
+        GetTextExtentPoint32(hdc, cTemp, strlen(cTemp), &sSize);
+        TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, posY, 
+             cTemp, strlen(cTemp));
+
+        posY -= rowH;
+        strcpy(cTemp, dataScan.getKlappgriff(Klappgriff));
+        GetTextExtentPoint32(hdc, cTemp, strlen(cTemp), &sSize);
+        TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, posY, 
+             cTemp, strlen(cTemp));
+    }
+}
+
 void CTorDoor::updateElemente()
 {
    if (RahmenElemente == NULL)
@@ -3737,9 +3763,10 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
             archive << TorFeststellung[i];
          }    
          // ab hier Version 5
-         archive << ZWidth << Band;
+         archive << ZWidth << (int)Band;
          strTextUnten = TextUnten;
          archive << strTextUnten;
+         archive << (int)Klappgriff;
     }
     else 
     {
@@ -3772,13 +3799,14 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
             }
          }
          if (m_iVersion > 4) {
-             int z, b;
-             archive >> (int)z;
+             int b, k;
+             archive >> (int)ZWidth;
              archive >> (int)b;
              archive >> strTextUnten;
-             ZWidth = z;
              Band = (tBand)b;
              strcpy(TextUnten, strTextUnten);
+             archive >> k;
+             Klappgriff = (tKlappgriff)k;
          }
 
          ProfilMass = (tProfilMass)iProfilMass;

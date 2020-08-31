@@ -319,6 +319,7 @@ class CTorDoor : public CObject
    int   ZWidth;   // Z 3 oder 4 mm, 2 steht für kein
    tBand Band;   // Band 14, 16, 16-80, kein
    char TextUnten[300];
+   tKlappgriff Klappgriff;    // Klappgriff kein, innen, aussen, beidseitig
 
    CPtrArray* FlParam;
    CPtrArray* Profile;
@@ -405,6 +406,7 @@ class CTorDoor : public CObject
    void drawProfil(HDC hdc, int x, int y, int typ);
    void drawSquares(HDC hdc, int x, int y);
    void drawFestellung(HDC hdc, int x, int y);
+   void printKlappgriff(HDC hdc, int x, int y);
    void profilRP1614(HDC hdc, int x, int y);
    void profilRP1615(HDC hdc, int x, int y);
    void profilRP1093(HDC hdc, int x, int y);

@@ -620,10 +620,18 @@ const char* TDataScan::getTorFeststellung(int tfs)
     return TorFeststellung[tfs];
 }
 
-static const char BandWerte[4][20] = 
+static const char BandWerte[BAND_MAX][20] = 
 { "", "14", "16", "16-80" };
 
 const char* TDataScan::getBand(int band)
 {
     return BandWerte[band];
+}
+
+static const char Klappgriffe[KLAPPG_MAX][20] = 
+{ "", "innen", "aussen", "beidseitig" };
+
+const char* TDataScan::getKlappgriff(int klapp)
+{
+    return Klappgriffe[klapp];
 }

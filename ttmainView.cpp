@@ -316,6 +316,7 @@ void CTtmainView::fillGrid(HDC hdc, int fact)
 		m_iAryTorHoehe[i]-2*(rowH+2*(spaceSquare+squareH)), m_smallFont);
     pTTor->drawSquares(hdc, posX, actY+2*(rowH+spaceSquare+squareH));
     pTTor->drawFestellung(hdc, posX, actY+2*(rowH+spaceSquare+squareH));
+    pTTor->printKlappgriff(hdc, posX, actY+2*(rowH+spaceSquare+squareH));
 
     //Kunde
     pTTor->printKundKomm(hdc, actX, (actY+10),
