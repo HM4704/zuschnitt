@@ -643,3 +643,11 @@ const char* TDataScan::getSchwelle(int schwelle)
 {
     return Schwellen[schwelle];
 }
+
+static const char SfRahmen[SF_RHMN_MAX][10] = 
+{ "", "T", "P" };
+
+const char* TDataScan::getSfRahmen(int sfr)
+{
+    return SfRahmen[sfr];
+}

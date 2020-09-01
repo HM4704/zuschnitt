@@ -68,6 +68,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    strcpy(TextUnten, ct->TextUnten);
    Klappgriff = ct->Klappgriff;
    Schwelle = ct->Schwelle;
+   SfRahmen = ct->SfRahmen;
 
    scF = (float)0.7;
    aSp = 2;
@@ -118,6 +119,7 @@ CTorDoor::CTorDoor()
    TextUnten[0] = 0;
    Klappgriff = KLAPPG_LEER;
    Schwelle = SCHWELLE_LEER;
+   SfRahmen = SF_RHMN_LEER;
 }
 
 CTorDoor::~CTorDoor() 
@@ -2378,16 +2380,15 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
       SelectObject(hdc, orgFont);
   }
 
-  if (GlasProfile->GetSize() > 0)
+  if (hasSchiebefenster() && SfRahmen > SF_RHMN_LEER)
   {
-      y = iYOrg + getLineBegin(CA_Y_AFTER_ROFILES);
-//      sprintf(temp, " %s", "Glas");
-//      TextOut(hdc, x, -(y), temp, strlen(temp));
+      TDataScan dataScan;
+      y = iYOrg + getLineBegin(CA_Y_AFTER_ROFILES) + rowH;
+      TextOut(hdc, x + 10, -(y), dataScan.getSfRahmen(SfRahmen), strlen(dataScan.getSfRahmen(SfRahmen)));
   }
 
   // Zeichnen der Rahmen
   y = iYOrg + getLineBegin(CA_Y_AFTER_GLASPROFILES);
-//  y += 2*rowH;
   if (RahmenElemente != NULL)
   {
       for (i=0; i<RahmenElemente->GetSize(); i++)
@@ -2445,6 +2446,26 @@ int CTorDoor::printBreite(HDC hdc, int x, int y, int maxX, HFONT bFont,
   }
 
   return 0; //temp., später richtig!!!
+}
+
+bool CTorDoor::hasSchiebefenster()
+{
+  if (GlasProfile->GetSize() > 0)
+  {
+      CFlParam* FluegelP = (CFlParam*)FlParam->GetAt(0);
+      if (FluegelP != NULL)
+      {
+          switch(FluegelP->FArt)
+          {
+          case SF:
+          case SF2:
+              return true;
+              break;
+          } 
+      }
+  }
+
+  return false;
 }
 
 void CTorDoor::profilRP1093(HDC hdc, int x, int y)
@@ -3778,6 +3799,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          archive << strTextUnten;
          archive << (int)Klappgriff;
          archive << (int)Schwelle;
+         archive << (int)SfRahmen;
     }
     else 
     {
@@ -3810,7 +3832,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
             }
          }
          if (m_iVersion > 4) {
-             int b, k, s;
+             int b, k, s, sfr;
              archive >> (int)ZWidth;
              archive >> (int)b;
              archive >> strTextUnten;
@@ -3820,6 +3842,8 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
              Klappgriff = (tKlappgriff)k;
              archive >> s;
              Schwelle = (tSchwelle)s;
+             archive >> sfr;
+             SfRahmen = (tSfRahmen)sfr;
          }
 
          ProfilMass = (tProfilMass)iProfilMass;

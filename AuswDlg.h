@@ -119,6 +119,7 @@ public:
     CString m_edTextUnten;
     CComboBox m_cbKlappgriff;
     CComboBox m_cbSchwelle;
+    CComboBox m_cbSfRahmen;
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -321,6 +321,7 @@ class CTorDoor : public CObject
    char TextUnten[300];
    tKlappgriff Klappgriff;    // Klappgriff kein, innen, aussen, beidseitig
    tSchwelle Schwelle;      // Schwelle: kein, 100/50/3, 100/50/4
+   tSfRahmen SfRahmen;      // Schiebefensterrahmen: kein, T, P
 
    CPtrArray* FlParam;
    CPtrArray* Profile;
@@ -422,6 +423,7 @@ class CTorDoor : public CObject
    void profil30_10(HDC hdc, int x, int y);
    void profilQuad(HDC hdc, int x, int y);
    int  getOeffnerFluegel(void);
+   bool hasSchiebefenster();
    void updateFuellung(void);
    void updateElemente(void);
 

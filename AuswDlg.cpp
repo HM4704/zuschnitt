@@ -117,6 +117,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_TEXT_UNTEN, m_edTextUnten);
     DDX_Control(pDX, IDC_KLAPPGRIFF, m_cbKlappgriff);
     DDX_Control(pDX, IDC_SCHWELLE, m_cbSchwelle);
+    DDX_Control(pDX, IDC_SF_RAHMEN, m_cbSfRahmen);
 }
 
 
@@ -284,6 +285,13 @@ BOOL CAuswDlg::OnInitDialog()
         m_cbSchwelle.AddString(dataScan.getSchwelle(schw));
     }
     m_cbSchwelle.SetCurSel(m_pTor->Schwelle);
+
+    // Schiebefensterrahmen
+	for (int sfr = SF_RHMN_LEER; sfr < SF_RHMN_MAX; sfr++)
+    {
+        m_cbSfRahmen.AddString(dataScan.getSfRahmen(sfr));
+    }
+    m_cbSfRahmen.SetCurSel(m_pTor->SfRahmen);
 
 	if (m_bModify)
 	{
@@ -888,6 +896,9 @@ void CAuswDlg::OnOK( )
 
     // Schwelle
     m_pTor->Schwelle = (tSchwelle)m_cbSchwelle.GetCurSel();
+
+    // Schiebefensterrahmen
+    m_pTor->SfRahmen = (tSfRahmen)m_cbSfRahmen.GetCurSel();
 
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{
