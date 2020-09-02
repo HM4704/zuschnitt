@@ -651,3 +651,12 @@ const char* TDataScan::getSfRahmen(int sfr)
 {
     return SfRahmen[sfr];
 }
+
+
+static const char Fliegengitter[FLIEGENGITTER_MAX][10] = 
+{ "", "Alu", "VA" };
+
+const char* TDataScan::getFliegengitter(int fg)
+{
+    return Fliegengitter[fg];
+}

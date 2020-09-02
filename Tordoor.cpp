@@ -69,6 +69,7 @@ CTorDoor::CTorDoor(CTorDoor* ct)
    Klappgriff = ct->Klappgriff;
    Schwelle = ct->Schwelle;
    SfRahmen = ct->SfRahmen;
+   Fliegengitter = ct->Fliegengitter;
 
    scF = (float)0.7;
    aSp = 2;
@@ -119,7 +120,7 @@ CTorDoor::CTorDoor()
    TextUnten[0] = 0;
    Klappgriff = KLAPPG_LEER;
    Schwelle = SCHWELLE_LEER;
-   SfRahmen = SF_RHMN_LEER;
+   Fliegengitter = FLIEGENGITTER_LEER;
 }
 
 CTorDoor::~CTorDoor() 
@@ -3213,7 +3214,7 @@ int CTorDoor::printFenster(HDC hdc, int y,
   int Ykipp = y;
   int Yschieb = y;
   int Ystarr = y;
-  int actY;
+  int actY = y;
   TDataScan dataScan;
   BOOL Fenster;
 
@@ -3255,10 +3256,19 @@ int CTorDoor::printFenster(HDC hdc, int y,
       {
         sprintf(Buf, "%s", dataScan.getGlasArt(pFl->GArt));
         TextOut(hdc, actX, -actY, Buf, strlen(Buf));
-	actY +=  rowH;
+	    actY +=  rowH;
       }
     }
   } 
+
+  if (Fliegengitter > FLIEGENGITTER_LEER) {
+    actX = posSchieb;
+    TextOut(hdc, actX, -actY, "Fliegeng.", strlen("Fliegeng."));
+    actY +=  rowH;
+    sprintf(Buf, "%s", dataScan.getFliegengitter(Fliegengitter));
+    TextOut(hdc, actX, -actY, Buf, strlen(Buf));
+    actY +=  rowH;
+  }
   return actY;
 }
 
@@ -3800,6 +3810,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
          archive << (int)Klappgriff;
          archive << (int)Schwelle;
          archive << (int)SfRahmen;
+         archive << (int)Fliegengitter;
     }
     else 
     {
@@ -3832,7 +3843,7 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
             }
          }
          if (m_iVersion > 4) {
-             int b, k, s, sfr;
+             int b, k, s, sfr, fg;
              archive >> (int)ZWidth;
              archive >> (int)b;
              archive >> strTextUnten;
@@ -3844,6 +3855,8 @@ int CTorDoor::Serialize( CArchive& archive, BOOL bReadVersion)
              Schwelle = (tSchwelle)s;
              archive >> sfr;
              SfRahmen = (tSfRahmen)sfr;
+             archive >> fg;
+             Fliegengitter = (tFliegengitter)fg;
          }
 
          ProfilMass = (tProfilMass)iProfilMass;

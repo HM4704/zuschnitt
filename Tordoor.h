@@ -322,6 +322,7 @@ class CTorDoor : public CObject
    tKlappgriff Klappgriff;    // Klappgriff kein, innen, aussen, beidseitig
    tSchwelle Schwelle;      // Schwelle: kein, 100/50/3, 100/50/4
    tSfRahmen SfRahmen;      // Schiebefensterrahmen: kein, T, P
+   tFliegengitter Fliegengitter;   // Fliegengitter: kein, Alu VA
 
    CPtrArray* FlParam;
    CPtrArray* Profile;

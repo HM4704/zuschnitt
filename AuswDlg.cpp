@@ -95,7 +95,6 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_PROFILDICKE, m_edProfilDicke);
     DDX_Text(pDX, IDC_BREITE_FL1, m_strBreiteFl1);
     //}}AFX_DATA_MAP
-    DDX_Control(pDX, IDC_BETO_COLOR, m_ctrlBetoColor);
     DDX_Control(pDX, IDC_KOMMISSION, m_cbKommission);
     DDX_Control(pDX, IDC_KUNDE, m_cbKunde);
     DDX_Control(pDX, IDC_POSITION, m_cbPosition);
@@ -118,6 +117,7 @@ void CAuswDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_KLAPPGRIFF, m_cbKlappgriff);
     DDX_Control(pDX, IDC_SCHWELLE, m_cbSchwelle);
     DDX_Control(pDX, IDC_SF_RAHMEN, m_cbSfRahmen);
+    DDX_Control(pDX, IDC_FLIEGENGITTER, m_cbFliegengitter);
 }
 
 
@@ -208,22 +208,10 @@ BOOL CAuswDlg::OnInitDialog()
     m_cbProfilMass.SetCurSel(-1);
     m_cbProfilMass.EnableWindow(FALSE);
 
-	for (int i = 0; i < 2; i++)
-		m_ctrlBetoColor.AddString(szBetoColors[i]);
-
 	for (int i = 0; i < 11; i++)
 		m_cbHolzAussen.AddString(dataScan.getNameForFuellung(i));
 	for (int i = 0; i < 11; i++)
 		m_cbHolzInnen.AddString(dataScan.getNameForFuellung(i));
-
-	m_ctrlBetoColor.SetCurSel(0);
-    for (int i = 0; i < 2; i++)
-    {
-        if (strstr(m_pTor->strFuellung, szBetoColors[i]) != NULL)
-        {
-	        m_ctrlBetoColor.SetCurSel(i);
-        }
-    }
 
     for (int i = 1; i < 21; i++)
     {
@@ -292,6 +280,13 @@ BOOL CAuswDlg::OnInitDialog()
         m_cbSfRahmen.AddString(dataScan.getSfRahmen(sfr));
     }
     m_cbSfRahmen.SetCurSel(m_pTor->SfRahmen);
+
+    // Fliegengitter
+	for (int fg = FLIEGENGITTER_LEER; fg < FLIEGENGITTER_MAX; fg++)
+    {
+        m_cbFliegengitter.AddString(dataScan.getFliegengitter(fg));
+    }
+    m_cbFliegengitter.SetCurSel(m_pTor->Fliegengitter);
 
 	if (m_bModify)
 	{
@@ -504,24 +499,6 @@ static const HOLZ_ADD_TEXTS holzInnenSearchTexts[NR_HOLZ_INNEN_TEXT] =
     { "doppelw. Holz", "innen " }    
 };
 
-void CAuswDlg::AddBetoColor(const char* strFuellung, const char* szColor)
-{
-    char szBuf[300];
-    
-//    m_cedFuellung.GetWindowText(szBuf);
-    strncpy(szBuf, strFuellung, sizeof(szBuf));
-    
-    for (int i = 0; i < NR_BETO_TEXT; i++)
-    {
-        if (insertWord(szBuf, betoSearchTexts[i], szColor) == true)
-        {
-	        m_cedFuellung.SetWindowText(szBuf);
-            break;
-        }
-    }
-
-}
-
 const char* szMitStyropor = " m. Styropor";
 void CAuswDlg::AddRemoveStyropor(bool add, int aNr)
 {
@@ -610,10 +587,6 @@ void CAuswDlg::OnSelchangeFuellung()
 		aNr = atoi(cBuffer);
 		m_cedFuellung.SetWindowText(dataScan.getBezeich(aNr));
 		dataScan.getFuellung(aNr, &outside, &inside);
-		if ((outside == F_BETOPLAN || inside == F_BETOPLAN) && (strstr(dataScan.getBezeich(aNr), " PP") == NULL))
-		{
-            AddBetoColor(dataScan.getBezeich(aNr), szBetoColors[m_ctrlBetoColor.GetCurSel()]);
-		}
         AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
 	}
 }
@@ -645,7 +618,6 @@ void CAuswDlg::OnSelchangeCustomFuellung()
         }
         m_cedFuellung.SetWindowText(cBuffer);
 
-        AddBetoColor(cBuffer, szBetoColors[m_ctrlBetoColor.GetCurSel()]);
         AddRemoveStyropor(m_ctrlStyropor.GetCheck() == 1, 0);
     }
     else
@@ -900,6 +872,9 @@ void CAuswDlg::OnOK( )
     // Schiebefensterrahmen
     m_pTor->SfRahmen = (tSfRahmen)m_cbSfRahmen.GetCurSel();
 
+    // Fliegengitter
+    m_pTor->Fliegengitter = (tFliegengitter)m_cbFliegengitter.GetCurSel();
+    
 	for (int i=0; i<m_pTor->FluegelAnz; i++)
 	{
 		CFlParam* FlP;

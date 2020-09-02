@@ -31,6 +31,8 @@ typedef enum { SCHWELLE_LEER = 0, SCHWELLE_3, SCHWELLE_4, SCHWELLE_MAX } tSchwel
 
 typedef enum { SF_RHMN_LEER = 0, SF_RHMN_T, SF_RHMN_P, SF_RHMN_MAX } tSfRahmen;
 
+typedef enum { FLIEGENGITTER_LEER = 0, FLIEGENGITTER_ALU, FLIEGENGITTER_VA, FLIEGENGITTER_MAX } tFliegengitter;
+
 
 typedef struct tagTTData{
 	int  artNr;
@@ -86,6 +88,7 @@ class TDataScan
      const char* getKlappgriff(int klapp);
      const char* getSchwelle(int schwelle);
      const char* getSfRahmen(int sfr);
+     const char* getFliegengitter(int fg);
 
    private:
      TTData*  getPtrToArtikel(int iNrArtikel);

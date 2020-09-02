@@ -69,7 +69,6 @@ public:
 	void SetFuellung(CString str);
 	void GetFluegelItems();
 protected:
-    void AddBetoColor(const char* strFuellung, const char* szColor);
     void AddHolzArt(char* szBuf, BOOL outside, char* szHolz);
     void AddRemoveStyropor(bool add, int aNr);
     bool FuellungMitStyropor(void);
@@ -90,7 +89,6 @@ protected:
     afx_msg void OnCbnSelchangeHolzInnen();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-	CComboBox m_ctrlBetoColor;
 public:
     afx_msg void OnCbnSelchangeBetoColor();
     CComboBox m_cbKommission;
@@ -120,6 +118,7 @@ public:
     CComboBox m_cbKlappgriff;
     CComboBox m_cbSchwelle;
     CComboBox m_cbSfRahmen;
+    CComboBox m_cbFliegengitter;
 };
 
 //{{AFX_INSERT_LOCATION}}
