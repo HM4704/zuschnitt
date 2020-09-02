@@ -28,6 +28,7 @@ CProfileElemDlg::CProfileElemDlg(CWnd* pParent, CTorDoor* pTor)
 	m_iProfileElemCount = 0;
 	m_iProfileElemLength = 0;
 	m_strProfileElemType = _T("");
+    m_actProfil = NP;
 	//}}AFX_DATA_INIT
     m_pTor = pTor;
     if (m_pTor->Typ != 4)
@@ -58,6 +59,7 @@ BEGIN_MESSAGE_MAP(CProfileElemDlg, CDialog)
 	//{{AFX_MSG_MAP(CProfileElemDlg)
 	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
+    ON_CBN_SELCHANGE(IDC_PROFILE_ELEM_TYPE, &CProfileElemDlg::OnCbnSelchangeProfileElemType)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -246,6 +248,8 @@ void CProfileElemDlg::CopyValues(BOOL bLoad)
             }
         }
 
+        m_actProfil = m_Prfl.Profil;
+
         UpdateData(FALSE);
     }
     else
@@ -322,4 +326,38 @@ void CProfileElemDlg::OnDestroy()
     SAFE_DELETE(pIL);
     pIL = m_cbProfileOrientation.GetImageList();	
     SAFE_DELETE(pIL);
+}
+
+void CProfileElemDlg::OnCbnSelchangeProfileElemType()
+{
+    COMBOBOXEXITEM cbi;
+
+    UpdateData(TRUE);
+
+    cbi.mask = CBEIF_LPARAM;
+    cbi.iItem = m_cbProfileType.GetCurSel();
+
+    m_cbProfileType.GetItem(&cbi);
+    tProfil profil = (tProfil)cbi.lParam;
+    // Typ 400 Korrektur
+    if (profil == RPRR) {
+        // 35mm abziehen
+        m_iProfileElemLength -= 35;
+    }
+    if (m_actProfil == RPRR) {
+        // 35mm zugeben
+        m_iProfileElemLength += 35;
+    }
+    // Typ 600 Korrektur
+    if (profil == RP6_M) {
+        // 35mm abziehen
+        m_iProfileElemLength -= 40;
+    }
+    if (m_actProfil == RP6_M) {
+        // 35mm zugeben
+        m_iProfileElemLength += 40;
+    }
+
+    UpdateData(FALSE);
+    m_actProfil = profil;
 }

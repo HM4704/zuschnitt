@@ -16,6 +16,7 @@ class CProfileElemDlg : public CDialog
 {
     CProfileElem  m_Prfl;
     CTorDoor*     m_pTor;
+    tProfil       m_actProfil;
 // Construction
 public:
 	CProfileElemDlg(CWnd* pParent, CTorDoor* pTor);   // standard constructor
@@ -55,6 +56,8 @@ protected:
 	afx_msg void OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+    afx_msg void OnCbnSelchangeProfileElemType();
 };
 
 //{{AFX_INSERT_LOCATION}}
