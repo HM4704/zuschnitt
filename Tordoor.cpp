@@ -3441,10 +3441,9 @@ void CTorDoor::printKlappgriff(HDC hdc, int x, int y)
         char cTemp[200];
         TDataScan dataScan;
 
-        int posY = -(y+Size.ZGesamtHoehe/2);
         strcpy(cTemp, "Klappgriff");
-
         GetTextExtentPoint32(hdc, cTemp, strlen(cTemp), &sSize);
+        int posY = -(y+Size.ZGesamtHoehe - 3.3*sSize.cy);
         TextOut(hdc, x+(Size.ZBreite-sSize.cx)/2, posY, 
              cTemp, strlen(cTemp));
 
