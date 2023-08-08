@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Anmerkungen zum Projekt
 
-- Beim Übersetzen wird Dll RegMan.dll aus dem Components-Verzeichnis
-  vor dem Linken über die Batch-Datei unter \Batch kopiert
+- Projektdateien für VS 2008
+
+- eine Version mit allen benötigten Dateien kann mit der Datei batch/install.bat erstellt werden
