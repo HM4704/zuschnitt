@@ -2324,6 +2324,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RegistryItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RegistryManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RegKeyEx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RegMan.h"
+				>
+			</File>
+			<File
 				RelativePath="Resource.h"
 				>
 			</File>

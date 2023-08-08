@@ -17,7 +17,7 @@
 #include "..\tuern.h"
 #include "..\ttmainDoc.h"
 #include "..\ttmainView.h"
-#include "RegistryManager.h"
+#include "..\RegistryManager.h"
 #include "TTTestManager.h"
 #include "TTTestConfigDlg.h"
 
