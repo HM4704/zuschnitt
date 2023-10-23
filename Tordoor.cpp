@@ -139,7 +139,7 @@ CTorDoor::~CTorDoor()
 	if (Treibriegel != NULL) delete Treibriegel;
 	if (BetoPlanElemente != NULL) delete BetoPlanElemente;
     if (RahmenElemente != NULL) delete RahmenElemente;
-    if (Treibriegel != NULL) delete Treibriegel;
+    //if (Treibriegel != NULL) delete Treibriegel;
 }
 
 void CTorDoor::deleteFluegel()

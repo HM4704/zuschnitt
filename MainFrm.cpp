@@ -125,14 +125,38 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Visuellen Manager zum Zeichnen aller Benutzeroberflächenelemente festlegen
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerVS2005));
 
+#if 1
 	CMDITabInfo mdiTabParams;
+    memset(&mdiTabParams, 0, sizeof(mdiTabParams));
+#if 1
 	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE; // Weitere Stile verfügbar...
 	mdiTabParams.m_bActiveTabCloseButton = TRUE;      // Auf "FALSE" festlegen, um die Schaltfläche "Schließen" rechts auf der Registerkarte zu platzieren
 	mdiTabParams.m_bTabIcons = FALSE;    // Auf "TRUE" festlegen, um Dokumentsymbole auf MDI-Registerkarten zu aktivieren
 	mdiTabParams.m_bAutoColor = TRUE;    // Auf "FALSE" festlegen, um automatische Farben für MDI-Registerkarten zu deaktivieren
 	mdiTabParams.m_bDocumentMenu = TRUE; // Dokumentmenü am rechten Rand des Registerkartenbereichs aktivieren
-	EnableMDITabbedGroups(TRUE, mdiTabParams);
+#endif
+	//EnableMDITabbedGroups(TRUE, mdiTabParams);
+    EnableMDITabs(TRUE, TRUE, CMFCTabCtrl::LOCATION_TOP, TRUE, CMFCTabCtrl::STYLE_3D_ONENOTE, FALSE, TRUE);
+//    EnableMDITabs(BOOL bEnable/* = TRUE*/, BOOL bIcons/* = TRUE*/, CMFCTabCtrl::Location tabLocation /* = CMFCTabCtrl::LOCATION_BOTTOM*/,
+//        BOOL bTabCloseButton/* = FALSE*/, CMFCTabCtrl::Style style/* = CMFCTabCtrl::STYLE_3D_SCROLLED*/, BOOL bTabCustomTooltips/* = FALSE*/, BOOL bActiveTabCloseButton/* = FALSE*/)
 
+#else
+    CMDITabInfo params;
+
+    params.m_tabLocation = theApp.m_Options.m_bTabsOnTop ? CMFCTabCtrl::LOCATION_TOP : CMFCTabCtrl::LOCATION_BOTTOM;
+    params.m_style = theApp.m_Options.m_nTabsStyle;
+    params.m_bTabCloseButton = !theApp.m_Options.m_bActiveTabCloseButton;
+    params.m_bActiveTabCloseButton = theApp.m_Options.m_bActiveTabCloseButton;
+    params.m_bAutoColor = theApp.m_Options.m_bTabsAutoColor;
+    params.m_bDocumentMenu = theApp.m_Options.m_bMDITabsDocMenu;
+    params.m_bEnableTabSwap = theApp.m_Options.m_bDragMDITabs;
+    params.m_nTabBorderSize = theApp.m_Options.m_nMDITabsBorderSize;
+    params.m_bTabIcons = theApp.m_Options.m_bMDITabsIcons;
+    params.m_bFlatFrame = theApp.m_Options.m_bFlatFrame;
+    params.m_bTabCustomTooltips = theApp.m_Options.m_bCustomTooltips;
+
+    EnableMDITabbedGroups(TRUE, params);
+#endif
 	if (!m_wndMenuBar.Create(this))
 	{
 		TRACE0("Fehler beim Erstellen der Menüleiste.\n");

@@ -41,65 +41,65 @@ static Property g_Eigenschaften[] =
 
 static char* g_strZuschnittDateiKopf[] =
 { 
-"#####################################################"NEW_LINE,
-"# Datei für Zuschnitt-Regeln"NEW_LINE,
-"#"NEW_LINE,
-"# Übersicht über Schlüsselworte:"NEW_LINE,
-"#       Schlüsselwort         mögliche Werte"NEW_LINE,
-"#"NEW_LINE,
-"#       Art                   Tür, Tor, *"NEW_LINE,
-"#       Typ                   400, 600, 800, *"NEW_LINE,
-"#       OKF                   ja, nein, *"NEW_LINE,
-"#       Bogen                 ja, nein, *"NEW_LINE,
-"#       Flügelanzahl          1, 2, 3, 4, 5, *"NEW_LINE,
-"#       Rahmen                W, Z, R, *"NEW_LINE,
-"#       Oberteil              kein, OzO, OiF, *"NEW_LINE,
-"#       Geteilt               ja, nein, *"NEW_LINE,
-"#"NEW_LINE,
-"#"NEW_LINE,
-"# Syntax-Erklärung"NEW_LINE,
-"#"NEW_LINE,
-"# Schlüsselword[Wert], Schlüsselword[Wert],...: Zuschnitt-Zahl"NEW_LINE,
-"# Beispiel: Art[Tür],Typ[400],Rahmen[W]: 100"NEW_LINE,
+"#####################################################\n",
+"# Datei für Zuschnitt-Regeln\n",
+"#\n",
+"# Übersicht über Schlüsselworte:\n",
+"#       Schlüsselwort         mögliche Werte\n",
+"#\n",
+"#       Art                   Tür, Tor, *\n",
+"#       Typ                   400, 600, 800, *\n",
+"#       OKF                   ja, nein, *\n",
+"#       Bogen                 ja, nein, *\n",
+"#       Flügelanzahl          1, 2, 3, 4, 5, *\n",
+"#       Rahmen                W, Z, R, *\n",
+"#       Oberteil              kein, OzO, OiF, *\n",
+"#       Geteilt               ja, nein, *\n",
+"#\n",
+"#\n",
+"# Syntax-Erklärung\n",
+"#\n",
+"# Schlüsselword[Wert], Schlüsselword[Wert],...: Zuschnitt-Zahl\n",
+"# Beispiel: Art[Tür],Typ[400],Rahmen[W]: 100\n",
 "\0"
 };
 
 static char* g_strZuschnittSenk[] = 
 {
-"# Abschnitt für senkrechte Zuschnittzugaben in [mm]"NEW_LINE,
-"[Senk]"NEW_LINE,
+"# Abschnitt für senkrechte Zuschnittzugaben in [mm]\n",
+"[Senk]\n",
 "\0"
 };
 static char* g_strZuschnittQuer[] = 
 {
-"# Abschnitt für waagrechte Zuschnittzugaben in [mm]"NEW_LINE,
-"[Quer]"NEW_LINE,
+"# Abschnitt für waagrechte Zuschnittzugaben in [mm]\n",
+"[Quer]\n",
 "\0"
 };
 static char* g_strZuschnittOber[] = 
 {
-"# Abschnitt für Zuschnittzugaben bei Oberteilen in [mm]"NEW_LINE,
-"[Ober]"NEW_LINE,
+"# Abschnitt für Zuschnittzugaben bei Oberteilen in [mm]\n",
+"[Ober]\n",
 "\0"
 };
 static char* g_strZuschnittUnter[] = 
 {
-"# Abschnitt für Zuschnittzugaben bei Unterteilen in [mm]"NEW_LINE,
-"[Unter]"NEW_LINE,
+"# Abschnitt für Zuschnittzugaben bei Unterteilen in [mm]\n",
+"[Unter]\n",
 "\0"
 };
 
 static char* g_strZuschnittSchiebefenster[] = 
 {
-"# Abschnitt für Zugaben für Schiebefenster (senkrecht, waagrecht)"NEW_LINE,
-"[SF]"NEW_LINE,
+"# Abschnitt für Zugaben für Schiebefenster (senkrecht, waagrecht)\n",
+"[SF]\n",
 "\0"
 };
 
 static char* g_strZuschnittSchiebefensterTyp2[] = 
 {
-"# Abschnitt für Zugaben (negativ) für Schiebefenster Typ 2 ( senkrecht, waagrecht)"NEW_LINE,
-"[SF2]"NEW_LINE,
+"# Abschnitt für Zugaben (negativ) für Schiebefenster Typ 2 ( senkrecht, waagrecht)\n",
+"[SF2]\n",
 "\0"
 };
 

@@ -41,6 +41,7 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
+	cs.style &= ~WS_SYSMENU;
 	CRect rect;
 	CWnd* pWnd = AfxGetMainWnd();
 	::GetClientRect(pWnd->m_hWnd, &rect);
@@ -48,7 +49,6 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
     cs.cx = rect.Width() - 40; //::GetSystemMetrics(SM_CXSCREEN) / 3; 
     cs.y = 0; //((cs.cy * 3) - cs.cy) / 2;     
 	cs.x = 0; //((cs.cx * 3) - cs.cx) / 2;
-
 	if( !CMDIChildWndEx::PreCreateWindow(cs) )
 		return FALSE;
 
